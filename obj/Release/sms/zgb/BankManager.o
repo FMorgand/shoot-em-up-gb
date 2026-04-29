@@ -1,0 +1,41 @@
+XL4
+H 9 areas 5 global symbols
+M BankManager
+S .__.ABS. Def00000000
+A _CODE size 0 flags 0 addr 0
+A _DATA size A flags 0 addr 0
+S _bank_stackSTACK Def00000000
+A _INITIALIZED size 2 flags 0 addr 0
+S _bank_stack Def00000000
+A _DABS size 0 flags 8 addr 0
+A _HOME size 23 flags 0 addr 0
+S _PopBank Def00000014
+S _PushBank Def00000000
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 2 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00 00
+R 00 00 01 00
+T 00 00 00 00
+R 00 00 01 00
+T 00 00 00 00
+R 00 00 02 00
+T 00 00 00 00
+R 00 00 02 00
+T 00 00 00 00
+R 00 00 04 00
+T 00 00 00 00 4F 2A 00 00 23 22 00 00 2A 00 00 3A
+R 00 00 04 00 00 06 02 00 00 0A 02 00 00 0D 02 00
+T 0C 00 00 00 FE FF 77 21 FE FF 71 C9
+R 00 00 04 00
+T 14 00 00 00
+R 00 00 04 00
+T 14 00 00 00 2A 00 00 7E 32 FE FF 2A 00 00 2B 22
+R 00 00 04 00 00 05 02 00 00 0C 02 00
+T 20 00 00 00 00 00 C9
+R 00 00 04 00 00 04 02 00
+T 00 00 00 00
+R 00 00 07 00
+T 00 00 00 00 FF FF
+R 00 00 07 00 00 04 01 00

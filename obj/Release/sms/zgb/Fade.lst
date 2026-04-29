@@ -1,0 +1,484 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module Fade
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _FadeStepColor
+                                     11 	.globl _UpdateColor
+                                     12 	.globl _SyncVBlank
+                                     13 	.globl _set_palette
+                                     14 	.globl _ZGB_Fading_SPal
+                                     15 	.globl _ZGB_Fading_BPal
+                                     16 	.globl b_FadeIn
+                                     17 	.globl _FadeIn
+                                     18 	.globl b_FadeOut
+                                     19 	.globl _FadeOut
+                                     20 ;--------------------------------------------------------
+                                     21 ; special function registers
+                                     22 ;--------------------------------------------------------
+                         00000000    23 _GG_STATE	=	0x0000
+                         00000001    24 _GG_EXT_7BIT	=	0x0001
+                         00000002    25 _GG_EXT_CTL	=	0x0002
+                         00000003    26 _GG_SIO_SEND	=	0x0003
+                         00000004    27 _GG_SIO_RECV	=	0x0004
+                         00000005    28 _GG_SIO_CTL	=	0x0005
+                         00000006    29 _GG_SOUND_PAN	=	0x0006
+                         0000003E    30 _MEMORY_CTL	=	0x003e
+                         0000003F    31 _JOY_CTL	=	0x003f
+                         0000007E    32 _VCOUNTER	=	0x007e
+                         0000007F    33 _PSG	=	0x007f
+                         0000007F    34 _HCOUNTER	=	0x007f
+                         000000BE    35 _VDP_DATA	=	0x00be
+                         000000BF    36 _VDP_CMD	=	0x00bf
+                         000000BF    37 _VDP_STATUS	=	0x00bf
+                         000000DC    38 _JOY_PORT1	=	0x00dc
+                         000000DD    39 _JOY_PORT2	=	0x00dd
+                         000000F0    40 _FMADDRESS	=	0x00f0
+                         000000F1    41 _FMDATA	=	0x00f1
+                         000000F2    42 _AUDIOCTRL	=	0x00f2
+                                     43 ;--------------------------------------------------------
+                                     44 ; ram data
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _DATA
+                         0000FFFC    47 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    48 _GLASSES_3D	=	0xfff8
+                         0000FFFD    49 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    50 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    51 _MAP_FRAME2	=	0xffff
+    00000000                         52 _ZGB_Fading_BPal::
+    00000000                         53 	.ds 16
+    00000010                         54 _ZGB_Fading_SPal::
+    00000010                         55 	.ds 16
+    00000020                         56 _FadeStepColor_palette_10000_242:
+    00000020                         57 	.ds 16
+    00000030                         58 _FadeStepColor_palette_s_10000_242:
+    00000030                         59 	.ds 16
+                                     60 ;--------------------------------------------------------
+                                     61 ; ram data
+                                     62 ;--------------------------------------------------------
+                                     63 	.area _INITIALIZED
+                                     64 ;--------------------------------------------------------
+                                     65 ; absolute external ram data
+                                     66 ;--------------------------------------------------------
+                                     67 	.area _DABS (ABS)
+                                     68 ;--------------------------------------------------------
+                                     69 ; global & static initialisations
+                                     70 ;--------------------------------------------------------
+                                     71 	.area _HOME
+                                     72 	.area _GSINIT
+                                     73 	.area _GSFINAL
+                                     74 	.area _GSINIT
+                                     75 ;--------------------------------------------------------
+                                     76 ; Home
+                                     77 ;--------------------------------------------------------
+                                     78 	.area _HOME
+                                     79 	.area _HOME
+                                     80 ;--------------------------------------------------------
+                                     81 ; code
+                                     82 ;--------------------------------------------------------
+                                     83 	.area _CODE_1
+                                     84 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:11: palette_color_t UpdateColor(UINT8 i, palette_color_t col) {
+                                     85 ;	---------------------------------
+                                     86 ; Function UpdateColor
+                                     87 ; ---------------------------------
+    00000000                         88 _UpdateColor::
+    00000000 DD E5            [15]   89 	push	ix
+    00000002 DD 21 00 00      [14]   90 	ld	ix,#0
+    00000006 DD 39            [15]   91 	add	ix,sp
+    00000008 FD 21 EF FF      [14]   92 	ld	iy, #-17
+    0000000C FD 39            [15]   93 	add	iy, sp
+    0000000E FD F9            [10]   94 	ld	sp, iy
+    00000010 DD 77 FF         [19]   95 	ld	-1 (ix), a
+    00000013 DD 75 FE         [19]   96 	ld	-2 (ix), l
+                                     97 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:12: INT8 BR = PAL_RED(ZGB_Fading_SPal[0]), BG = PAL_GREEN(ZGB_Fading_SPal[0]), BB = PAL_BLUE(ZGB_Fading_SPal[0]);
+    00000016 21r10r00         [10]   98 	ld	hl, #_ZGB_Fading_SPal+0
+    00000019 4E               [ 7]   99 	ld	c, (hl)
+    0000001A 79               [ 4]  100 	ld	a, c
+    0000001B E6 03            [ 7]  101 	and	a, #0x03
+    0000001D DD 77 EF         [19]  102 	ld	-17 (ix), a
+    00000020 79               [ 4]  103 	ld	a, c
+    00000021 0F               [ 4]  104 	rrca
+    00000022 0F               [ 4]  105 	rrca
+    00000023 E6 03            [ 7]  106 	and	a, #0x3
+    00000025 DD 77 F0         [19]  107 	ld	-16 (ix), a
+    00000028 79               [ 4]  108 	ld	a, c
+    00000029 07               [ 4]  109 	rlca
+    0000002A 07               [ 4]  110 	rlca
+    0000002B 07               [ 4]  111 	rlca
+    0000002C 07               [ 4]  112 	rlca
+    0000002D E6 0F            [ 7]  113 	and	a, #0x0f
+    0000002F DD 77 FD         [19]  114 	ld	-3 (ix), a
+    00000032 E6 03            [ 7]  115 	and	a, #0x03
+    00000034 DD 77 F1         [19]  116 	ld	-15 (ix), a
+                                    117 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:13: INT8 R = PAL_RED(col), G = PAL_GREEN(col), B = PAL_BLUE(col);
+    00000037 DD 7E FE         [19]  118 	ld	a, -2 (ix)
+    0000003A DD 77 FD         [19]  119 	ld	-3 (ix), a
+    0000003D E6 03            [ 7]  120 	and	a, #0x03
+    0000003F DD 77 F2         [19]  121 	ld	-14 (ix), a
+    00000042 DD 7E FE         [19]  122 	ld	a, -2 (ix)
+    00000045 0F               [ 4]  123 	rrca
+    00000046 0F               [ 4]  124 	rrca
+    00000047 E6 3F            [ 7]  125 	and	a, #0x3f
+    00000049 DD 77 FD         [19]  126 	ld	-3 (ix), a
+    0000004C E6 03            [ 7]  127 	and	a, #0x03
+    0000004E DD 77 F3         [19]  128 	ld	-13 (ix), a
+    00000051 DD 7E FE         [19]  129 	ld	a, -2 (ix)
+    00000054 07               [ 4]  130 	rlca
+    00000055 07               [ 4]  131 	rlca
+    00000056 07               [ 4]  132 	rlca
+    00000057 07               [ 4]  133 	rlca
+    00000058 E6 0F            [ 7]  134 	and	a, #0x0f
+    0000005A DD 77 FD         [19]  135 	ld	-3 (ix), a
+    0000005D E6 03            [ 7]  136 	and	a, #0x03
+    0000005F DD 77 F4         [19]  137 	ld	-12 (ix), a
+                                    138 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:15: R = (R > BR) ? MAX(BR, R - i) : MIN(BR, R + i);
+    00000062 DD 7E F2         [19]  139 	ld	a, -14 (ix)
+    00000065 DD 77 F5         [19]  140 	ld	-11 (ix), a
+    00000068 07               [ 4]  141 	rlca
+    00000069 9F               [ 4]  142 	sbc	a, a
+    0000006A DD 77 F6         [19]  143 	ld	-10 (ix), a
+    0000006D DD 7E FF         [19]  144 	ld	a, -1 (ix)
+    00000070 DD 77 F7         [19]  145 	ld	-9 (ix), a
+    00000073 DD 36 F8 00      [19]  146 	ld	-8 (ix), #0x00
+    00000077 DD 7E EF         [19]  147 	ld	a, -17 (ix)
+    0000007A DD 77 F9         [19]  148 	ld	-7 (ix), a
+    0000007D 07               [ 4]  149 	rlca
+    0000007E 9F               [ 4]  150 	sbc	a, a
+    0000007F DD 77 FA         [19]  151 	ld	-6 (ix), a
+    00000082 DD 7E FF         [19]  152 	ld	a, -1 (ix)
+    00000085 DD 77 FB         [19]  153 	ld	-5 (ix), a
+    00000088 DD 7E EF         [19]  154 	ld	a, -17 (ix)
+    0000008B DD 96 F2         [19]  155 	sub	a, -14 (ix)
+    0000008E 30 34            [12]  156 	jr	NC, 00103$
+    00000090 DD 7E F5         [19]  157 	ld	a, -11 (ix)
+    00000093 DD 96 F7         [19]  158 	sub	a, -9 (ix)
+    00000096 DD 77 FC         [19]  159 	ld	-4 (ix), a
+    00000099 9F               [ 4]  160 	sbc	a, a
+    0000009A DD 96 F8         [19]  161 	sub	a, -8 (ix)
+    0000009D DD 77 FD         [19]  162 	ld	-3 (ix), a
+    000000A0 DD 7E FC         [19]  163 	ld	a, -4 (ix)
+    000000A3 DD 96 F9         [19]  164 	sub	a, -7 (ix)
+    000000A6 DD 7E FD         [19]  165 	ld	a, -3 (ix)
+    000000A9 DD 9E FA         [19]  166 	sbc	a, -6 (ix)
+    000000AC E2rB1r00         [10]  167 	jp	PO, 00184$
+    000000AF EE 80            [ 7]  168 	xor	a, #0x80
+    000000B1                        169 00184$:
+    000000B1 F2rB9r00         [10]  170 	jp	P, 00105$
+    000000B4 DD 7E EF         [19]  171 	ld	a, -17 (ix)
+    000000B7 18 06            [12]  172 	jr	00106$
+    000000B9                        173 00105$:
+    000000B9 DD 7E F2         [19]  174 	ld	a, -14 (ix)
+    000000BC DD 96 FB         [19]  175 	sub	a, -5 (ix)
+    000000BF                        176 00106$:
+    000000BF DD 77 FD         [19]  177 	ld	-3 (ix), a
+    000000C2 18 24            [12]  178 	jr	00104$
+    000000C4                        179 00103$:
+    000000C4 DD 7E F5         [19]  180 	ld	a, -11 (ix)
+    000000C7 DD 86 F7         [19]  181 	add	a, -9 (ix)
+    000000CA 4F               [ 4]  182 	ld	c, a
+    000000CB 3E 00            [ 7]  183 	ld	a, #0x00
+    000000CD DD 8E F8         [19]  184 	adc	a, -8 (ix)
+    000000D0 47               [ 4]  185 	ld	b, a
+    000000D1 DD 7E F9         [19]  186 	ld	a, -7 (ix)
+    000000D4 91               [ 4]  187 	sub	a, c
+    000000D5 3E 00            [ 7]  188 	ld	a, #0x00
+    000000D7 98               [ 4]  189 	sbc	a, b
+    000000D8 30 05            [12]  190 	jr	NC, 00107$
+    000000DA DD 7E EF         [19]  191 	ld	a, -17 (ix)
+    000000DD 18 06            [12]  192 	jr	00108$
+    000000DF                        193 00107$:
+    000000DF DD 7E FB         [19]  194 	ld	a, -5 (ix)
+    000000E2 DD 86 F2         [19]  195 	add	a, -14 (ix)
+    000000E5                        196 00108$:
+    000000E5 DD 77 FD         [19]  197 	ld	-3 (ix), a
+    000000E8                        198 00104$:
+    000000E8 DD 7E FD         [19]  199 	ld	a, -3 (ix)
+    000000EB DD 77 F2         [19]  200 	ld	-14 (ix), a
+                                    201 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:16: G = (G > BG) ? MAX(BG, G - i) : MIN(BG, G + i);
+    000000EE DD 7E F3         [19]  202 	ld	a, -13 (ix)
+    000000F1 DD 77 F5         [19]  203 	ld	-11 (ix), a
+    000000F4 07               [ 4]  204 	rlca
+    000000F5 9F               [ 4]  205 	sbc	a, a
+    000000F6 DD 77 F6         [19]  206 	ld	-10 (ix), a
+    000000F9 DD 7E F0         [19]  207 	ld	a, -16 (ix)
+    000000FC DD 77 F9         [19]  208 	ld	-7 (ix), a
+    000000FF 07               [ 4]  209 	rlca
+    00000100 9F               [ 4]  210 	sbc	a, a
+    00000101 DD 77 FA         [19]  211 	ld	-6 (ix), a
+    00000104 DD 7E F0         [19]  212 	ld	a, -16 (ix)
+    00000107 DD 96 F3         [19]  213 	sub	a, -13 (ix)
+    0000010A 30 2D            [12]  214 	jr	NC, 00109$
+    0000010C DD 7E F5         [19]  215 	ld	a, -11 (ix)
+    0000010F DD 96 F7         [19]  216 	sub	a, -9 (ix)
+    00000112 4F               [ 4]  217 	ld	c, a
+    00000113 9F               [ 4]  218 	sbc	a, a
+    00000114 DD 96 F8         [19]  219 	sub	a, -8 (ix)
+    00000117 47               [ 4]  220 	ld	b, a
+    00000118 79               [ 4]  221 	ld	a, c
+    00000119 DD 96 F9         [19]  222 	sub	a, -7 (ix)
+    0000011C 78               [ 4]  223 	ld	a, b
+    0000011D DD 9E FA         [19]  224 	sbc	a, -6 (ix)
+    00000120 E2r25r01         [10]  225 	jp	PO, 00185$
+    00000123 EE 80            [ 7]  226 	xor	a, #0x80
+    00000125                        227 00185$:
+    00000125 F2r2Dr01         [10]  228 	jp	P, 00111$
+    00000128 DD 46 F0         [19]  229 	ld	b, -16 (ix)
+    0000012B 18 07            [12]  230 	jr	00112$
+    0000012D                        231 00111$:
+    0000012D DD 7E F3         [19]  232 	ld	a, -13 (ix)
+    00000130 DD 96 FB         [19]  233 	sub	a, -5 (ix)
+    00000133 47               [ 4]  234 	ld	b, a
+    00000134                        235 00112$:
+    00000134 DD 70 FD         [19]  236 	ld	-3 (ix), b
+    00000137 18 2D            [12]  237 	jr	00110$
+    00000139                        238 00109$:
+    00000139 DD 7E F5         [19]  239 	ld	a, -11 (ix)
+    0000013C DD 86 F7         [19]  240 	add	a, -9 (ix)
+    0000013F DD 77 FC         [19]  241 	ld	-4 (ix), a
+    00000142 3E 00            [ 7]  242 	ld	a, #0x00
+    00000144 DD 8E F8         [19]  243 	adc	a, -8 (ix)
+    00000147 DD 77 FD         [19]  244 	ld	-3 (ix), a
+    0000014A DD 7E F9         [19]  245 	ld	a, -7 (ix)
+    0000014D DD 96 FC         [19]  246 	sub	a, -4 (ix)
+    00000150 3E 00            [ 7]  247 	ld	a, #0x00
+    00000152 DD 9E FD         [19]  248 	sbc	a, -3 (ix)
+    00000155 30 05            [12]  249 	jr	NC, 00113$
+    00000157 DD 46 F0         [19]  250 	ld	b, -16 (ix)
+    0000015A 18 07            [12]  251 	jr	00114$
+    0000015C                        252 00113$:
+    0000015C DD 7E FB         [19]  253 	ld	a, -5 (ix)
+    0000015F DD 86 F3         [19]  254 	add	a, -13 (ix)
+    00000162 47               [ 4]  255 	ld	b, a
+    00000163                        256 00114$:
+    00000163 DD 70 FD         [19]  257 	ld	-3 (ix), b
+    00000166                        258 00110$:
+    00000166 DD 7E FD         [19]  259 	ld	a, -3 (ix)
+    00000169 DD 77 F6         [19]  260 	ld	-10 (ix), a
+                                    261 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:17: B = (B > BB) ? MAX(BB, B - i) : MIN(BB, B + i);
+    0000016C DD 7E F4         [19]  262 	ld	a, -12 (ix)
+    0000016F DD 77 F9         [19]  263 	ld	-7 (ix), a
+    00000172 07               [ 4]  264 	rlca
+    00000173 9F               [ 4]  265 	sbc	a, a
+    00000174 DD 77 FA         [19]  266 	ld	-6 (ix), a
+    00000177 DD 7E F1         [19]  267 	ld	a, -15 (ix)
+    0000017A DD 77 FC         [19]  268 	ld	-4 (ix), a
+    0000017D 07               [ 4]  269 	rlca
+    0000017E 9F               [ 4]  270 	sbc	a, a
+    0000017F DD 77 FD         [19]  271 	ld	-3 (ix), a
+    00000182 DD 7E F1         [19]  272 	ld	a, -15 (ix)
+    00000185 DD 96 F4         [19]  273 	sub	a, -12 (ix)
+    00000188 30 32            [12]  274 	jr	NC, 00115$
+    0000018A DD 7E F9         [19]  275 	ld	a, -7 (ix)
+    0000018D DD 96 F7         [19]  276 	sub	a, -9 (ix)
+    00000190 4F               [ 4]  277 	ld	c, a
+    00000191 9F               [ 4]  278 	sbc	a, a
+    00000192 DD 96 F8         [19]  279 	sub	a, -8 (ix)
+    00000195 47               [ 4]  280 	ld	b, a
+    00000196 79               [ 4]  281 	ld	a, c
+    00000197 DD 96 FC         [19]  282 	sub	a, -4 (ix)
+    0000019A 78               [ 4]  283 	ld	a, b
+    0000019B DD 9E FD         [19]  284 	sbc	a, -3 (ix)
+    0000019E E2rA3r01         [10]  285 	jp	PO, 00186$
+    000001A1 EE 80            [ 7]  286 	xor	a, #0x80
+    000001A3                        287 00186$:
+    000001A3 F2rAEr01         [10]  288 	jp	P, 00117$
+    000001A6 DD 7E F1         [19]  289 	ld	a, -15 (ix)
+    000001A9 DD 77 FD         [19]  290 	ld	-3 (ix), a
+    000001AC 18 09            [12]  291 	jr	00118$
+    000001AE                        292 00117$:
+    000001AE DD 7E F4         [19]  293 	ld	a, -12 (ix)
+    000001B1 DD 96 FB         [19]  294 	sub	a, -5 (ix)
+    000001B4 DD 77 FD         [19]  295 	ld	-3 (ix), a
+    000001B7                        296 00118$:
+    000001B7 DD 4E FD         [19]  297 	ld	c, -3 (ix)
+    000001BA 18 22            [12]  298 	jr	00116$
+    000001BC                        299 00115$:
+    000001BC DD 7E F9         [19]  300 	ld	a, -7 (ix)
+    000001BF DD 86 F7         [19]  301 	add	a, -9 (ix)
+    000001C2 4F               [ 4]  302 	ld	c, a
+    000001C3 3E 00            [ 7]  303 	ld	a, #0x00
+    000001C5 DD 8E F8         [19]  304 	adc	a, -8 (ix)
+    000001C8 47               [ 4]  305 	ld	b, a
+    000001C9 DD 7E FC         [19]  306 	ld	a, -4 (ix)
+    000001CC 91               [ 4]  307 	sub	a, c
+    000001CD 3E 00            [ 7]  308 	ld	a, #0x00
+    000001CF 98               [ 4]  309 	sbc	a, b
+    000001D0 30 05            [12]  310 	jr	NC, 00119$
+    000001D2 DD 4E F1         [19]  311 	ld	c, -15 (ix)
+    000001D5 18 07            [12]  312 	jr	00120$
+    000001D7                        313 00119$:
+    000001D7 DD 7E FB         [19]  314 	ld	a, -5 (ix)
+    000001DA DD 86 F4         [19]  315 	add	a, -12 (ix)
+    000001DD 4F               [ 4]  316 	ld	c, a
+    000001DE                        317 00120$:
+    000001DE                        318 00116$:
+                                    319 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:19: return RGB(R, G, B);
+    000001DE DD 7E F6         [19]  320 	ld	a, -10 (ix)
+    000001E1 87               [ 4]  321 	add	a, a
+    000001E2 87               [ 4]  322 	add	a, a
+    000001E3 DD B6 F2         [19]  323 	or	a, -14 (ix)
+    000001E6 47               [ 4]  324 	ld	b, a
+    000001E7 79               [ 4]  325 	ld	a, c
+    000001E8 87               [ 4]  326 	add	a, a
+    000001E9 87               [ 4]  327 	add	a, a
+    000001EA 87               [ 4]  328 	add	a, a
+    000001EB 87               [ 4]  329 	add	a, a
+    000001EC B0               [ 4]  330 	or	a, b
+                                    331 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:20: }
+    000001ED DD F9            [10]  332 	ld	sp, ix
+    000001EF DD E1            [14]  333 	pop	ix
+    000001F1 C9               [10]  334 	ret
+                                    335 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:22: void FadeStepColor(UINT8 i) {
+                                    336 ;	---------------------------------
+                                    337 ; Function FadeStepColor
+                                    338 ; ---------------------------------
+    000001F2                        339 _FadeStepColor::
+    000001F2 DD E5            [15]  340 	push	ix
+    000001F4 DD 21 00 00      [14]  341 	ld	ix,#0
+    000001F8 DD 39            [15]  342 	add	ix,sp
+    000001FA F5               [11]  343 	push	af
+    000001FB F5               [11]  344 	push	af
+    000001FC DD 77 FC         [19]  345 	ld	-4 (ix), a
+                                    346 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:25: palette_color_t* col = ZGB_Fading_BPal;
+    000001FF 01r00r00         [10]  347 	ld	bc, #_ZGB_Fading_BPal+0
+                                    348 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:26: palette_color_t* col_s = ZGB_Fading_SPal;
+    00000202 DD 36 FDr10      [19]  349 	ld	-3 (ix), #<(_ZGB_Fading_SPal)
+    00000206 DD 36 FEs00      [19]  350 	ld	-2 (ix), #>(_ZGB_Fading_SPal)
+                                    351 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:28: for(UINT8 c = 0; c < 16; ++c, ++col, ++col_s) {
+    0000020A DD 36 FF 00      [19]  352 	ld	-1 (ix), #0x00
+    0000020E                        353 00106$:
+    0000020E DD 7E FF         [19]  354 	ld	a, -1 (ix)
+    00000211 D6 10            [ 7]  355 	sub	a, #0x10
+    00000213 30 43            [12]  356 	jr	NC, 00102$
+                                    357 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:29: palette[c] = UpdateColor(i, *col);
+    00000215 3Er20            [ 7]  358 	ld	a, #<(_FadeStepColor_palette_10000_242)
+    00000217 DD 86 FF         [19]  359 	add	a, -1 (ix)
+    0000021A 5F               [ 4]  360 	ld	e, a
+    0000021B 3Es00            [ 7]  361 	ld	a, #>(_FadeStepColor_palette_10000_242)
+    0000021D CE 00            [ 7]  362 	adc	a, #0x00
+    0000021F 57               [ 4]  363 	ld	d, a
+    00000220 0A               [ 7]  364 	ld	a, (bc)
+    00000221 C5               [11]  365 	push	bc
+    00000222 D5               [11]  366 	push	de
+    00000223 6F               [ 4]  367 	ld	l, a
+    00000224 DD 7E FC         [19]  368 	ld	a, -4 (ix)
+    00000227 CDr00r00         [17]  369 	call	_UpdateColor
+    0000022A D1               [10]  370 	pop	de
+    0000022B C1               [10]  371 	pop	bc
+    0000022C 12               [ 7]  372 	ld	(de), a
+                                    373 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:30: palette_s[c] = UpdateColor(i, *col_s);
+    0000022D 3Er30            [ 7]  374 	ld	a, #<(_FadeStepColor_palette_s_10000_242)
+    0000022F DD 86 FF         [19]  375 	add	a, -1 (ix)
+    00000232 5F               [ 4]  376 	ld	e, a
+    00000233 3Es00            [ 7]  377 	ld	a, #>(_FadeStepColor_palette_s_10000_242)
+    00000235 CE 00            [ 7]  378 	adc	a, #0x00
+    00000237 57               [ 4]  379 	ld	d, a
+    00000238 DD 6E FD         [19]  380 	ld	l, -3 (ix)
+    0000023B DD 66 FE         [19]  381 	ld	h, -2 (ix)
+    0000023E 6E               [ 7]  382 	ld	l, (hl)
+    0000023F C5               [11]  383 	push	bc
+    00000240 D5               [11]  384 	push	de
+    00000241 DD 7E FC         [19]  385 	ld	a, -4 (ix)
+    00000244 CDr00r00         [17]  386 	call	_UpdateColor
+    00000247 D1               [10]  387 	pop	de
+    00000248 C1               [10]  388 	pop	bc
+    00000249 12               [ 7]  389 	ld	(de), a
+                                    390 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:28: for(UINT8 c = 0; c < 16; ++c, ++col, ++col_s) {
+    0000024A DD 34 FF         [23]  391 	inc	-1 (ix)
+    0000024D 03               [ 6]  392 	inc	bc
+    0000024E DD 34 FD         [23]  393 	inc	-3 (ix)
+    00000251 20 BB            [12]  394 	jr	NZ, 00106$
+    00000253 DD 34 FE         [23]  395 	inc	-2 (ix)
+    00000256 18 B6            [12]  396 	jr	00106$
+                                    397 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:33: WAIT_WRITABLE_CRAM;	// avoid snow on screen
+    00000258                        398 00102$:
+    00000258 DB 7E            [11]  399 	in	a, (_VCOUNTER)
+    0000025A D6 D8            [ 7]  400 	sub	a, #0xd8
+    0000025C 38 FA            [12]  401 	jr	C, 00102$
+                                    402 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:35: set_bkg_palette(0, 1, palette);
+    0000025E 21r20r00         [10]  403 	ld	hl, #_FadeStepColor_palette_10000_242
+    00000261 E5               [11]  404 	push	hl
+    00000262 21 00 01         [10]  405 	ld	hl, #0x100
+    00000265 E5               [11]  406 	push	hl
+    00000266 CDr00r00         [17]  407 	call	_set_palette
+                                    408 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:36: set_sprite_palette(0, 1, palette_s);
+    00000269 21r30r00         [10]  409 	ld	hl, #_FadeStepColor_palette_s_10000_242
+    0000026C E5               [11]  410 	push	hl
+    0000026D 21 01 01         [10]  411 	ld	hl, #0x101
+    00000270 E5               [11]  412 	push	hl
+    00000271 CDr00r00         [17]  413 	call	_set_palette
+                                    414 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:38: DISPLAY_ON;
+    00000274 3Ar00r00         [13]  415 	ld	a, (_shadow_VDP_R1+0)
+    00000277 F6 40            [ 7]  416 	or	a, #0x40
+    00000279 32r00r00         [13]  417 	ld	(_shadow_VDP_R1+0), a
+    0000027C F3               [ 4]  418 	di
+    0000027D 3Ar00r00         [13]  419 	ld	a, (_shadow_VDP_R1+0)
+    00000280 D3 BF            [11]  420 	out	(_VDP_CMD), a
+    00000282 3E 81            [ 7]  421 	ld	a, #0x81
+    00000284 D3 BF            [11]  422 	out	(_VDP_CMD), a
+    00000286 FB               [ 4]  423 	ei
+                                    424 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:39: SyncVBlank();
+    00000287 CDr00r00         [17]  425 	call	_SyncVBlank
+                                    426 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:40: SyncVBlank();
+    0000028A CDr00r00         [17]  427 	call	_SyncVBlank
+                                    428 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:41: }
+    0000028D DD F9            [10]  429 	ld	sp, ix
+    0000028F DD E1            [14]  430 	pop	ix
+    00000291 C9               [10]  431 	ret
+                                    432 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:43: void FadeIn(void) BANKED {
+                                    433 ;	---------------------------------
+                                    434 ; Function FadeIn
+                                    435 ; ---------------------------------
+                         00000001   436 	b_FadeIn	= 1
+    00000292                        437 _FadeIn::
+                                    438 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:44: FadeStepColor(0);	
+    00000292 AF               [ 4]  439 	xor	a, a
+    00000293 CDrF2r01         [17]  440 	call	_FadeStepColor
+                                    441 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:45: FadeStepColor(1);	
+    00000296 3E 01            [ 7]  442 	ld	a, #0x01
+    00000298 CDrF2r01         [17]  443 	call	_FadeStepColor
+                                    444 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:46: FadeStepColor(2);	
+    0000029B 3E 02            [ 7]  445 	ld	a, #0x02
+    0000029D CDrF2r01         [17]  446 	call	_FadeStepColor
+                                    447 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:47: FadeStepColor(3);	
+    000002A0 3E 03            [ 7]  448 	ld	a, #0x03
+    000002A2 CDrF2r01         [17]  449 	call	_FadeStepColor
+                                    450 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\sms\sms.h:254: __WRITE_VDP_REG(VDP_R1, __READ_VDP_REG(VDP_R1) &= (~R1_DISP_ON));
+    000002A5 3Ar00r00         [13]  451 	ld	a, (_shadow_VDP_R1+0)
+    000002A8 E6 BF            [ 7]  452 	and	a, #0xbf
+    000002AA 32r00r00         [13]  453 	ld	(_shadow_VDP_R1+0), a
+    000002AD F3               [ 4]  454 	di
+    000002AE 3Ar00r00         [13]  455 	ld	a, (_shadow_VDP_R1+0)
+    000002B1 D3 BF            [11]  456 	out	(_VDP_CMD), a
+    000002B3 3E 81            [ 7]  457 	ld	a, #0x81
+    000002B5 D3 BF            [11]  458 	out	(_VDP_CMD), a
+    000002B7 FB               [ 4]  459 	ei
+                                    460 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:48: DISPLAY_OFF;
+                                    461 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:49: }
+    000002B8 C9               [10]  462 	ret
+                                    463 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:51: void FadeOut(void) BANKED {
+                                    464 ;	---------------------------------
+                                    465 ; Function FadeOut
+                                    466 ; ---------------------------------
+                         00000001   467 	b_FadeOut	= 1
+    000002B9                        468 _FadeOut::
+                                    469 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:52: FadeStepColor(3);	
+    000002B9 3E 03            [ 7]  470 	ld	a, #0x03
+    000002BB CDrF2r01         [17]  471 	call	_FadeStepColor
+                                    472 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:53: FadeStepColor(2);	
+    000002BE 3E 02            [ 7]  473 	ld	a, #0x02
+    000002C0 CDrF2r01         [17]  474 	call	_FadeStepColor
+                                    475 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:54: FadeStepColor(1);	
+    000002C3 3E 01            [ 7]  476 	ld	a, #0x01
+    000002C5 CDrF2r01         [17]  477 	call	_FadeStepColor
+                                    478 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:55: FadeStepColor(0);	
+    000002C8 AF               [ 4]  479 	xor	a, a
+                                    480 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/sms/Fade.c:56: }
+    000002C9 C3rF2r01         [10]  481 	jp	_FadeStepColor
+                                    482 	.area _CODE_1
+                                    483 	.area _INITIALIZER
+                                    484 	.area _CABS (ABS)

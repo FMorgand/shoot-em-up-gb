@@ -1,0 +1,96 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module DefVSync
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _SyncVBlank
+                                     11 	.globl _vsync
+                                     12 ;--------------------------------------------------------
+                                     13 ; special function registers
+                                     14 ;--------------------------------------------------------
+                         00000000    15 _GG_STATE	=	0x0000
+                         00000001    16 _GG_EXT_7BIT	=	0x0001
+                         00000002    17 _GG_EXT_CTL	=	0x0002
+                         00000003    18 _GG_SIO_SEND	=	0x0003
+                         00000004    19 _GG_SIO_RECV	=	0x0004
+                         00000005    20 _GG_SIO_CTL	=	0x0005
+                         00000006    21 _GG_SOUND_PAN	=	0x0006
+                         0000003E    22 _MEMORY_CTL	=	0x003e
+                         0000003F    23 _JOY_CTL	=	0x003f
+                         0000007E    24 _VCOUNTER	=	0x007e
+                         0000007F    25 _PSG	=	0x007f
+                         0000007F    26 _HCOUNTER	=	0x007f
+                         000000BE    27 _VDP_DATA	=	0x00be
+                         000000BF    28 _VDP_CMD	=	0x00bf
+                         000000BF    29 _VDP_STATUS	=	0x00bf
+                         000000DC    30 _JOY_PORT1	=	0x00dc
+                         000000DD    31 _JOY_PORT2	=	0x00dd
+                         000000F0    32 _FMADDRESS	=	0x00f0
+                         000000F1    33 _FMDATA	=	0x00f1
+                         000000F2    34 _AUDIOCTRL	=	0x00f2
+                                     35 ;--------------------------------------------------------
+                                     36 ; ram data
+                                     37 ;--------------------------------------------------------
+                                     38 	.area _DATA
+                         0000FFFC    39 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    40 _GLASSES_3D	=	0xfff8
+                         0000FFFD    41 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    42 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    43 _MAP_FRAME2	=	0xffff
+                                     44 ;--------------------------------------------------------
+                                     45 ; ram data
+                                     46 ;--------------------------------------------------------
+                                     47 	.area _INITIALIZED
+                                     48 ;--------------------------------------------------------
+                                     49 ; absolute external ram data
+                                     50 ;--------------------------------------------------------
+                                     51 	.area _DABS (ABS)
+                                     52 ;--------------------------------------------------------
+                                     53 ; global & static initialisations
+                                     54 ;--------------------------------------------------------
+                                     55 	.area _HOME
+                                     56 	.area _GSINIT
+                                     57 	.area _GSFINAL
+                                     58 	.area _GSINIT
+                                     59 ;--------------------------------------------------------
+                                     60 ; Home
+                                     61 ;--------------------------------------------------------
+                                     62 	.area _HOME
+                                     63 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVSync.c:5: UINT8 SyncVBlank(void) NONBANKED {
+                                     64 ;	---------------------------------
+                                     65 ; Function SyncVBlank
+                                     66 ; ---------------------------------
+    00000000                         67 _SyncVBlank::
+                                     68 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVSync.c:6: if (!vbl_count) vsync();   // wait VBlank if not slowdown
+    00000000 3Ar00r00         [13]   69 	ld	a, (_vbl_count+0)
+    00000003 B7               [ 4]   70 	or	a, a
+    00000004 20 03            [12]   71 	jr	NZ, 00102$
+    00000006 CDr00r00         [17]   72 	call	_vsync
+    00000009                         73 00102$:
+                                     74 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVSync.c:8: UINT8 delta_time = (vbl_count < 2u) ? 0u : 1u;
+    00000009 3Ar00r00         [13]   75 	ld	a, (_vbl_count+0)
+    0000000C D6 02            [ 7]   76 	sub	a, #0x02
+    0000000E 30 03            [12]   77 	jr	NC, 00105$
+    00000010 AF               [ 4]   78 	xor	a, a
+    00000011 18 02            [12]   79 	jr	00106$
+    00000013                         80 00105$:
+    00000013 3E 01            [ 7]   81 	ld	a, #0x01
+    00000015                         82 00106$:
+                                     83 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVSync.c:9: vbl_count = 0;
+    00000015 21r00r00         [10]   84 	ld	hl, #_vbl_count
+    00000018 36 00            [10]   85 	ld	(hl), #0x00
+                                     86 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVSync.c:11: return delta_time;
+                                     87 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVSync.c:12: }
+    0000001A C9               [10]   88 	ret
+                                     89 	.area _HOME
+                                     90 ;--------------------------------------------------------
+                                     91 ; code
+                                     92 ;--------------------------------------------------------
+                                     93 	.area _CODE
+                                     94 	.area _CODE
+                                     95 	.area _INITIALIZER
+                                     96 	.area _CABS (ABS)

@@ -1,0 +1,84 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module StateGame
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _Update_StateGame
+                                     11 	.globl _Start_StateGame
+                                     12 	.globl _InitScroll
+                                     13 	.globl _SpriteManagerAddEx
+                                     14 	.globl ___bank_StateGame
+                                     15 ;--------------------------------------------------------
+                                     16 ; special function registers
+                                     17 ;--------------------------------------------------------
+                                     18 	.area _HRAM
+                                     19 ;--------------------------------------------------------
+                                     20 ; ram data
+                                     21 ;--------------------------------------------------------
+                                     22 	.area _DATA
+                                     23 ;--------------------------------------------------------
+                                     24 ; ram data
+                                     25 ;--------------------------------------------------------
+                                     26 	.area _INITIALIZED
+                                     27 ;--------------------------------------------------------
+                                     28 ; absolute external ram data
+                                     29 ;--------------------------------------------------------
+                                     30 	.area _DABS (ABS)
+                                     31 ;--------------------------------------------------------
+                                     32 ; global & static initialisations
+                                     33 ;--------------------------------------------------------
+                                     34 	.area _HOME
+                                     35 	.area _GSINIT
+                                     36 	.area _GSFINAL
+                                     37 	.area _GSINIT
+                                     38 ;--------------------------------------------------------
+                                     39 ; Home
+                                     40 ;--------------------------------------------------------
+                                     41 	.area _HOME
+                                     42 	.area _HOME
+                                     43 ;--------------------------------------------------------
+                                     44 ; code
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _CODE_255
+                                     47 ;StateGame.c:9: void START(void) {
+                                     48 ;	---------------------------------
+                                     49 ; Function Start_StateGame
+                                     50 ; ---------------------------------
+    00000000                         51 _Start_StateGame::
+                                     52 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/SpriteManager.h:45: return SpriteManagerAddEx(sprite_type, x, y, NULL);
+    00000000 11 00 00         [12]   53 	ld	de, #0x0000
+    00000003 D5               [16]   54 	push	de
+    00000004 11 78 00         [12]   55 	ld	de, #0x0078
+    00000007 D5               [16]   56 	push	de
+    00000008 11 50 00         [12]   57 	ld	de, #0x0050
+    0000000B AF               [ 4]   58 	xor	a, a
+    0000000C CDr00r00         [24]   59 	call	_SpriteManagerAddEx
+                                     60 ;StateGame.c:11: InitScroll(BANK(map), &map, 0, 0);
+    0000000F 3Er00            [ 8]   61 	ld	a, #<(___bank_map)
+    00000011 11 00 00         [12]   62 	ld	de, #0x0000
+    00000014 D5               [16]   63 	push	de
+    00000015 D5               [16]   64 	push	de
+    00000016 11r00r00         [12]   65 	ld	de, #_map
+    00000019 CDr00r00         [24]   66 	call	_InitScroll
+                                     67 ;StateGame.c:12: scroll_target = NULL;
+    0000001C AF               [ 4]   68 	xor	a, a
+    0000001D 21r00r00         [12]   69 	ld	hl, #_scroll_target
+    00000020 22               [ 8]   70 	ld	(hl+), a
+    00000021 77               [ 8]   71 	ld	(hl), a
+                                     72 ;StateGame.c:13: }
+    00000022 C9               [16]   73 	ret
+                         000000FF    74 ___bank_StateGame	=	0x00ff
+                                     75 ;StateGame.c:15: void UPDATE(void) {
+                                     76 ;	---------------------------------
+                                     77 ; Function Update_StateGame
+                                     78 ; ---------------------------------
+    00000023                         79 _Update_StateGame::
+                                     80 ;StateGame.c:16: }
+    00000023 C9               [16]   81 	ret
+                                     82 	.area _CODE_255
+                                     83 	.area _INITIALIZER
+                                     84 	.area _CABS (ABS)

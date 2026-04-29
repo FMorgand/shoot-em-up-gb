@@ -1,0 +1,160 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module Vector
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _memcpy
+                                     11 	.globl _BufferExchange
+                                     12 	.globl _BufferRotate
+                                     13 	.globl _VectorRemovePos
+                                     14 ;--------------------------------------------------------
+                                     15 ; special function registers
+                                     16 ;--------------------------------------------------------
+                         00000000    17 _GG_STATE	=	0x0000
+                         00000001    18 _GG_EXT_7BIT	=	0x0001
+                         00000002    19 _GG_EXT_CTL	=	0x0002
+                         00000003    20 _GG_SIO_SEND	=	0x0003
+                         00000004    21 _GG_SIO_RECV	=	0x0004
+                         00000005    22 _GG_SIO_CTL	=	0x0005
+                         00000006    23 _GG_SOUND_PAN	=	0x0006
+                         0000003E    24 _MEMORY_CTL	=	0x003e
+                         0000003F    25 _JOY_CTL	=	0x003f
+                         0000007E    26 _VCOUNTER	=	0x007e
+                         0000007F    27 _PSG	=	0x007f
+                         0000007F    28 _HCOUNTER	=	0x007f
+                         000000BE    29 _VDP_DATA	=	0x00be
+                         000000BF    30 _VDP_CMD	=	0x00bf
+                         000000BF    31 _VDP_STATUS	=	0x00bf
+                         000000DC    32 _JOY_PORT1	=	0x00dc
+                         000000DD    33 _JOY_PORT2	=	0x00dd
+                         000000F0    34 _FMADDRESS	=	0x00f0
+                         000000F1    35 _FMDATA	=	0x00f1
+                         000000F2    36 _AUDIOCTRL	=	0x00f2
+                                     37 ;--------------------------------------------------------
+                                     38 ; ram data
+                                     39 ;--------------------------------------------------------
+                                     40 	.area _DATA
+                         0000FFFC    41 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    42 _GLASSES_3D	=	0xfff8
+                         0000FFFD    43 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    44 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    45 _MAP_FRAME2	=	0xffff
+                                     46 ;--------------------------------------------------------
+                                     47 ; ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area _INITIALIZED
+                                     50 ;--------------------------------------------------------
+                                     51 ; absolute external ram data
+                                     52 ;--------------------------------------------------------
+                                     53 	.area _DABS (ABS)
+                                     54 ;--------------------------------------------------------
+                                     55 ; global & static initialisations
+                                     56 ;--------------------------------------------------------
+                                     57 	.area _HOME
+                                     58 	.area _GSINIT
+                                     59 	.area _GSFINAL
+                                     60 	.area _GSINIT
+                                     61 ;--------------------------------------------------------
+                                     62 ; Home
+                                     63 ;--------------------------------------------------------
+                                     64 	.area _HOME
+                                     65 	.area _HOME
+                                     66 ;--------------------------------------------------------
+                                     67 ; code
+                                     68 ;--------------------------------------------------------
+                                     69 	.area _CODE
+                                     70 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:5: void BufferExchange(UINT8* v, UINT16 xy) NAKED {
+                                     71 ;	---------------------------------
+                                     72 ; Function BufferExchange
+                                     73 ; ---------------------------------
+    00000000                         74 _BufferExchange::
+                                     75 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:63: __endasm;
+    00000000 42               [ 4]   76 	ld	b, d
+    00000001 4B               [ 4]   77 	ld	c, e
+    00000002 EB               [ 4]   78 	ex	de, hl
+    00000003 7B               [ 4]   79 	ld	a, e
+    00000004 81               [ 4]   80 	add	c
+    00000005 6F               [ 4]   81 	ld	l, a
+    00000006 8A               [ 4]   82 	adc	d
+    00000007 95               [ 4]   83 	sub	l
+    00000008 67               [ 4]   84 	ld	h, a
+    00000009 4E               [ 7]   85 	ld	c, (hl)
+    0000000A E5               [11]   86 	push	hl
+    0000000B 7B               [ 4]   87 	ld	a, e
+    0000000C 80               [ 4]   88 	add	b
+    0000000D 6F               [ 4]   89 	ld	l, a
+    0000000E 8A               [ 4]   90 	adc	d
+    0000000F 95               [ 4]   91 	sub	l
+    00000010 67               [ 4]   92 	ld	h, a
+    00000011 7E               [ 7]   93 	ld	a, (hl)
+    00000012 71               [ 7]   94 	ld	(hl), c
+    00000013 E1               [10]   95 	pop	hl
+    00000014 77               [ 7]   96 	ld	(hl), a
+    00000015 C9               [10]   97 	ret
+                                     98 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:64: }
+                                     99 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:66: void BufferRotate(UINT8* v, UINT8 len) NAKED {
+                                    100 ;	---------------------------------
+                                    101 ; Function BufferRotate
+                                    102 ; ---------------------------------
+    00000016                        103 _BufferRotate::
+                                    104 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:116: __endasm;
+    00000016 C1               [10]  105 	pop	bc
+    00000017 3B               [ 6]  106 	dec	sp
+    00000018 F1               [10]  107 	pop	af
+    00000019 C5               [11]  108 	push	bc
+    0000001A D6 01            [ 7]  109 	sub	#1
+    0000001C D8               [11]  110 	ret	c
+    0000001D C8               [11]  111 	ret	z
+    0000001E 4F               [ 4]  112 	ld	c, a
+    0000001F 06 00            [ 7]  113 	ld	b, #0
+    00000021 54               [ 4]  114 	ld	d, h
+    00000022 5D               [ 4]  115 	ld	e, l
+    00000023 1A               [ 7]  116 	ld	a, (de)
+    00000024 23               [ 6]  117 	inc	hl
+    00000025 ED B0            [21]  118 	ldir
+    00000027 12               [ 7]  119 	ld	(de), a
+    00000028 C9               [10]  120 	ret
+                                    121 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:117: }
+                                    122 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:119: void VectorRemovePos(UINT8* v, UINT8 pos) {
+                                    123 ;	---------------------------------
+                                    124 ; Function VectorRemovePos
+                                    125 ; ---------------------------------
+    00000029                        126 _VectorRemovePos::
+    00000029 DD E5            [15]  127 	push	ix
+    0000002B DD 21 00 00      [14]  128 	ld	ix,#0
+    0000002F DD 39            [15]  129 	add	ix,sp
+    00000031 EB               [ 4]  130 	ex	de, hl
+                                    131 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:120: memcpy(&v[pos + 1], &v[pos + 2], (UINT8)((UINT8)(v[0]--) - pos));
+    00000032 1A               [ 7]  132 	ld	a, (de)
+    00000033 4F               [ 4]  133 	ld	c, a
+    00000034 3D               [ 4]  134 	dec	a
+    00000035 12               [ 7]  135 	ld	(de), a
+    00000036 79               [ 4]  136 	ld	a, c
+    00000037 DD 96 04         [19]  137 	sub	a, 4 (ix)
+    0000003A 4F               [ 4]  138 	ld	c, a
+    0000003B 06 00            [ 7]  139 	ld	b, #0x00
+    0000003D DD 6E 04         [19]  140 	ld	l, 4 (ix)
+    00000040 26 00            [ 7]  141 	ld	h, #0x00
+    00000042 E5               [11]  142 	push	hl
+    00000043 23               [ 6]  143 	inc	hl
+    00000044 FD E1            [14]  144 	pop	iy
+    00000046 FD 23            [10]  145 	inc	iy
+    00000048 FD 23            [10]  146 	inc	iy
+    0000004A FD 19            [15]  147 	add	iy, de
+    0000004C 19               [11]  148 	add	hl, de
+    0000004D C5               [11]  149 	push	bc
+    0000004E FD E5            [15]  150 	push	iy
+    00000050 D1               [10]  151 	pop	de
+    00000051 CDr00r00         [17]  152 	call	_memcpy
+                                    153 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Vector.c:121: }
+    00000054 DD E1            [14]  154 	pop	ix
+    00000056 E1               [10]  155 	pop	hl
+    00000057 33               [ 6]  156 	inc	sp
+    00000058 E9               [ 4]  157 	jp	(hl)
+                                    158 	.area _CODE
+                                    159 	.area _INITIALIZER
+                                    160 	.area _CABS (ABS)

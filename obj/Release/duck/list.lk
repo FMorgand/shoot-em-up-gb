@@ -1,0 +1,9 @@
+../obj/Release/duck/res/sprites/player.png.o
+../obj/Release/duck/res/map.png.o
+../obj/Release/duck/res/tiles.png.o
+../obj/Release/duck/res/font.png.o
+../obj/Release/duck/SpriteBullet.o
+../obj/Release/duck/SpritePlayer.o
+../obj/Release/duck/StateGame.o
+../obj/Release/duck/ZGBMain.o
+../obj/Release/duck/ZGBMain_Init.o

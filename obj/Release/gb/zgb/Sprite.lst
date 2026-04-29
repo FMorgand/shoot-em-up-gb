@@ -1,0 +1,1376 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module Sprite
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _SpriteManagerRemoveSprite
+                                     11 	.globl _GetSpriteAnimation
+                                     12 	.globl _InitSprite
+                                     13 	.globl _SetSpriteAnim
+                                     14 	.globl _DrawSprite
+                                     15 	.globl _CheckCollision
+                                     16 ;--------------------------------------------------------
+                                     17 ; special function registers
+                                     18 ;--------------------------------------------------------
+                                     19 	.area _HRAM
+                                     20 ;--------------------------------------------------------
+                                     21 ; ram data
+                                     22 ;--------------------------------------------------------
+                                     23 	.area _DATA
+    00000000                         24 _DrawSprite_screen_x_10000_294:
+    00000000                         25 	.ds 2
+    00000002                         26 _DrawSprite_screen_y_10000_294:
+    00000002                         27 	.ds 2
+                                     28 ;--------------------------------------------------------
+                                     29 ; ram data
+                                     30 ;--------------------------------------------------------
+                                     31 	.area _INITIALIZED
+                                     32 ;--------------------------------------------------------
+                                     33 ; absolute external ram data
+                                     34 ;--------------------------------------------------------
+                                     35 	.area _DABS (ABS)
+                                     36 ;--------------------------------------------------------
+                                     37 ; global & static initialisations
+                                     38 ;--------------------------------------------------------
+                                     39 	.area _HOME
+                                     40 	.area _GSINIT
+                                     41 	.area _GSFINAL
+                                     42 	.area _GSINIT
+                                     43 ;--------------------------------------------------------
+                                     44 ; Home
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _HOME
+                                     47 	.area _HOME
+                                     48 ;--------------------------------------------------------
+                                     49 ; code
+                                     50 ;--------------------------------------------------------
+                                     51 	.area _CODE
+                                     52 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:19: void InitSprite(Sprite* sprite, UINT8 sprite_type) {
+                                     53 ;	---------------------------------
+                                     54 ; Function InitSprite
+                                     55 ; ---------------------------------
+    00000000                         56 _InitSprite::
+    00000000 E8 F7            [16]   57 	add	sp, #-9
+    00000002 F8 07            [12]   58 	ldhl	sp,	#7
+    00000004 73               [ 8]   59 	ld	(hl), e
+    00000005 23               [ 8]   60 	inc	hl
+    00000006 72               [ 8]   61 	ld	(hl), d
+    00000007 4F               [ 4]   62 	ld	c, a
+                                     63 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:20: const struct MetaSpriteInfo* mt_sprite_info = spriteDatas[sprite_type];
+    00000008 69               [ 4]   64 	ld	l, c
+    00000009 AF               [ 4]   65 	xor	a, a
+    0000000A 67               [ 4]   66 	ld	h, a
+    0000000B 29               [ 8]   67 	add	hl, hl
+    0000000C 11r00r00         [12]   68 	ld	de, #_spriteDatas
+    0000000F 19               [ 8]   69 	add	hl, de
+    00000010 5D               [ 4]   70 	ld	e, l
+    00000011 54               [ 4]   71 	ld	d, h
+    00000012 1A               [ 8]   72 	ld	a, (de)
+    00000013 F8 02            [12]   73 	ldhl	sp,	#2
+    00000015 22               [ 8]   74 	ld	(hl+), a
+    00000016 13               [ 8]   75 	inc	de
+    00000017 1A               [ 8]   76 	ld	a, (de)
+    00000018 77               [ 8]   77 	ld	(hl), a
+                                     78 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:22: sprite->mt_sprite_info = mt_sprite_info;
+    00000019 F8 07            [12]   79 	ldhl	sp,#7
+    0000001B 2A               [ 8]   80 	ld	a, (hl+)
+    0000001C 5F               [ 4]   81 	ld	e, a
+    0000001D 56               [ 8]   82 	ld	d, (hl)
+    0000001E 21 07 00         [12]   83 	ld	hl, #0x0007
+    00000021 19               [ 8]   84 	add	hl, de
+    00000022 5D               [ 4]   85 	ld	e, l
+    00000023 54               [ 4]   86 	ld	d, h
+    00000024 F8 02            [12]   87 	ldhl	sp,	#2
+    00000026 2A               [ 8]   88 	ld	a, (hl+)
+    00000027 12               [ 8]   89 	ld	(de), a
+    00000028 13               [ 8]   90 	inc	de
+    00000029 7E               [ 8]   91 	ld	a, (hl)
+    0000002A 12               [ 8]   92 	ld	(de), a
+                                     93 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:23: sprite->mt_sprite_bank = spriteDataBanks[sprite_type];
+    0000002B F8 07            [12]   94 	ldhl	sp,#7
+    0000002D 2A               [ 8]   95 	ld	a, (hl+)
+    0000002E 5F               [ 4]   96 	ld	e, a
+    0000002F 56               [ 8]   97 	ld	d, (hl)
+    00000030 21 06 00         [12]   98 	ld	hl, #0x0006
+    00000033 19               [ 8]   99 	add	hl, de
+    00000034 33               [ 8]  100 	inc	sp
+    00000035 33               [ 8]  101 	inc	sp
+    00000036 E5               [16]  102 	push	hl
+    00000037 11r00r00         [12]  103 	ld	de, #_spriteDataBanks
+    0000003A 69               [ 4]  104 	ld	l, c
+    0000003B 26 00            [ 8]  105 	ld	h, #0x00
+    0000003D 19               [ 8]  106 	add	hl, de
+    0000003E E5               [16]  107 	push	hl
+    0000003F 7D               [ 4]  108 	ld	a, l
+    00000040 F8 06            [12]  109 	ldhl	sp,	#6
+    00000042 77               [ 8]  110 	ld	(hl), a
+    00000043 E1               [12]  111 	pop	hl
+    00000044 7C               [ 4]  112 	ld	a, h
+    00000045 F8 05            [12]  113 	ldhl	sp,	#5
+    00000047 32               [ 8]  114 	ld	(hl-), a
+    00000048 2A               [ 8]  115 	ld	a, (hl+)
+    00000049 5F               [ 4]  116 	ld	e, a
+    0000004A 56               [ 8]  117 	ld	d, (hl)
+    0000004B 1A               [ 8]  118 	ld	a, (de)
+    0000004C E1               [12]  119 	pop	hl
+    0000004D E5               [16]  120 	push	hl
+    0000004E 77               [ 8]  121 	ld	(hl), a
+                                    122 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:25: sprite->flips = spriteFlips[sprite_type];
+    0000004F F8 07            [12]  123 	ldhl	sp,#7
+    00000051 2A               [ 8]  124 	ld	a, (hl+)
+    00000052 5F               [ 4]  125 	ld	e, a
+    00000053 56               [ 8]  126 	ld	d, (hl)
+    00000054 21 09 00         [12]  127 	ld	hl, #0x0009
+    00000057 19               [ 8]  128 	add	hl, de
+    00000058 5D               [ 4]  129 	ld	e, l
+    00000059 54               [ 4]  130 	ld	d, h
+    0000005A 21r00r00         [12]  131 	ld	hl, #_spriteFlips
+    0000005D 06 00            [ 8]  132 	ld	b, #0x00
+    0000005F 09               [ 8]  133 	add	hl, bc
+    00000060 7E               [ 8]  134 	ld	a, (hl)
+    00000061 12               [ 8]  135 	ld	(de), a
+                                    136 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:26: sprite->first_tile = spriteIdxs[sprite_type];
+    00000062 F8 07            [12]  137 	ldhl	sp,#7
+    00000064 2A               [ 8]  138 	ld	a, (hl+)
+    00000065 5F               [ 4]  139 	ld	e, a
+    00000066 56               [ 8]  140 	ld	d, (hl)
+    00000067 21 0A 00         [12]  141 	ld	hl, #0x000a
+    0000006A 19               [ 8]  142 	add	hl, de
+    0000006B 5D               [ 4]  143 	ld	e, l
+    0000006C 54               [ 4]  144 	ld	d, h
+    0000006D 21r00r00         [12]  145 	ld	hl, #_spriteIdxs
+    00000070 06 00            [ 8]  146 	ld	b, #0x00
+    00000072 09               [ 8]  147 	add	hl, bc
+    00000073 7E               [ 8]  148 	ld	a, (hl)
+    00000074 12               [ 8]  149 	ld	(de), a
+                                    150 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:27: sprite->first_tile_H = spriteIdxsH[sprite_type];
+    00000075 F8 07            [12]  151 	ldhl	sp,#7
+    00000077 2A               [ 8]  152 	ld	a, (hl+)
+    00000078 5F               [ 4]  153 	ld	e, a
+    00000079 56               [ 8]  154 	ld	d, (hl)
+    0000007A 21 0B 00         [12]  155 	ld	hl, #0x000b
+    0000007D 19               [ 8]  156 	add	hl, de
+    0000007E 5D               [ 4]  157 	ld	e, l
+    0000007F 54               [ 4]  158 	ld	d, h
+    00000080 21r00r00         [12]  159 	ld	hl, #_spriteIdxsH
+    00000083 06 00            [ 8]  160 	ld	b, #0x00
+    00000085 09               [ 8]  161 	add	hl, bc
+    00000086 7E               [ 8]  162 	ld	a, (hl)
+    00000087 12               [ 8]  163 	ld	(de), a
+                                    164 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:28: sprite->first_tile_V = spriteIdxsV[sprite_type];
+    00000088 F8 07            [12]  165 	ldhl	sp,#7
+    0000008A 2A               [ 8]  166 	ld	a, (hl+)
+    0000008B 5F               [ 4]  167 	ld	e, a
+    0000008C 56               [ 8]  168 	ld	d, (hl)
+    0000008D 21 0C 00         [12]  169 	ld	hl, #0x000c
+    00000090 19               [ 8]  170 	add	hl, de
+    00000091 5D               [ 4]  171 	ld	e, l
+    00000092 54               [ 4]  172 	ld	d, h
+    00000093 21r00r00         [12]  173 	ld	hl, #_spriteIdxsV
+    00000096 06 00            [ 8]  174 	ld	b, #0x00
+    00000098 09               [ 8]  175 	add	hl, bc
+    00000099 7E               [ 8]  176 	ld	a, (hl)
+    0000009A 12               [ 8]  177 	ld	(de), a
+                                    178 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:29: sprite->first_tile_HV = spriteIdxsHV[sprite_type];
+    0000009B F8 07            [12]  179 	ldhl	sp,#7
+    0000009D 2A               [ 8]  180 	ld	a, (hl+)
+    0000009E 5F               [ 4]  181 	ld	e, a
+    0000009F 56               [ 8]  182 	ld	d, (hl)
+    000000A0 21 0D 00         [12]  183 	ld	hl, #0x000d
+    000000A3 19               [ 8]  184 	add	hl, de
+    000000A4 5D               [ 4]  185 	ld	e, l
+    000000A5 54               [ 4]  186 	ld	d, h
+    000000A6 21r00r00         [12]  187 	ld	hl, #_spriteIdxsHV
+    000000A9 06 00            [ 8]  188 	ld	b, #0x00
+    000000AB 09               [ 8]  189 	add	hl, bc
+    000000AC 7E               [ 8]  190 	ld	a, (hl)
+    000000AD 12               [ 8]  191 	ld	(de), a
+                                    192 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:33: sprite->attr_add = 0;
+    000000AE F8 07            [12]  193 	ldhl	sp,#7
+    000000B0 2A               [ 8]  194 	ld	a, (hl+)
+    000000B1 5F               [ 4]  195 	ld	e, a
+    000000B2 56               [ 8]  196 	ld	d, (hl)
+    000000B3 21 0E 00         [12]  197 	ld	hl, #0x000e
+    000000B6 19               [ 8]  198 	add	hl, de
+    000000B7 4D               [ 4]  199 	ld	c, l
+    000000B8 44               [ 4]  200 	ld	b, h
+    000000B9 AF               [ 4]  201 	xor	a, a
+    000000BA 02               [ 8]  202 	ld	(bc), a
+                                    203 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:36: sprite->anim_data = NULL;	
+    000000BB F8 07            [12]  204 	ldhl	sp,#7
+    000000BD 2A               [ 8]  205 	ld	a, (hl+)
+    000000BE 5F               [ 4]  206 	ld	e, a
+    000000BF 56               [ 8]  207 	ld	d, (hl)
+    000000C0 21 0F 00         [12]  208 	ld	hl, #0x000f
+    000000C3 19               [ 8]  209 	add	hl, de
+    000000C4 4D               [ 4]  210 	ld	c, l
+    000000C5 44               [ 4]  211 	ld	b, h
+    000000C6 AF               [ 4]  212 	xor	a, a
+    000000C7 02               [ 8]  213 	ld	(bc), a
+    000000C8 03               [ 8]  214 	inc	bc
+    000000C9 02               [ 8]  215 	ld	(bc), a
+                                    216 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:37: sprite->anim_speed = 33u;
+    000000CA F8 07            [12]  217 	ldhl	sp,#7
+    000000CC 2A               [ 8]  218 	ld	a, (hl+)
+    000000CD 5F               [ 4]  219 	ld	e, a
+    000000CE 56               [ 8]  220 	ld	d, (hl)
+    000000CF 21 12 00         [12]  221 	ld	hl, #0x0012
+    000000D2 19               [ 8]  222 	add	hl, de
+    000000D3 36 21            [12]  223 	ld	(hl), #0x21
+                                    224 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sprite.h:81: sprite->mt_sprite = GetSpriteAnimation(sprite, frame);
+    000000D5 F8 07            [12]  225 	ldhl	sp,#7
+    000000D7 2A               [ 8]  226 	ld	a, (hl+)
+    000000D8 5F               [ 4]  227 	ld	e, a
+    000000D9 56               [ 8]  228 	ld	d, (hl)
+    000000DA 21 14 00         [12]  229 	ld	hl, #0x0014
+    000000DD 19               [ 8]  230 	add	hl, de
+    000000DE E5               [16]  231 	push	hl
+    000000DF 01 00 00         [12]  232 	ld	bc, #0x0000
+    000000E2 F8 09            [12]  233 	ldhl	sp,	#9
+    000000E4 2A               [ 8]  234 	ld	a, (hl+)
+    000000E5 5F               [ 4]  235 	ld	e, a
+    000000E6 56               [ 8]  236 	ld	d, (hl)
+    000000E7 CDr00r00         [24]  237 	call	_GetSpriteAnimation
+    000000EA D1               [12]  238 	pop	de
+    000000EB 79               [ 4]  239 	ld	a, c
+    000000EC 12               [ 8]  240 	ld	(de), a
+    000000ED 13               [ 8]  241 	inc	de
+    000000EE 78               [ 4]  242 	ld	a, b
+    000000EF 12               [ 8]  243 	ld	(de), a
+                                    244 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sprite.h:82: sprite->anim_frame = frame;
+    000000F0 F8 07            [12]  245 	ldhl	sp,#7
+    000000F2 2A               [ 8]  246 	ld	a, (hl+)
+    000000F3 5F               [ 4]  247 	ld	e, a
+    000000F4 56               [ 8]  248 	ld	d, (hl)
+    000000F5 21 13 00         [12]  249 	ld	hl, #0x0013
+    000000F8 19               [ 8]  250 	add	hl, de
+    000000F9 4D               [ 4]  251 	ld	c, l
+    000000FA 44               [ 4]  252 	ld	b, h
+    000000FB AF               [ 4]  253 	xor	a, a
+    000000FC 02               [ 8]  254 	ld	(bc), a
+                                    255 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:41: sprite->ctx = NULL;
+    000000FD F8 07            [12]  256 	ldhl	sp,#7
+    000000FF 2A               [ 8]  257 	ld	a, (hl+)
+    00000100 5F               [ 4]  258 	ld	e, a
+    00000101 56               [ 8]  259 	ld	d, (hl)
+    00000102 21 17 00         [12]  260 	ld	hl, #0x0017
+    00000105 19               [ 8]  261 	add	hl, de
+    00000106 4D               [ 4]  262 	ld	c, l
+    00000107 44               [ 4]  263 	ld	b, h
+    00000108 AF               [ 4]  264 	xor	a, a
+    00000109 02               [ 8]  265 	ld	(bc), a
+    0000010A 03               [ 8]  266 	inc	bc
+    0000010B 02               [ 8]  267 	ld	(bc), a
+                                    268 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:43: sprite->x = 0;
+    0000010C F8 07            [12]  269 	ldhl	sp,	#7
+    0000010E 2A               [ 8]  270 	ld	a, (hl+)
+    0000010F 66               [ 8]  271 	ld	h, (hl)
+    00000110 6F               [ 4]  272 	ld	l, a
+    00000111 AF               [ 4]  273 	xor	a, a
+    00000112 22               [ 8]  274 	ld	(hl+), a
+    00000113 77               [ 8]  275 	ld	(hl), a
+                                    276 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:44: sprite->y = 0;
+    00000114 F8 07            [12]  277 	ldhl	sp,	#7
+    00000116 2A               [ 8]  278 	ld	a, (hl+)
+    00000117 4F               [ 4]  279 	ld	c, a
+                                    280 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:46: sprite->coll_group = COLL_GROUP_DEFAULT;
+    00000118 3A               [ 8]  281 	ld	a, (hl-)
+    00000119 47               [ 4]  282 	ld	b, a
+    0000011A 03               [ 8]  283 	inc	bc
+    0000011B 03               [ 8]  284 	inc	bc
+    0000011C AF               [ 4]  285 	xor	a, a
+    0000011D 02               [ 8]  286 	ld	(bc), a
+    0000011E 03               [ 8]  287 	inc	bc
+    0000011F 02               [ 8]  288 	ld	(bc), a
+    00000120 2A               [ 8]  289 	ld	a, (hl+)
+    00000121 5F               [ 4]  290 	ld	e, a
+    00000122 56               [ 8]  291 	ld	d, (hl)
+    00000123 21 22 00         [12]  292 	ld	hl, #0x0022
+    00000126 19               [ 8]  293 	add	hl, de
+    00000127 36 01            [12]  294 	ld	(hl), #0x01
+                                    295 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:47: sprite->coll_group_down = COLL_GROUP_DOWN;
+    00000129 F8 07            [12]  296 	ldhl	sp,#7
+    0000012B 2A               [ 8]  297 	ld	a, (hl+)
+    0000012C 5F               [ 4]  298 	ld	e, a
+    0000012D 56               [ 8]  299 	ld	d, (hl)
+    0000012E 21 23 00         [12]  300 	ld	hl, #0x0023
+    00000131 19               [ 8]  301 	add	hl, de
+    00000132 36 80            [12]  302 	ld	(hl), #0x80
+                                    303 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sprite.h:100: sprite->visible = (visible);
+    00000134 F8 07            [12]  304 	ldhl	sp,#7
+    00000136 2A               [ 8]  305 	ld	a, (hl+)
+    00000137 5F               [ 4]  306 	ld	e, a
+    00000138 56               [ 8]  307 	ld	d, (hl)
+    00000139 21 21 00         [12]  308 	ld	hl, #0x0021
+    0000013C 19               [ 8]  309 	add	hl, de
+    0000013D 4D               [ 4]  310 	ld	c, l
+    0000013E 44               [ 4]  311 	ld	b, h
+    0000013F 0A               [ 8]  312 	ld	a, (bc)
+    00000140 F6 01            [ 8]  313 	or	a, #0x01
+    00000142 02               [ 8]  314 	ld	(bc), a
+                                    315 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sprite.h:103: sprite->persistent = (persistent);
+    00000143 F8 07            [12]  316 	ldhl	sp,#7
+    00000145 2A               [ 8]  317 	ld	a, (hl+)
+    00000146 5F               [ 4]  318 	ld	e, a
+    00000147 56               [ 8]  319 	ld	d, (hl)
+    00000148 21 21 00         [12]  320 	ld	hl, #0x0021
+    0000014B 19               [ 8]  321 	add	hl, de
+    0000014C 4D               [ 4]  322 	ld	c, l
+    0000014D 44               [ 4]  323 	ld	b, h
+    0000014E 0A               [ 8]  324 	ld	a, (bc)
+    0000014F E6 FD            [ 8]  325 	and	a, #0xfd
+    00000151 02               [ 8]  326 	ld	(bc), a
+                                    327 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sprite.h:106: sprite->loop_anim = (loop_anim);
+    00000152 F8 07            [12]  328 	ldhl	sp,#7
+    00000154 2A               [ 8]  329 	ld	a, (hl+)
+    00000155 5F               [ 4]  330 	ld	e, a
+    00000156 56               [ 8]  331 	ld	d, (hl)
+    00000157 21 21 00         [12]  332 	ld	hl, #0x0021
+    0000015A 19               [ 8]  333 	add	hl, de
+    0000015B 4D               [ 4]  334 	ld	c, l
+    0000015C 44               [ 4]  335 	ld	b, h
+    0000015D 0A               [ 8]  336 	ld	a, (bc)
+    0000015E F6 04            [ 8]  337 	or	a, #0x04
+    00000160 02               [ 8]  338 	ld	(bc), a
+                                    339 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:53: UINT8 __save = CURRENT_BANK;
+    00000161 F0r00            [12]  340 	ldh	a, (__current_bank + 0)
+    00000163 F8 06            [12]  341 	ldhl	sp,	#6
+                                    342 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:54: SWITCH_ROM(spriteDataBanks[sprite_type]);
+    00000165 32               [ 8]  343 	ld	(hl-), a
+    00000166 2B               [ 8]  344 	dec	hl
+    00000167 2A               [ 8]  345 	ld	a, (hl+)
+    00000168 5F               [ 4]  346 	ld	e, a
+    00000169 56               [ 8]  347 	ld	d, (hl)
+    0000016A 1A               [ 8]  348 	ld	a, (de)
+    0000016B E0r00            [12]  349 	ldh	(__current_bank + 0), a
+    0000016D EAr00r00         [16]  350 	ld	(#_rROMB0),a
+                                    351 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:55: sprite->coll_w = mt_sprite_info->width;
+    00000170 F8 07            [12]  352 	ldhl	sp,#7
+    00000172 2A               [ 8]  353 	ld	a, (hl+)
+    00000173 5F               [ 4]  354 	ld	e, a
+    00000174 56               [ 8]  355 	ld	d, (hl)
+    00000175 21 04 00         [12]  356 	ld	hl, #0x0004
+    00000178 19               [ 8]  357 	add	hl, de
+    00000179 4D               [ 4]  358 	ld	c, l
+    0000017A 44               [ 4]  359 	ld	b, h
+    0000017B F8 02            [12]  360 	ldhl	sp,#2
+    0000017D 2A               [ 8]  361 	ld	a, (hl+)
+    0000017E 5F               [ 4]  362 	ld	e, a
+    0000017F 56               [ 8]  363 	ld	d, (hl)
+    00000180 1A               [ 8]  364 	ld	a, (de)
+    00000181 02               [ 8]  365 	ld	(bc), a
+                                    366 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:56: sprite->coll_h = mt_sprite_info->height;
+    00000182 F8 07            [12]  367 	ldhl	sp,#7
+    00000184 2A               [ 8]  368 	ld	a, (hl+)
+    00000185 5F               [ 4]  369 	ld	e, a
+    00000186 56               [ 8]  370 	ld	d, (hl)
+    00000187 21 05 00         [12]  371 	ld	hl, #0x0005
+    0000018A 19               [ 8]  372 	add	hl, de
+    0000018B 4D               [ 4]  373 	ld	c, l
+    0000018C 44               [ 4]  374 	ld	b, h
+    0000018D F8 02            [12]  375 	ldhl	sp,	#2
+    0000018F 2A               [ 8]  376 	ld	a, (hl+)
+    00000190 5F               [ 4]  377 	ld	e, a
+    00000191 56               [ 8]  378 	ld	d, (hl)
+    00000192 13               [ 8]  379 	inc	de
+    00000193 1A               [ 8]  380 	ld	a, (de)
+    00000194 02               [ 8]  381 	ld	(bc), a
+                                    382 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:57: SWITCH_ROM(__save);
+    00000195 F8 06            [12]  383 	ldhl	sp,	#6
+    00000197 7E               [ 8]  384 	ld	a, (hl)
+    00000198 E0r00            [12]  385 	ldh	(__current_bank + 0), a
+    0000019A 7E               [ 8]  386 	ld	a, (hl)
+    0000019B EAr00r00         [16]  387 	ld	(#_rROMB0),a
+                                    388 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:58: }
+    0000019E E8 09            [16]  389 	add	sp, #9
+    000001A0 C9               [16]  390 	ret
+                                    391 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:60: void SetSpriteAnim(Sprite* sprite, const UINT8* data, UINT8 speed) {
+                                    392 ;	---------------------------------
+                                    393 ; Function SetSpriteAnim
+                                    394 ; ---------------------------------
+    000001A1                        395 _SetSpriteAnim::
+    000001A1 E8 FC            [16]  396 	add	sp, #-4
+    000001A3 F8 02            [12]  397 	ldhl	sp,	#2
+    000001A5 7B               [ 4]  398 	ld	a, e
+    000001A6 22               [ 8]  399 	ld	(hl+), a
+                                    400 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:61: if (sprite->anim_data != data) {
+    000001A7 7A               [ 4]  401 	ld	a, d
+    000001A8 32               [ 8]  402 	ld	(hl-), a
+    000001A9 2A               [ 8]  403 	ld	a, (hl+)
+    000001AA 5F               [ 4]  404 	ld	e, a
+    000001AB 56               [ 8]  405 	ld	d, (hl)
+    000001AC 21 0F 00         [12]  406 	ld	hl, #0x000f
+    000001AF 19               [ 8]  407 	add	hl, de
+    000001B0 33               [ 8]  408 	inc	sp
+    000001B1 33               [ 8]  409 	inc	sp
+    000001B2 5D               [ 4]  410 	ld	e, l
+    000001B3 54               [ 4]  411 	ld	d, h
+    000001B4 D5               [16]  412 	push	de
+    000001B5 1A               [ 8]  413 	ld	a, (de)
+    000001B6 6F               [ 4]  414 	ld	l, a
+    000001B7 13               [ 8]  415 	inc	de
+    000001B8 1A               [ 8]  416 	ld	a, (de)
+    000001B9 67               [ 4]  417 	ld	h, a
+    000001BA 7D               [ 4]  418 	ld	a, l
+    000001BB 91               [ 4]  419 	sub	a, c
+    000001BC 20 04            [12]  420 	jr	NZ, 00113$
+    000001BE 7C               [ 4]  421 	ld	a, h
+    000001BF 90               [ 4]  422 	sub	a, b
+    000001C0 28 51            [12]  423 	jr	Z, 00104$
+    000001C2                        424 00113$:
+                                    425 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:62: sprite->anim_data = (UINT8* )data;
+    000001C2 E1               [12]  426 	pop	hl
+    000001C3 E5               [16]  427 	push	hl
+    000001C4 79               [ 4]  428 	ld	a, c
+    000001C5 22               [ 8]  429 	ld	(hl+), a
+    000001C6 70               [ 8]  430 	ld	(hl), b
+                                    431 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:63: SetFrame(sprite, VECTOR_GET(data, 0));
+    000001C7 03               [ 8]  432 	inc	bc
+    000001C8 0A               [ 8]  433 	ld	a, (bc)
+    000001C9 F8 01            [12]  434 	ldhl	sp,	#1
+                                    435 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sprite.h:81: sprite->mt_sprite = GetSpriteAnimation(sprite, frame);
+    000001CB 22               [ 8]  436 	ld	(hl+), a
+    000001CC 2A               [ 8]  437 	ld	a, (hl+)
+    000001CD 5F               [ 4]  438 	ld	e, a
+    000001CE 56               [ 8]  439 	ld	d, (hl)
+    000001CF 21 14 00         [12]  440 	ld	hl, #0x0014
+    000001D2 19               [ 8]  441 	add	hl, de
+    000001D3 5D               [ 4]  442 	ld	e, l
+    000001D4 54               [ 4]  443 	ld	d, h
+    000001D5 F8 01            [12]  444 	ldhl	sp,	#1
+    000001D7 2A               [ 8]  445 	ld	a, (hl+)
+    000001D8 4F               [ 4]  446 	ld	c, a
+    000001D9 AF               [ 4]  447 	xor	a, a
+    000001DA D5               [16]  448 	push	de
+    000001DB 47               [ 4]  449 	ld	b, a
+    000001DC 2A               [ 8]  450 	ld	a, (hl+)
+    000001DD 5F               [ 4]  451 	ld	e, a
+    000001DE 56               [ 8]  452 	ld	d, (hl)
+    000001DF CDr00r00         [24]  453 	call	_GetSpriteAnimation
+    000001E2 D1               [12]  454 	pop	de
+    000001E3 79               [ 4]  455 	ld	a, c
+    000001E4 12               [ 8]  456 	ld	(de), a
+    000001E5 13               [ 8]  457 	inc	de
+    000001E6 78               [ 4]  458 	ld	a, b
+    000001E7 12               [ 8]  459 	ld	(de), a
+                                    460 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sprite.h:82: sprite->anim_frame = frame;
+    000001E8 F8 02            [12]  461 	ldhl	sp,#2
+    000001EA 2A               [ 8]  462 	ld	a, (hl+)
+    000001EB 5F               [ 4]  463 	ld	e, a
+    000001EC 56               [ 8]  464 	ld	d, (hl)
+    000001ED 21 13 00         [12]  465 	ld	hl, #0x0013
+    000001F0 19               [ 8]  466 	add	hl, de
+    000001F1 4D               [ 4]  467 	ld	c, l
+    000001F2 44               [ 4]  468 	ld	b, h
+    000001F3 F8 01            [12]  469 	ldhl	sp,	#1
+                                    470 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:64: sprite->anim_frame = 0;
+                                    471 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:65: sprite->anim_accum_ticks = 0;
+    000001F5 2A               [ 8]  472 	ld	a, (hl+)
+    000001F6 02               [ 8]  473 	ld	(bc), a
+    000001F7 AF               [ 4]  474 	xor	a, a
+    000001F8 02               [ 8]  475 	ld	(bc), a
+    000001F9 2A               [ 8]  476 	ld	a, (hl+)
+    000001FA 5F               [ 4]  477 	ld	e, a
+    000001FB 56               [ 8]  478 	ld	d, (hl)
+    000001FC 21 11 00         [12]  479 	ld	hl, #0x0011
+    000001FF 19               [ 8]  480 	add	hl, de
+    00000200 4D               [ 4]  481 	ld	c, l
+    00000201 44               [ 4]  482 	ld	b, h
+    00000202 AF               [ 4]  483 	xor	a, a
+    00000203 02               [ 8]  484 	ld	(bc), a
+                                    485 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:66: sprite->anim_speed = speed;
+    00000204 F8 02            [12]  486 	ldhl	sp,#2
+    00000206 2A               [ 8]  487 	ld	a, (hl+)
+    00000207 5F               [ 4]  488 	ld	e, a
+    00000208 56               [ 8]  489 	ld	d, (hl)
+    00000209 21 12 00         [12]  490 	ld	hl, #0x0012
+    0000020C 19               [ 8]  491 	add	hl, de
+    0000020D 4D               [ 4]  492 	ld	c, l
+    0000020E 44               [ 4]  493 	ld	b, h
+    0000020F F8 06            [12]  494 	ldhl	sp,	#6
+    00000211 7E               [ 8]  495 	ld	a, (hl)
+    00000212 02               [ 8]  496 	ld	(bc), a
+    00000213                        497 00104$:
+                                    498 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:68: }
+    00000213 E8 04            [16]  499 	add	sp, #4
+    00000215 E1               [12]  500 	pop	hl
+    00000216 33               [ 8]  501 	inc	sp
+    00000217 E9               [ 4]  502 	jp	(hl)
+                                    503 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:72: void DrawSprite(void) {
+                                    504 ;	---------------------------------
+                                    505 ; Function DrawSprite
+                                    506 ; ---------------------------------
+    00000218                        507 _DrawSprite::
+    00000218 E8 F0            [16]  508 	add	sp, #-16
+                                    509 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:74: screen_x = THIS->x - scroll_x;
+    0000021A 21r00r00         [12]  510 	ld	hl, #_THIS
+    0000021D 2A               [ 8]  511 	ld	a,	(hl+)
+    0000021E 66               [ 8]  512 	ld	h, (hl)
+    0000021F 6F               [ 4]  513 	ld	l, a
+    00000220 2A               [ 8]  514 	ld	a, (hl+)
+    00000221 4F               [ 4]  515 	ld	c, a
+    00000222 46               [ 8]  516 	ld	b, (hl)
+    00000223 FAr00r00         [16]  517 	ld	a, (_scroll_x)
+    00000226 5F               [ 4]  518 	ld	e, a
+    00000227 21r01r00         [12]  519 	ld	hl, #_scroll_x + 1
+    0000022A 56               [ 8]  520 	ld	d, (hl)
+    0000022B 79               [ 4]  521 	ld	a, c
+    0000022C 93               [ 4]  522 	sub	a, e
+    0000022D 21r00r00         [12]  523 	ld	hl, #_DrawSprite_screen_x_10000_294
+    00000230 22               [ 8]  524 	ld	(hl+), a
+    00000231 78               [ 4]  525 	ld	a, b
+    00000232 9A               [ 4]  526 	sbc	a, d
+    00000233 77               [ 8]  527 	ld	(hl), a
+                                    528 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:75: screen_y = THIS->y - scroll_y;
+    00000234 FAr00r00         [16]  529 	ld	a, (#_THIS)
+    00000237 F8 0D            [12]  530 	ldhl	sp,	#13
+    00000239 77               [ 8]  531 	ld	(hl), a
+    0000023A FAr01r00         [16]  532 	ld	a, (#_THIS + 1)
+    0000023D F8 0E            [12]  533 	ldhl	sp,	#14
+    0000023F 32               [ 8]  534 	ld	(hl-), a
+    00000240 2A               [ 8]  535 	ld	a, (hl+)
+    00000241 66               [ 8]  536 	ld	h, (hl)
+    00000242 6F               [ 4]  537 	ld	l, a
+    00000243 23               [ 8]  538 	inc	hl
+    00000244 23               [ 8]  539 	inc	hl
+    00000245 2A               [ 8]  540 	ld	a, (hl+)
+    00000246 4F               [ 4]  541 	ld	c, a
+    00000247 46               [ 8]  542 	ld	b, (hl)
+    00000248 FAr00r00         [16]  543 	ld	a, (_scroll_y)
+    0000024B 5F               [ 4]  544 	ld	e, a
+    0000024C 21r01r00         [12]  545 	ld	hl, #_scroll_y + 1
+    0000024F 56               [ 8]  546 	ld	d, (hl)
+    00000250 79               [ 4]  547 	ld	a, c
+    00000251 93               [ 4]  548 	sub	a, e
+    00000252 21r02r00         [12]  549 	ld	hl, #_DrawSprite_screen_y_10000_294
+    00000255 22               [ 8]  550 	ld	(hl+), a
+    00000256 78               [ 4]  551 	ld	a, b
+    00000257 9A               [ 4]  552 	sbc	a, d
+    00000258 77               [ 8]  553 	ld	(hl), a
+                                    554 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:78: if (THIS->anim_data) {
+    00000259 F8 0D            [12]  555 	ldhl	sp,#13
+    0000025B 2A               [ 8]  556 	ld	a, (hl+)
+    0000025C 5F               [ 4]  557 	ld	e, a
+    0000025D 56               [ 8]  558 	ld	d, (hl)
+    0000025E 21 0F 00         [12]  559 	ld	hl, #0x000f
+    00000261 19               [ 8]  560 	add	hl, de
+    00000262 2A               [ 8]  561 	ld	a, (hl+)
+    00000263 B6               [ 8]  562 	or	a, (hl)
+    00000264 CAr29r03         [16]  563 	jp	Z, 00109$
+                                    564 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:79: THIS->anim_accum_ticks += (THIS->anim_speed << delta_time);
+    00000267 F8 0D            [12]  565 	ldhl	sp,#13
+    00000269 2A               [ 8]  566 	ld	a, (hl+)
+    0000026A 5F               [ 4]  567 	ld	e, a
+    0000026B 56               [ 8]  568 	ld	d, (hl)
+    0000026C 21 11 00         [12]  569 	ld	hl, #0x0011
+    0000026F 19               [ 8]  570 	add	hl, de
+    00000270 5D               [ 4]  571 	ld	e, l
+    00000271 54               [ 4]  572 	ld	d, h
+    00000272 1A               [ 8]  573 	ld	a, (de)
+    00000273 F8 0F            [12]  574 	ldhl	sp,	#15
+    00000275 32               [ 8]  575 	ld	(hl-), a
+    00000276 2B               [ 8]  576 	dec	hl
+    00000277 D5               [16]  577 	push	de
+    00000278 2A               [ 8]  578 	ld	a, (hl+)
+    00000279 5F               [ 4]  579 	ld	e, a
+    0000027A 56               [ 8]  580 	ld	d, (hl)
+    0000027B 21 12 00         [12]  581 	ld	hl, #0x0012
+    0000027E 19               [ 8]  582 	add	hl, de
+    0000027F D1               [12]  583 	pop	de
+    00000280 4D               [ 4]  584 	ld	c, l
+    00000281 44               [ 4]  585 	ld	b, h
+    00000282 0A               [ 8]  586 	ld	a, (bc)
+    00000283 21r00r00         [12]  587 	ld	hl, #_delta_time
+    00000286 46               [ 8]  588 	ld	b, (hl)
+    00000287 04               [ 4]  589 	inc	b
+    00000288 18 01            [12]  590 	jr	00220$
+    0000028A                        591 00219$:
+    0000028A 87               [ 4]  592 	add	a, a
+    0000028B                        593 00220$:
+    0000028B 05               [ 4]  594 	dec	b
+    0000028C 20 FC            [12]  595 	jr	NZ,00219$
+    0000028E F8 0F            [12]  596 	ldhl	sp,	#15
+    00000290 86               [ 8]  597 	add	a, (hl)
+    00000291 12               [ 8]  598 	ld	(de), a
+                                    599 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:75: screen_y = THIS->y - scroll_y;
+    00000292 FAr00r00         [16]  600 	ld	a, (_THIS)
+    00000295 21r01r00         [12]  601 	ld	hl, #_THIS + 1
+    00000298 66               [ 8]  602 	ld	h, (hl)
+                                    603 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:79: THIS->anim_accum_ticks += (THIS->anim_speed << delta_time);
+    00000299 6F               [ 4]  604 	ld	l, a
+    0000029A 11 11 00         [12]  605 	ld	de, #0x0011
+    0000029D 19               [ 8]  606 	add	hl, de
+    0000029E 7E               [ 8]  607 	ld	a, (hl)
+                                    608 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:80: if (THIS->anim_accum_ticks >= 100u) {
+    0000029F FE 64            [ 8]  609 	cp	a, #0x64
+    000002A1 DAr29r03         [16]  610 	jp	C, 00109$
+                                    611 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:81: THIS->anim_accum_ticks -= 100u;
+    000002A4 C6 9C            [ 8]  612 	add	a, #0x9c
+    000002A6 77               [ 8]  613 	ld	(hl), a
+                                    614 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:83: if (++THIS->anim_frame >= VECTOR_LEN(THIS->anim_data)) {
+    000002A7 FAr00r00         [16]  615 	ld	a, (_THIS)
+    000002AA 21r01r00         [12]  616 	ld	hl, #_THIS + 1
+    000002AD 46               [ 8]  617 	ld	b, (hl)
+    000002AE C6 13            [ 8]  618 	add	a, #0x13
+    000002B0 4F               [ 4]  619 	ld	c, a
+    000002B1 30 01            [12]  620 	jr	NC, 00221$
+    000002B3 04               [ 4]  621 	inc	b
+    000002B4                        622 00221$:
+    000002B4 0A               [ 8]  623 	ld	a, (bc)
+    000002B5 3C               [ 4]  624 	inc	a
+    000002B6 F8 0F            [12]  625 	ldhl	sp,	#15
+    000002B8 77               [ 8]  626 	ld	(hl), a
+    000002B9 7E               [ 8]  627 	ld	a, (hl)
+    000002BA 02               [ 8]  628 	ld	(bc), a
+                                    629 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:75: screen_y = THIS->y - scroll_y;
+    000002BB FAr00r00         [16]  630 	ld	a, (_THIS)
+    000002BE 4F               [ 4]  631 	ld	c, a
+    000002BF 21r01r00         [12]  632 	ld	hl, #_THIS + 1
+    000002C2 46               [ 8]  633 	ld	b, (hl)
+                                    634 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:83: if (++THIS->anim_frame >= VECTOR_LEN(THIS->anim_data)) {
+    000002C3 21 0F 00         [12]  635 	ld	hl, #0x000f
+    000002C6 09               [ 8]  636 	add	hl, bc
+    000002C7 2A               [ 8]  637 	ld	a,	(hl+)
+    000002C8 66               [ 8]  638 	ld	h, (hl)
+    000002C9 6F               [ 4]  639 	ld	l, a
+    000002CA 5E               [ 8]  640 	ld	e, (hl)
+    000002CB F8 0F            [12]  641 	ldhl	sp,	#15
+    000002CD 7E               [ 8]  642 	ld	a, (hl)
+    000002CE 93               [ 4]  643 	sub	a, e
+    000002CF 38 18            [12]  644 	jr	C, 00105$
+                                    645 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:84: if (THIS->loop_anim) {
+    000002D1 21 21 00         [12]  646 	ld	hl, #0x0021
+    000002D4 09               [ 8]  647 	add	hl, bc
+    000002D5 7E               [ 8]  648 	ld	a, (hl)
+    000002D6 0F               [ 4]  649 	rrca
+    000002D7 0F               [ 4]  650 	rrca
+    000002D8 E6 01            [ 8]  651 	and	a, #0x01
+    000002DA 5F               [ 4]  652 	ld	e, a
+                                    653 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:85: THIS->anim_frame = 0;
+    000002DB 21 13 00         [12]  654 	ld	hl, #0x0013
+    000002DE 09               [ 8]  655 	add	hl, bc
+                                    656 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:84: if (THIS->loop_anim) {
+    000002DF 7B               [ 4]  657 	ld	a, e
+    000002E0 B7               [ 4]  658 	or	a, a
+    000002E1 28 04            [12]  659 	jr	Z, 00102$
+                                    660 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:85: THIS->anim_frame = 0;
+    000002E3 36 00            [12]  661 	ld	(hl), #0x00
+    000002E5 18 02            [12]  662 	jr	00105$
+    000002E7                        663 00102$:
+                                    664 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:87: --THIS->anim_frame;
+    000002E7 35               [12]  665 	dec	(hl)
+    000002E8 7E               [ 8]  666 	ld	a, (hl)
+    000002E9                        667 00105$:
+                                    668 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:75: screen_y = THIS->y - scroll_y;
+    000002E9 FAr00r00         [16]  669 	ld	a, (_THIS)
+    000002EC 4F               [ 4]  670 	ld	c, a
+    000002ED 21r01r00         [12]  671 	ld	hl, #_THIS + 1
+    000002F0 46               [ 8]  672 	ld	b, (hl)
+                                    673 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:90: THIS->mt_sprite = GetSpriteAnimation(THIS, VECTOR_GET(THIS->anim_data, THIS->anim_frame));
+    000002F1 21 14 00         [12]  674 	ld	hl, #0x0014
+    000002F4 09               [ 8]  675 	add	hl, bc
+    000002F5 E5               [16]  676 	push	hl
+    000002F6 7D               [ 4]  677 	ld	a, l
+    000002F7 F8 10            [12]  678 	ldhl	sp,	#16
+    000002F9 77               [ 8]  679 	ld	(hl), a
+    000002FA E1               [12]  680 	pop	hl
+    000002FB 7C               [ 4]  681 	ld	a, h
+    000002FC F8 0F            [12]  682 	ldhl	sp,	#15
+    000002FE 77               [ 8]  683 	ld	(hl), a
+    000002FF 21 0F 00         [12]  684 	ld	hl, #0x000f
+    00000302 09               [ 8]  685 	add	hl, bc
+    00000303 2A               [ 8]  686 	ld	a,	(hl+)
+    00000304 66               [ 8]  687 	ld	h, (hl)
+    00000305 6F               [ 4]  688 	ld	l, a
+    00000306 79               [ 4]  689 	ld	a, c
+    00000307 C6 13            [ 8]  690 	add	a, #0x13
+    00000309 4F               [ 4]  691 	ld	c, a
+    0000030A 30 01            [12]  692 	jr	NC, 00222$
+    0000030C 04               [ 4]  693 	inc	b
+    0000030D                        694 00222$:
+    0000030D 0A               [ 8]  695 	ld	a, (bc)
+    0000030E 06 00            [ 8]  696 	ld	b, #0x00
+    00000310 4F               [ 4]  697 	ld	c, a
+    00000311 03               [ 8]  698 	inc	bc
+    00000312 09               [ 8]  699 	add	hl, bc
+    00000313 4E               [ 8]  700 	ld	c, (hl)
+    00000314 AF               [ 4]  701 	xor	a, a
+    00000315 47               [ 4]  702 	ld	b, a
+    00000316 FAr00r00         [16]  703 	ld	a, (_THIS)
+    00000319 5F               [ 4]  704 	ld	e, a
+    0000031A 21r01r00         [12]  705 	ld	hl, #_THIS + 1
+    0000031D 56               [ 8]  706 	ld	d, (hl)
+    0000031E CDr00r00         [24]  707 	call	_GetSpriteAnimation
+    00000321 F8 0E            [12]  708 	ldhl	sp,	#14
+    00000323 2A               [ 8]  709 	ld	a, (hl+)
+    00000324 66               [ 8]  710 	ld	h, (hl)
+    00000325 6F               [ 4]  711 	ld	l, a
+    00000326 79               [ 4]  712 	ld	a, c
+    00000327 22               [ 8]  713 	ld	(hl+), a
+    00000328 70               [ 8]  714 	ld	(hl), b
+    00000329                        715 00109$:
+                                    716 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:75: screen_y = THIS->y - scroll_y;
+    00000329 FAr00r00         [16]  717 	ld	a, (_THIS)
+    0000032C 4F               [ 4]  718 	ld	c, a
+    0000032D 21r01r00         [12]  719 	ld	hl, #_THIS + 1
+    00000330 46               [ 8]  720 	ld	b, (hl)
+                                    721 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:96: (THIS->visible) &&
+    00000331 21 21 00         [12]  722 	ld	hl, #0x0021
+    00000334 09               [ 8]  723 	add	hl, bc
+    00000335 7E               [ 8]  724 	ld	a, (hl)
+    00000336 E6 01            [ 8]  725 	and	a, #0x01
+    00000338 5F               [ 4]  726 	ld	e, a
+    00000339 B7               [ 4]  727 	or	a, a
+    0000033A CAr4Ar05         [16]  728 	jp	Z, 00121$
+                                    729 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:98: ((UINT16)(screen_x + MAXIMUM_SPRITES_SIZE) < (UINT16)(DEVICE_SCREEN_PX_WIDTH + (MAXIMUM_SPRITES_SIZE << 1))) &&
+    0000033D 21r00r00         [12]  730 	ld	hl, #_DrawSprite_screen_x_10000_294
+    00000340 2A               [ 8]  731 	ld	a, (hl+)
+    00000341 C6 20            [ 8]  732 	add	a, #0x20
+    00000343 5F               [ 4]  733 	ld	e, a
+    00000344 7E               [ 8]  734 	ld	a, (hl)
+    00000345 CE 00            [ 8]  735 	adc	a, #0x00
+    00000347 57               [ 4]  736 	ld	d, a
+    00000348 7B               [ 4]  737 	ld	a, e
+    00000349 D6 E0            [ 8]  738 	sub	a, #0xe0
+    0000034B 7A               [ 4]  739 	ld	a, d
+    0000034C DE 00            [ 8]  740 	sbc	a, #0x00
+    0000034E D2r4Ar05         [16]  741 	jp	NC, 00121$
+                                    742 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:99: ((UINT16)(screen_y + MAXIMUM_SPRITES_SIZE) < (UINT16)(DEVICE_SCREEN_PX_HEIGHT + (MAXIMUM_SPRITES_SIZE << 1)))
+    00000351 21r02r00         [12]  743 	ld	hl, #_DrawSprite_screen_y_10000_294
+    00000354 2A               [ 8]  744 	ld	a, (hl+)
+    00000355 C6 20            [ 8]  745 	add	a, #0x20
+    00000357 5F               [ 4]  746 	ld	e, a
+    00000358 7E               [ 8]  747 	ld	a, (hl)
+    00000359 CE 00            [ 8]  748 	adc	a, #0x00
+    0000035B 57               [ 4]  749 	ld	d, a
+    0000035C 7B               [ 4]  750 	ld	a, e
+    0000035D D6 D0            [ 8]  751 	sub	a, #0xd0
+    0000035F 7A               [ 4]  752 	ld	a, d
+    00000360 DE 00            [ 8]  753 	sbc	a, #0x00
+    00000362 D2r4Ar05         [16]  754 	jp	NC, 00121$
+                                    755 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:103: screen_x += (DEVICE_SPRITE_PX_OFFSET_X + SCREEN_SPR_OFFSET_X);
+    00000365 21r00r00         [12]  756 	ld	hl, #_DrawSprite_screen_x_10000_294
+    00000368 7E               [ 8]  757 	ld	a, (hl)
+    00000369 C6 08            [ 8]  758 	add	a, #0x08
+    0000036B 22               [ 8]  759 	ld	(hl+), a
+    0000036C 7E               [ 8]  760 	ld	a, (hl)
+    0000036D CE 00            [ 8]  761 	adc	a, #0x00
+    0000036F 77               [ 8]  762 	ld	(hl), a
+                                    763 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:104: screen_y += DEVICE_SPRITE_PX_OFFSET_Y;
+    00000370 21r02r00         [12]  764 	ld	hl, #_DrawSprite_screen_y_10000_294
+    00000373 7E               [ 8]  765 	ld	a, (hl)
+    00000374 C6 10            [ 8]  766 	add	a, #0x10
+    00000376 22               [ 8]  767 	ld	(hl+), a
+    00000377 7E               [ 8]  768 	ld	a, (hl)
+    00000378 CE 00            [ 8]  769 	adc	a, #0x00
+    0000037A 77               [ 8]  770 	ld	(hl), a
+                                    771 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:107: UINT8 __save = CURRENT_BANK;
+    0000037B F0r00            [12]  772 	ldh	a, (__current_bank + 0)
+    0000037D F8 00            [12]  773 	ldhl	sp,	#0
+    0000037F 77               [ 8]  774 	ld	(hl), a
+                                    775 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:75: screen_y = THIS->y - scroll_y;
+    00000380 FAr00r00         [16]  776 	ld	a, (_THIS)
+    00000383 4F               [ 4]  777 	ld	c, a
+    00000384 21r01r00         [12]  778 	ld	hl, #_THIS + 1
+    00000387 46               [ 8]  779 	ld	b, (hl)
+                                    780 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:108: SWITCH_ROM(THIS->mt_sprite_bank);
+    00000388 21 06 00         [12]  781 	ld	hl, #0x0006
+    0000038B 09               [ 8]  782 	add	hl, bc
+    0000038C 5D               [ 4]  783 	ld	e, l
+    0000038D 54               [ 4]  784 	ld	d, h
+    0000038E 1A               [ 8]  785 	ld	a, (de)
+    0000038F E0r00            [12]  786 	ldh	(__current_bank + 0), a
+    00000391 1A               [ 8]  787 	ld	a, (de)
+    00000392 EAr00r00         [16]  788 	ld	(#_rROMB0),a
+                                    789 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:109: switch(THIS->mirror) {
+    00000395 21 16 00         [12]  790 	ld	hl, #0x0016
+    00000398 09               [ 8]  791 	add	hl, bc
+    00000399 7E               [ 8]  792 	ld	a, (hl)
+    0000039A F8 01            [12]  793 	ldhl	sp,	#1
+    0000039C 77               [ 8]  794 	ld	(hl), a
+    0000039D 3E 04            [ 8]  795 	ld	a, #0x04
+    0000039F F8 01            [12]  796 	ldhl	sp,	#1
+    000003A1 96               [ 8]  797 	sub	a, (hl)
+    000003A2 DAr3Fr05         [16]  798 	jp	C, 00115$
+                                    799 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:110: case NO_MIRROR: next_oam_idx += move_metasprite_ex    (THIS->mt_sprite, THIS->first_tile,    THIS->attr_add, next_oam_idx, screen_x,                screen_y               ); break;
+    000003A5 FAr02r00         [16]  800 	ld	a, (#_DrawSprite_screen_y_10000_294)
+    000003A8 F8 02            [12]  801 	ldhl	sp,	#2
+    000003AA 77               [ 8]  802 	ld	(hl), a
+    000003AB FAr00r00         [16]  803 	ld	a, (#_DrawSprite_screen_x_10000_294)
+    000003AE F8 03            [12]  804 	ldhl	sp,	#3
+    000003B0 77               [ 8]  805 	ld	(hl), a
+    000003B1 FAr00r00         [16]  806 	ld	a, (#_next_oam_idx)
+    000003B4 F8 04            [12]  807 	ldhl	sp,	#4
+    000003B6 77               [ 8]  808 	ld	(hl), a
+                                    809 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:111: case H_MIRROR:  next_oam_idx += move_metasprite_flipy (THIS->mt_sprite, THIS->first_tile_H,  THIS->attr_add, next_oam_idx, screen_x,                screen_y + THIS->coll_h); break;
+    000003B7 FAr02r00         [16]  810 	ld	a, (#_DrawSprite_screen_y_10000_294)
+    000003BA F8 05            [12]  811 	ldhl	sp,	#5
+    000003BC 77               [ 8]  812 	ld	(hl), a
+                                    813 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:112: case V_MIRROR:  next_oam_idx += move_metasprite_flipx (THIS->mt_sprite, THIS->first_tile_V,  THIS->attr_add, next_oam_idx, screen_x + THIS->coll_w, screen_y               ); break;
+    000003BD FAr00r00         [16]  814 	ld	a, (#_DrawSprite_screen_x_10000_294)
+    000003C0 F8 06            [12]  815 	ldhl	sp,	#6
+    000003C2 77               [ 8]  816 	ld	(hl), a
+                                    817 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:90: THIS->mt_sprite = GetSpriteAnimation(THIS, VECTOR_GET(THIS->anim_data, THIS->anim_frame));
+    000003C3 21 14 00         [12]  818 	ld	hl, #0x0014
+    000003C6 09               [ 8]  819 	add	hl, bc
+    000003C7 E5               [16]  820 	push	hl
+    000003C8 7D               [ 4]  821 	ld	a, l
+    000003C9 F8 10            [12]  822 	ldhl	sp,	#16
+    000003CB 77               [ 8]  823 	ld	(hl), a
+    000003CC E1               [12]  824 	pop	hl
+    000003CD 7C               [ 4]  825 	ld	a, h
+    000003CE F8 0F            [12]  826 	ldhl	sp,	#15
+    000003D0 77               [ 8]  827 	ld	(hl), a
+                                    828 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:110: case NO_MIRROR: next_oam_idx += move_metasprite_ex    (THIS->mt_sprite, THIS->first_tile,    THIS->attr_add, next_oam_idx, screen_x,                screen_y               ); break;
+    000003D1 21 0E 00         [12]  829 	ld	hl, #0x000e
+    000003D4 09               [ 8]  830 	add	hl, bc
+    000003D5 5D               [ 4]  831 	ld	e, l
+    000003D6 54               [ 4]  832 	ld	d, h
+                                    833 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:111: case H_MIRROR:  next_oam_idx += move_metasprite_flipy (THIS->mt_sprite, THIS->first_tile_H,  THIS->attr_add, next_oam_idx, screen_x,                screen_y + THIS->coll_h); break;
+    000003D7 21 05 00         [12]  834 	ld	hl, #0x0005
+    000003DA 09               [ 8]  835 	add	hl, bc
+    000003DB E5               [16]  836 	push	hl
+    000003DC 7D               [ 4]  837 	ld	a, l
+    000003DD F8 09            [12]  838 	ldhl	sp,	#9
+    000003DF 77               [ 8]  839 	ld	(hl), a
+    000003E0 E1               [12]  840 	pop	hl
+    000003E1 7C               [ 4]  841 	ld	a, h
+    000003E2 F8 08            [12]  842 	ldhl	sp,	#8
+    000003E4 77               [ 8]  843 	ld	(hl), a
+                                    844 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:112: case V_MIRROR:  next_oam_idx += move_metasprite_flipx (THIS->mt_sprite, THIS->first_tile_V,  THIS->attr_add, next_oam_idx, screen_x + THIS->coll_w, screen_y               ); break;
+    000003E5 21 04 00         [12]  845 	ld	hl, #0x0004
+    000003E8 09               [ 8]  846 	add	hl, bc
+    000003E9 E5               [16]  847 	push	hl
+    000003EA 7D               [ 4]  848 	ld	a, l
+    000003EB F8 0B            [12]  849 	ldhl	sp,	#11
+    000003ED 77               [ 8]  850 	ld	(hl), a
+    000003EE E1               [12]  851 	pop	hl
+    000003EF 7C               [ 4]  852 	ld	a, h
+    000003F0 F8 0A            [12]  853 	ldhl	sp,	#10
+                                    854 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:110: case NO_MIRROR: next_oam_idx += move_metasprite_ex    (THIS->mt_sprite, THIS->first_tile,    THIS->attr_add, next_oam_idx, screen_x,                screen_y               ); break;
+    000003F2 22               [ 8]  855 	ld	(hl+), a
+    000003F3 1A               [ 8]  856 	ld	a, (de)
+    000003F4 77               [ 8]  857 	ld	(hl), a
+    000003F5 F8 0E            [12]  858 	ldhl	sp,#14
+    000003F7 2A               [ 8]  859 	ld	a, (hl+)
+    000003F8 5F               [ 4]  860 	ld	e, a
+    000003F9 56               [ 8]  861 	ld	d, (hl)
+    000003FA 1A               [ 8]  862 	ld	a, (de)
+    000003FB F8 0C            [12]  863 	ldhl	sp,	#12
+    000003FD 22               [ 8]  864 	ld	(hl+), a
+    000003FE 13               [ 8]  865 	inc	de
+    000003FF 1A               [ 8]  866 	ld	a, (de)
+                                    867 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:160: __current_metasprite = metasprite;
+    00000400 32               [ 8]  868 	ld	(hl-), a
+    00000401 2A               [ 8]  869 	ld	a, (hl+)
+    00000402 23               [ 8]  870 	inc	hl
+    00000403 32               [ 8]  871 	ld	(hl-), a
+    00000404 2A               [ 8]  872 	ld	a, (hl+)
+    00000405 23               [ 8]  873 	inc	hl
+    00000406 77               [ 8]  874 	ld	(hl), a
+                                    875 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:109: switch(THIS->mirror) {
+    00000407 F8 01            [12]  876 	ldhl	sp,	#1
+    00000409 5E               [ 8]  877 	ld	e, (hl)
+    0000040A 16 00            [ 8]  878 	ld	d, #0x00
+    0000040C 21r16r04         [12]  879 	ld	hl, #00223$
+    0000040F 19               [ 8]  880 	add	hl, de
+    00000410 19               [ 8]  881 	add	hl, de
+    00000411 5E               [ 8]  882 	ld	e, (hl)
+    00000412 23               [ 8]  883 	inc	hl
+    00000413 66               [ 8]  884 	ld	h, (hl)
+    00000414 6B               [ 4]  885 	ld	l, e
+    00000415 E9               [ 4]  886 	jp	(hl)
+    00000416                        887 00223$:
+    00000416r20r04                  888 	.dw	00110$
+    00000418r4Dr04                  889 	.dw	00111$
+    0000041Ar95r04                  890 	.dw	00112$
+    0000041CrD3r04                  891 	.dw	00114$
+    0000041ErD3r04                  892 	.dw	00114$
+                                    893 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:110: case NO_MIRROR: next_oam_idx += move_metasprite_ex    (THIS->mt_sprite, THIS->first_tile,    THIS->attr_add, next_oam_idx, screen_x,                screen_y               ); break;
+    00000420                        894 00110$:
+    00000420 F8 02            [12]  895 	ldhl	sp,	#2
+    00000422 2A               [ 8]  896 	ld	a, (hl+)
+    00000423 57               [ 4]  897 	ld	d, a
+    00000424 5E               [ 8]  898 	ld	e, (hl)
+    00000425 F8 0B            [12]  899 	ldhl	sp,	#11
+    00000427 7E               [ 8]  900 	ld	a, (hl)
+    00000428 EAr00r00         [16]  901 	ld	(#___current_base_prop),a
+    0000042B 21 0A 00         [12]  902 	ld	hl, #0x000a
+    0000042E 09               [ 8]  903 	add	hl, bc
+    0000042F 7E               [ 8]  904 	ld	a, (hl)
+    00000430 EAr00r00         [16]  905 	ld	(#___current_base_tile),a
+                                    906 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:160: __current_metasprite = metasprite;
+    00000433 F8 0E            [12]  907 	ldhl	sp,	#14
+    00000435 7E               [ 8]  908 	ld	a, (hl)
+    00000436 EAr00r00         [16]  909 	ld	(#___current_metasprite),a
+    00000439 F8 0F            [12]  910 	ldhl	sp,	#15
+    0000043B 7E               [ 8]  911 	ld	a, (hl)
+    0000043C EAr01r00         [16]  912 	ld	(#___current_metasprite + 1),a
+                                    913 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:163: return __move_metasprite(base_sprite, (y << 8) | (uint8_t)x);
+    0000043F F8 04            [12]  914 	ldhl	sp,	#4
+    00000441 7E               [ 8]  915 	ld	a, (hl)
+    00000442 CDr00r00         [24]  916 	call	___move_metasprite
+                                    917 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:110: case NO_MIRROR: next_oam_idx += move_metasprite_ex    (THIS->mt_sprite, THIS->first_tile,    THIS->attr_add, next_oam_idx, screen_x,                screen_y               ); break;
+    00000445 21r00r00         [12]  918 	ld	hl, #_next_oam_idx
+    00000448 86               [ 8]  919 	add	a, (hl)
+    00000449 77               [ 8]  920 	ld	(hl), a
+    0000044A C3r3Fr05         [16]  921 	jp	00115$
+                                    922 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:111: case H_MIRROR:  next_oam_idx += move_metasprite_flipy (THIS->mt_sprite, THIS->first_tile_H,  THIS->attr_add, next_oam_idx, screen_x,                screen_y + THIS->coll_h); break;
+    0000044D                        923 00111$:
+    0000044D F8 07            [12]  924 	ldhl	sp,#7
+    0000044F 2A               [ 8]  925 	ld	a, (hl+)
+    00000450 5F               [ 4]  926 	ld	e, a
+    00000451 56               [ 8]  927 	ld	d, (hl)
+    00000452 1A               [ 8]  928 	ld	a, (de)
+    00000453 F8 05            [12]  929 	ldhl	sp,	#5
+    00000455 86               [ 8]  930 	add	a, (hl)
+    00000456 2B               [ 8]  931 	dec	hl
+    00000457 2B               [ 8]  932 	dec	hl
+    00000458 57               [ 4]  933 	ld	d, a
+    00000459 5E               [ 8]  934 	ld	e, (hl)
+    0000045A F8 0B            [12]  935 	ldhl	sp,	#11
+    0000045C 7E               [ 8]  936 	ld	a, (hl)
+    0000045D EAr00r00         [16]  937 	ld	(#___current_base_prop),a
+    00000460 21 0B 00         [12]  938 	ld	hl, #0x000b
+    00000463 09               [ 8]  939 	add	hl, bc
+    00000464 7E               [ 8]  940 	ld	a, (hl)
+    00000465 EAr00r00         [16]  941 	ld	(#___current_base_tile),a
+    00000468 F8 0C            [12]  942 	ldhl	sp,	#12
+    0000046A 2A               [ 8]  943 	ld	a, (hl+)
+    0000046B 4E               [ 8]  944 	ld	c, (hl)
+    0000046C F8 04            [12]  945 	ldhl	sp,	#4
+    0000046E 6E               [ 8]  946 	ld	l, (hl)
+                                    947 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:241: __current_metasprite = metasprite;
+    0000046F EAr00r00         [16]  948 	ld	(___current_metasprite), a
+    00000472 79               [ 4]  949 	ld	a, c
+    00000473 EAr01r00         [16]  950 	ld	(___current_metasprite + 1), a
+                                    951 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:244: return __move_metasprite_flipy(base_sprite, ((y - ((LCDC_REG & LCDCF_OBJ16) ? 16u : 8u)) << 8) | x);
+    00000476 D5               [16]  952 	push	de
+    00000477 F0r00            [12]  953 	ldh	a, (_LCDC_REG + 0)
+    00000479 4F               [ 4]  954 	ld	c, a
+    0000047A F1               [12]  955 	pop	af
+    0000047B CB 51            [ 8]  956 	bit	2, c
+    0000047D 28 05            [12]  957 	jr	Z, 00131$
+    0000047F 01 10 00         [12]  958 	ld	bc, #0x0010
+    00000482 18 03            [12]  959 	jr	00132$
+    00000484                        960 00131$:
+    00000484 01 08 00         [12]  961 	ld	bc, #0x0008
+    00000487                        962 00132$:
+    00000487 91               [ 4]  963 	sub	a, c
+    00000488 57               [ 4]  964 	ld	d, a
+    00000489 7D               [ 4]  965 	ld	a, l
+    0000048A CDr00r00         [24]  966 	call	___move_metasprite_flipy
+                                    967 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:111: case H_MIRROR:  next_oam_idx += move_metasprite_flipy (THIS->mt_sprite, THIS->first_tile_H,  THIS->attr_add, next_oam_idx, screen_x,                screen_y + THIS->coll_h); break;
+    0000048D 21r00r00         [12]  968 	ld	hl, #_next_oam_idx
+    00000490 86               [ 8]  969 	add	a, (hl)
+    00000491 77               [ 8]  970 	ld	(hl), a
+    00000492 C3r3Fr05         [16]  971 	jp	00115$
+                                    972 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:112: case V_MIRROR:  next_oam_idx += move_metasprite_flipx (THIS->mt_sprite, THIS->first_tile_V,  THIS->attr_add, next_oam_idx, screen_x + THIS->coll_w, screen_y               ); break;
+    00000495                        973 00112$:
+    00000495 F8 02            [12]  974 	ldhl	sp,	#2
+    00000497 7E               [ 8]  975 	ld	a, (hl)
+    00000498 F8 0D            [12]  976 	ldhl	sp,	#13
+    0000049A 77               [ 8]  977 	ld	(hl), a
+    0000049B F8 09            [12]  978 	ldhl	sp,#9
+    0000049D 2A               [ 8]  979 	ld	a, (hl+)
+    0000049E 5F               [ 4]  980 	ld	e, a
+    0000049F 56               [ 8]  981 	ld	d, (hl)
+    000004A0 1A               [ 8]  982 	ld	a, (de)
+    000004A1 F8 06            [12]  983 	ldhl	sp,	#6
+    000004A3 86               [ 8]  984 	add	a, (hl)
+    000004A4 5F               [ 4]  985 	ld	e, a
+    000004A5 F8 0B            [12]  986 	ldhl	sp,	#11
+    000004A7 7E               [ 8]  987 	ld	a, (hl)
+    000004A8 EAr00r00         [16]  988 	ld	(#___current_base_prop),a
+    000004AB 21 0C 00         [12]  989 	ld	hl, #0x000c
+    000004AE 09               [ 8]  990 	add	hl, bc
+    000004AF 7E               [ 8]  991 	ld	a, (hl)
+    000004B0 EAr00r00         [16]  992 	ld	(#___current_base_tile),a
+                                    993 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:200: __current_metasprite = metasprite;
+    000004B3 F8 0E            [12]  994 	ldhl	sp,	#14
+    000004B5 7E               [ 8]  995 	ld	a, (hl)
+    000004B6 EAr00r00         [16]  996 	ld	(#___current_metasprite),a
+    000004B9 F8 0F            [12]  997 	ldhl	sp,	#15
+    000004BB 7E               [ 8]  998 	ld	a, (hl)
+    000004BC EAr01r00         [16]  999 	ld	(#___current_metasprite + 1),a
+                                   1000 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:203: return __move_metasprite_flipx(base_sprite, (y << 8) | (uint8_t)(x - 8u));
+    000004BF F8 0D            [12] 1001 	ldhl	sp,	#13
+    000004C1 56               [ 8] 1002 	ld	d, (hl)
+    000004C2 7B               [ 4] 1003 	ld	a, e
+    000004C3 C6 F8            [ 8] 1004 	add	a, #0xf8
+    000004C5 5F               [ 4] 1005 	ld	e, a
+    000004C6 F8 04            [12] 1006 	ldhl	sp,	#4
+    000004C8 7E               [ 8] 1007 	ld	a, (hl)
+    000004C9 CDr00r00         [24] 1008 	call	___move_metasprite_flipx
+                                   1009 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:112: case V_MIRROR:  next_oam_idx += move_metasprite_flipx (THIS->mt_sprite, THIS->first_tile_V,  THIS->attr_add, next_oam_idx, screen_x + THIS->coll_w, screen_y               ); break;
+    000004CC 21r00r00         [12] 1010 	ld	hl, #_next_oam_idx
+    000004CF 86               [ 8] 1011 	add	a, (hl)
+    000004D0 77               [ 8] 1012 	ld	(hl), a
+    000004D1 18 6C            [12] 1013 	jr	00115$
+                                   1014 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:114: case HV_MIRROR: next_oam_idx += move_metasprite_flipxy(THIS->mt_sprite, THIS->first_tile_HV, THIS->attr_add, next_oam_idx, screen_x + THIS->coll_w, screen_y + THIS->coll_h); break;
+    000004D3                       1015 00114$:
+    000004D3 F8 07            [12] 1016 	ldhl	sp,#7
+    000004D5 2A               [ 8] 1017 	ld	a, (hl+)
+    000004D6 5F               [ 4] 1018 	ld	e, a
+    000004D7 56               [ 8] 1019 	ld	d, (hl)
+    000004D8 1A               [ 8] 1020 	ld	a, (de)
+    000004D9 F8 05            [12] 1021 	ldhl	sp,	#5
+    000004DB 86               [ 8] 1022 	add	a, (hl)
+    000004DC F8 0F            [12] 1023 	ldhl	sp,	#15
+    000004DE 77               [ 8] 1024 	ld	(hl), a
+    000004DF F8 09            [12] 1025 	ldhl	sp,#9
+    000004E1 2A               [ 8] 1026 	ld	a, (hl+)
+    000004E2 5F               [ 4] 1027 	ld	e, a
+    000004E3 56               [ 8] 1028 	ld	d, (hl)
+    000004E4 1A               [ 8] 1029 	ld	a, (de)
+    000004E5 F8 06            [12] 1030 	ldhl	sp,	#6
+    000004E7 86               [ 8] 1031 	add	a, (hl)
+    000004E8 F8 0E            [12] 1032 	ldhl	sp,	#14
+    000004EA 77               [ 8] 1033 	ld	(hl), a
+    000004EB F8 0B            [12] 1034 	ldhl	sp,	#11
+    000004ED 7E               [ 8] 1035 	ld	a, (hl)
+    000004EE EAr00r00         [16] 1036 	ld	(#___current_base_prop),a
+    000004F1 21 0D 00         [12] 1037 	ld	hl, #0x000d
+    000004F4 09               [ 8] 1038 	add	hl, bc
+    000004F5 7E               [ 8] 1039 	ld	a, (hl)
+    000004F6 EAr00r00         [16] 1040 	ld	(#___current_base_tile),a
+    000004F9 F8 0C            [12] 1041 	ldhl	sp,	#12
+    000004FB 2A               [ 8] 1042 	ld	a, (hl+)
+    000004FC 46               [ 8] 1043 	ld	b, (hl)
+    000004FD F8 04            [12] 1044 	ldhl	sp,	#4
+    000004FF 4E               [ 8] 1045 	ld	c, (hl)
+                                   1046 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:281: __current_metasprite = metasprite;
+    00000500 21r00r00         [12] 1047 	ld	hl, #___current_metasprite
+    00000503 22               [ 8] 1048 	ld	(hl+), a
+    00000504 70               [ 8] 1049 	ld	(hl), b
+                                   1050 ;c:\users\franc\documents\projets\perso\gameboyprojects\gbdk\include\gb\metasprites.h:284: return __move_metasprite_flipxy(base_sprite, ((y - ((LCDC_REG & LCDCF_OBJ16) ? 16u : 8u)) << 8) | (uint8_t)(x - 8));
+    00000505 F8 0F            [12] 1051 	ldhl	sp,	#15
+    00000507 46               [ 8] 1052 	ld	b, (hl)
+    00000508 F0r00            [12] 1053 	ldh	a, (_LCDC_REG + 0)
+    0000050A CB 57            [ 8] 1054 	bit	2, a
+    0000050C 28 09            [12] 1055 	jr	Z, 00133$
+    0000050E F8 0A            [12] 1056 	ldhl	sp,	#10
+    00000510 3E 10            [ 8] 1057 	ld	a, #0x10
+    00000512 22               [ 8] 1058 	ld	(hl+), a
+    00000513 AF               [ 4] 1059 	xor	a, a
+    00000514 77               [ 8] 1060 	ld	(hl), a
+    00000515 18 07            [12] 1061 	jr	00134$
+    00000517                       1062 00133$:
+    00000517 F8 0A            [12] 1063 	ldhl	sp,	#10
+    00000519 3E 08            [ 8] 1064 	ld	a, #0x08
+    0000051B 22               [ 8] 1065 	ld	(hl+), a
+    0000051C AF               [ 4] 1066 	xor	a, a
+    0000051D 77               [ 8] 1067 	ld	(hl), a
+    0000051E                       1068 00134$:
+    0000051E 58               [ 4] 1069 	ld	e, b
+    0000051F 16 00            [ 8] 1070 	ld	d, #0x00
+    00000521 F8 0A            [12] 1071 	ldhl	sp,	#10
+    00000523 2A               [ 8] 1072 	ld	a,	(hl+)
+    00000524 66               [ 8] 1073 	ld	h, (hl)
+    00000525 6F               [ 4] 1074 	ld	l, a
+    00000526 7B               [ 4] 1075 	ld	a, e
+    00000527 95               [ 4] 1076 	sub	a, l
+    00000528 5F               [ 4] 1077 	ld	e, a
+    00000529 7A               [ 4] 1078 	ld	a, d
+    0000052A 9C               [ 4] 1079 	sbc	a, h
+    0000052B F8 0D            [12] 1080 	ldhl	sp,	#13
+    0000052D 32               [ 8] 1081 	ld	(hl-), a
+    0000052E 73               [ 8] 1082 	ld	(hl), e
+    0000052F 2A               [ 8] 1083 	ld	a, (hl+)
+    00000530 23               [ 8] 1084 	inc	hl
+    00000531 57               [ 4] 1085 	ld	d, a
+    00000532 7E               [ 8] 1086 	ld	a, (hl)
+    00000533 C6 F8            [ 8] 1087 	add	a, #0xf8
+    00000535 5F               [ 4] 1088 	ld	e, a
+    00000536 79               [ 4] 1089 	ld	a, c
+    00000537 CDr00r00         [24] 1090 	call	___move_metasprite_flipxy
+                                   1091 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:114: case HV_MIRROR: next_oam_idx += move_metasprite_flipxy(THIS->mt_sprite, THIS->first_tile_HV, THIS->attr_add, next_oam_idx, screen_x + THIS->coll_w, screen_y + THIS->coll_h); break;
+    0000053A 21r00r00         [12] 1092 	ld	hl, #_next_oam_idx
+    0000053D 86               [ 8] 1093 	add	a, (hl)
+    0000053E 77               [ 8] 1094 	ld	(hl), a
+                                   1095 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:115: }
+    0000053F                       1096 00115$:
+                                   1097 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:116: SWITCH_ROM(__save);
+    0000053F F8 00            [12] 1098 	ldhl	sp,	#0
+    00000541 7E               [ 8] 1099 	ld	a, (hl)
+    00000542 E0r00            [12] 1100 	ldh	(__current_bank + 0), a
+    00000544 7E               [ 8] 1101 	ld	a, (hl)
+    00000545 EAr00r00         [16] 1102 	ld	(#_rROMB0),a
+    00000548 18 77            [12] 1103 	jr	00129$
+    0000054A                       1104 00121$:
+                                   1105 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:120: (!(THIS->persistent)) && 
+    0000054A 21 21 00         [12] 1106 	ld	hl, #0x0021
+    0000054D 09               [ 8] 1107 	add	hl, bc
+    0000054E 7E               [ 8] 1108 	ld	a, (hl)
+    0000054F 0F               [ 4] 1109 	rrca
+    00000550 E6 01            [ 8] 1110 	and	a, #0x01
+    00000552 20 6D            [12] 1111 	jr	NZ, 00129$
+                                   1112 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:122: ((UINT16)(screen_x + THIS->lim_x + 16u) > (UINT16)((THIS->lim_x << 1) + (DEVICE_SCREEN_PX_WIDTH + (16u << 1)))) || 
+    00000554 21 19 00         [12] 1113 	ld	hl, #0x0019
+    00000557 09               [ 8] 1114 	add	hl, bc
+    00000558 5D               [ 4] 1115 	ld	e, l
+    00000559 54               [ 4] 1116 	ld	d, h
+    0000055A 1A               [ 8] 1117 	ld	a, (de)
+    0000055B F8 0C            [12] 1118 	ldhl	sp,	#12
+    0000055D 22               [ 8] 1119 	ld	(hl+), a
+    0000055E 13               [ 8] 1120 	inc	de
+    0000055F 1A               [ 8] 1121 	ld	a, (de)
+    00000560 77               [ 8] 1122 	ld	(hl), a
+    00000561 F8 0C            [12] 1123 	ldhl	sp,#12
+    00000563 2A               [ 8] 1124 	ld	a, (hl+)
+    00000564 5F               [ 4] 1125 	ld	e, a
+    00000565 56               [ 8] 1126 	ld	d, (hl)
+    00000566 21r00r00         [12] 1127 	ld	hl, #_DrawSprite_screen_x_10000_294
+    00000569 2A               [ 8] 1128 	ld	a,	(hl+)
+    0000056A 66               [ 8] 1129 	ld	h, (hl)
+    0000056B 6F               [ 4] 1130 	ld	l, a
+    0000056C 19               [ 8] 1131 	add	hl, de
+    0000056D 5D               [ 4] 1132 	ld	e, l
+    0000056E 54               [ 4] 1133 	ld	d, h
+    0000056F 21 10 00         [12] 1134 	ld	hl, #0x0010
+    00000572 19               [ 8] 1135 	add	hl, de
+    00000573 E5               [16] 1136 	push	hl
+    00000574 7D               [ 4] 1137 	ld	a, l
+    00000575 F8 10            [12] 1138 	ldhl	sp,	#16
+    00000577 77               [ 8] 1139 	ld	(hl), a
+    00000578 E1               [12] 1140 	pop	hl
+    00000579 7C               [ 4] 1141 	ld	a, h
+    0000057A F8 0F            [12] 1142 	ldhl	sp,	#15
+    0000057C 77               [ 8] 1143 	ld	(hl), a
+    0000057D F8 0C            [12] 1144 	ldhl	sp,	#12
+    0000057F 2A               [ 8] 1145 	ld	a, (hl+)
+    00000580 5E               [ 8] 1146 	ld	e, (hl)
+    00000581 87               [ 4] 1147 	add	a, a
+    00000582 CB 13            [ 8] 1148 	rl	e
+    00000584 C6 C0            [ 8] 1149 	add	a, #0xc0
+    00000586 57               [ 4] 1150 	ld	d, a
+    00000587 30 01            [12] 1151 	jr	NC, 00227$
+    00000589 1C               [ 4] 1152 	inc	e
+    0000058A                       1153 00227$:
+    0000058A 23               [ 8] 1154 	inc	hl
+    0000058B 7A               [ 4] 1155 	ld	a, d
+    0000058C 96               [ 8] 1156 	sub	a, (hl)
+    0000058D 23               [ 8] 1157 	inc	hl
+    0000058E 7B               [ 4] 1158 	ld	a, e
+    0000058F 9E               [ 8] 1159 	sbc	a, (hl)
+    00000590 38 24            [12] 1160 	jr	C, 00116$
+                                   1161 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:123: ((UINT16)(screen_y + THIS->lim_y + 16u) > (UINT16)((THIS->lim_y << 1) + (DEVICE_SCREEN_PX_HEIGHT + (16u << 1))))
+    00000592 21 1B 00         [12] 1162 	ld	hl, #0x001b
+    00000595 09               [ 8] 1163 	add	hl, bc
+    00000596 2A               [ 8] 1164 	ld	a, (hl+)
+    00000597 4F               [ 4] 1165 	ld	c, a
+    00000598 46               [ 8] 1166 	ld	b, (hl)
+    00000599 79               [ 4] 1167 	ld	a, c
+    0000059A 21r02r00         [12] 1168 	ld	hl, #_DrawSprite_screen_y_10000_294
+    0000059D 86               [ 8] 1169 	add	a, (hl)
+    0000059E 23               [ 8] 1170 	inc	hl
+    0000059F 5F               [ 4] 1171 	ld	e, a
+    000005A0 78               [ 4] 1172 	ld	a, b
+    000005A1 8E               [ 8] 1173 	adc	a, (hl)
+    000005A2 57               [ 4] 1174 	ld	d, a
+    000005A3 21 10 00         [12] 1175 	ld	hl, #0x0010
+    000005A6 19               [ 8] 1176 	add	hl, de
+    000005A7 5D               [ 4] 1177 	ld	e, l
+    000005A8 54               [ 4] 1178 	ld	d, h
+    000005A9 69               [ 4] 1179 	ld	l, c
+    000005AA 60               [ 4] 1180 	ld	h, b
+    000005AB 29               [ 8] 1181 	add	hl, hl
+    000005AC 01 B0 00         [12] 1182 	ld	bc, #0x00b0
+    000005AF 09               [ 8] 1183 	add	hl, bc
+    000005B0 7D               [ 4] 1184 	ld	a, l
+    000005B1 93               [ 4] 1185 	sub	a, e
+    000005B2 7C               [ 4] 1186 	ld	a, h
+    000005B3 9A               [ 4] 1187 	sbc	a, d
+    000005B4 30 0B            [12] 1188 	jr	NC, 00129$
+    000005B6                       1189 00116$:
+                                   1190 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:126: return SpriteManagerRemoveSprite(THIS);
+    000005B6 FAr00r00         [16] 1191 	ld	a, (_THIS)
+    000005B9 5F               [ 4] 1192 	ld	e, a
+    000005BA 21r01r00         [12] 1193 	ld	hl, #_THIS + 1
+    000005BD 56               [ 8] 1194 	ld	d, (hl)
+    000005BE CDr00r00         [24] 1195 	call	_SpriteManagerRemoveSprite
+    000005C1                       1196 00129$:
+                                   1197 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:130: }
+    000005C1 E8 10            [16] 1198 	add	sp, #16
+    000005C3 C9               [16] 1199 	ret
+                                   1200 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:132: UINT8 CheckCollision(Sprite* sprite1, Sprite* sprite2) {
+                                   1201 ;	---------------------------------
+                                   1202 ; Function CheckCollision
+                                   1203 ; ---------------------------------
+    000005C4                       1204 _CheckCollision::
+    000005C4 E8 F8            [16] 1205 	add	sp, #-8
+    000005C6 F8 06            [12] 1206 	ldhl	sp,	#6
+    000005C8 7B               [ 4] 1207 	ld	a, e
+    000005C9 22               [ 8] 1208 	ld	(hl+), a
+    000005CA 72               [ 8] 1209 	ld	(hl), d
+    000005CB F8 04            [12] 1210 	ldhl	sp,	#4
+    000005CD 79               [ 4] 1211 	ld	a, c
+    000005CE 22               [ 8] 1212 	ld	(hl+), a
+                                   1213 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:133: if ((sprite1->x + sprite1->coll_w) < sprite2->x) return 0;
+    000005CF 78               [ 4] 1214 	ld	a, b
+    000005D0 22               [ 8] 1215 	ld	(hl+), a
+    000005D1 2A               [ 8] 1216 	ld	a, (hl+)
+    000005D2 5F               [ 4] 1217 	ld	e, a
+    000005D3 56               [ 8] 1218 	ld	d, (hl)
+    000005D4 1A               [ 8] 1219 	ld	a, (de)
+    000005D5 F8 00            [12] 1220 	ldhl	sp,	#0
+    000005D7 22               [ 8] 1221 	ld	(hl+), a
+    000005D8 13               [ 8] 1222 	inc	de
+    000005D9 1A               [ 8] 1223 	ld	a, (de)
+    000005DA 77               [ 8] 1224 	ld	(hl), a
+    000005DB F8 06            [12] 1225 	ldhl	sp,#6
+    000005DD 2A               [ 8] 1226 	ld	a, (hl+)
+    000005DE 5F               [ 4] 1227 	ld	e, a
+    000005DF 56               [ 8] 1228 	ld	d, (hl)
+    000005E0 21 04 00         [12] 1229 	ld	hl, #0x0004
+    000005E3 19               [ 8] 1230 	add	hl, de
+    000005E4 4D               [ 4] 1231 	ld	c, l
+    000005E5 44               [ 4] 1232 	ld	b, h
+    000005E6 0A               [ 8] 1233 	ld	a, (bc)
+    000005E7 16 00            [ 8] 1234 	ld	d, #0x00
+    000005E9 5F               [ 4] 1235 	ld	e, a
+    000005EA E1               [12] 1236 	pop	hl
+    000005EB E5               [16] 1237 	push	hl
+    000005EC 19               [ 8] 1238 	add	hl, de
+    000005ED 4D               [ 4] 1239 	ld	c, l
+    000005EE 44               [ 4] 1240 	ld	b, h
+    000005EF F8 04            [12] 1241 	ldhl	sp,#4
+    000005F1 2A               [ 8] 1242 	ld	a, (hl+)
+    000005F2 5F               [ 4] 1243 	ld	e, a
+    000005F3 56               [ 8] 1244 	ld	d, (hl)
+    000005F4 1A               [ 8] 1245 	ld	a, (de)
+    000005F5 F8 02            [12] 1246 	ldhl	sp,	#2
+    000005F7 22               [ 8] 1247 	ld	(hl+), a
+    000005F8 13               [ 8] 1248 	inc	de
+    000005F9 1A               [ 8] 1249 	ld	a, (de)
+    000005FA 32               [ 8] 1250 	ld	(hl-), a
+    000005FB 79               [ 4] 1251 	ld	a, c
+    000005FC 96               [ 8] 1252 	sub	a, (hl)
+    000005FD 23               [ 8] 1253 	inc	hl
+    000005FE 78               [ 4] 1254 	ld	a, b
+    000005FF 9E               [ 8] 1255 	sbc	a, (hl)
+    00000600 30 04            [12] 1256 	jr	NC, 00102$
+    00000602 AF               [ 4] 1257 	xor	a, a
+    00000603 C3r88r06         [16] 1258 	jp	00109$
+    00000606                       1259 00102$:
+                                   1260 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:134: if ((sprite2->x + sprite2->coll_w) < sprite1->x) return 0;
+    00000606 F8 04            [12] 1261 	ldhl	sp,#4
+    00000608 2A               [ 8] 1262 	ld	a, (hl+)
+    00000609 5F               [ 4] 1263 	ld	e, a
+    0000060A 56               [ 8] 1264 	ld	d, (hl)
+    0000060B 21 04 00         [12] 1265 	ld	hl, #0x0004
+    0000060E 19               [ 8] 1266 	add	hl, de
+    0000060F 4D               [ 4] 1267 	ld	c, l
+    00000610 44               [ 4] 1268 	ld	b, h
+    00000611 0A               [ 8] 1269 	ld	a, (bc)
+    00000612 16 00            [ 8] 1270 	ld	d, #0x00
+    00000614 5F               [ 4] 1271 	ld	e, a
+    00000615 F8 02            [12] 1272 	ldhl	sp,	#2
+    00000617 2A               [ 8] 1273 	ld	a,	(hl+)
+    00000618 66               [ 8] 1274 	ld	h, (hl)
+    00000619 6F               [ 4] 1275 	ld	l, a
+    0000061A 19               [ 8] 1276 	add	hl, de
+    0000061B 4D               [ 4] 1277 	ld	c, l
+    0000061C 44               [ 4] 1278 	ld	b, h
+    0000061D F8 00            [12] 1279 	ldhl	sp,	#0
+    0000061F 79               [ 4] 1280 	ld	a, c
+    00000620 96               [ 8] 1281 	sub	a, (hl)
+    00000621 23               [ 8] 1282 	inc	hl
+    00000622 78               [ 4] 1283 	ld	a, b
+    00000623 9E               [ 8] 1284 	sbc	a, (hl)
+    00000624 30 03            [12] 1285 	jr	NC, 00104$
+    00000626 AF               [ 4] 1286 	xor	a, a
+    00000627 18 5F            [12] 1287 	jr	00109$
+    00000629                       1288 00104$:
+                                   1289 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:135: if ((sprite1->y + sprite1->coll_h) < sprite2->y) return 0;
+    00000629 F8 06            [12] 1290 	ldhl	sp,	#6
+    0000062B 2A               [ 8] 1291 	ld	a, (hl+)
+    0000062C 4F               [ 4] 1292 	ld	c, a
+    0000062D 46               [ 8] 1293 	ld	b, (hl)
+    0000062E 03               [ 8] 1294 	inc	bc
+    0000062F 03               [ 8] 1295 	inc	bc
+    00000630 59               [ 4] 1296 	ld	e, c
+    00000631 50               [ 4] 1297 	ld	d, b
+    00000632 1A               [ 8] 1298 	ld	a, (de)
+    00000633 F8 00            [12] 1299 	ldhl	sp,	#0
+    00000635 22               [ 8] 1300 	ld	(hl+), a
+    00000636 13               [ 8] 1301 	inc	de
+    00000637 1A               [ 8] 1302 	ld	a, (de)
+    00000638 77               [ 8] 1303 	ld	(hl), a
+    00000639 F8 06            [12] 1304 	ldhl	sp,#6
+    0000063B 2A               [ 8] 1305 	ld	a, (hl+)
+    0000063C 5F               [ 4] 1306 	ld	e, a
+    0000063D 56               [ 8] 1307 	ld	d, (hl)
+    0000063E 21 05 00         [12] 1308 	ld	hl, #0x0005
+    00000641 19               [ 8] 1309 	add	hl, de
+    00000642 4D               [ 4] 1310 	ld	c, l
+    00000643 44               [ 4] 1311 	ld	b, h
+    00000644 0A               [ 8] 1312 	ld	a, (bc)
+    00000645 16 00            [ 8] 1313 	ld	d, #0x00
+    00000647 5F               [ 4] 1314 	ld	e, a
+    00000648 E1               [12] 1315 	pop	hl
+    00000649 E5               [16] 1316 	push	hl
+    0000064A 19               [ 8] 1317 	add	hl, de
+    0000064B E5               [16] 1318 	push	hl
+    0000064C 7D               [ 4] 1319 	ld	a, l
+    0000064D F8 04            [12] 1320 	ldhl	sp,	#4
+    0000064F 77               [ 8] 1321 	ld	(hl), a
+    00000650 E1               [12] 1322 	pop	hl
+    00000651 7C               [ 4] 1323 	ld	a, h
+    00000652 F8 03            [12] 1324 	ldhl	sp,	#3
+    00000654 22               [ 8] 1325 	ld	(hl+), a
+    00000655 2A               [ 8] 1326 	ld	a, (hl+)
+    00000656 66               [ 8] 1327 	ld	h, (hl)
+    00000657 6F               [ 4] 1328 	ld	l, a
+    00000658 23               [ 8] 1329 	inc	hl
+    00000659 23               [ 8] 1330 	inc	hl
+    0000065A 2A               [ 8] 1331 	ld	a, (hl+)
+    0000065B 4F               [ 4] 1332 	ld	c, a
+    0000065C 46               [ 8] 1333 	ld	b, (hl)
+    0000065D F8 02            [12] 1334 	ldhl	sp,	#2
+    0000065F 2A               [ 8] 1335 	ld	a, (hl+)
+    00000660 91               [ 4] 1336 	sub	a, c
+    00000661 7E               [ 8] 1337 	ld	a, (hl)
+    00000662 98               [ 4] 1338 	sbc	a, b
+    00000663 30 03            [12] 1339 	jr	NC, 00106$
+    00000665 AF               [ 4] 1340 	xor	a, a
+    00000666 18 20            [12] 1341 	jr	00109$
+    00000668                       1342 00106$:
+                                   1343 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:136: if ((sprite2->y + sprite2->coll_h) < sprite1->y) return 0;
+    00000668 F8 04            [12] 1344 	ldhl	sp,#4
+    0000066A 2A               [ 8] 1345 	ld	a, (hl+)
+    0000066B 5F               [ 4] 1346 	ld	e, a
+    0000066C 56               [ 8] 1347 	ld	d, (hl)
+    0000066D 21 05 00         [12] 1348 	ld	hl, #0x0005
+    00000670 19               [ 8] 1349 	add	hl, de
+    00000671 5D               [ 4] 1350 	ld	e, l
+    00000672 54               [ 4] 1351 	ld	d, h
+    00000673 1A               [ 8] 1352 	ld	a, (de)
+    00000674 6F               [ 4] 1353 	ld	l, a
+    00000675 26 00            [ 8] 1354 	ld	h, #0x00
+    00000677 09               [ 8] 1355 	add	hl, bc
+    00000678 4D               [ 4] 1356 	ld	c, l
+    00000679 44               [ 4] 1357 	ld	b, h
+    0000067A F8 00            [12] 1358 	ldhl	sp,	#0
+    0000067C 79               [ 4] 1359 	ld	a, c
+    0000067D 96               [ 8] 1360 	sub	a, (hl)
+    0000067E 23               [ 8] 1361 	inc	hl
+    0000067F 78               [ 4] 1362 	ld	a, b
+    00000680 9E               [ 8] 1363 	sbc	a, (hl)
+    00000681 30 03            [12] 1364 	jr	NC, 00108$
+    00000683 AF               [ 4] 1365 	xor	a, a
+    00000684 18 02            [12] 1366 	jr	00109$
+    00000686                       1367 00108$:
+                                   1368 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:137: return 1;
+    00000686 3E 01            [ 8] 1369 	ld	a, #0x01
+    00000688                       1370 00109$:
+                                   1371 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/Sprite.c:138: }
+    00000688 E8 08            [16] 1372 	add	sp, #8
+    0000068A C9               [16] 1373 	ret
+                                   1374 	.area _CODE
+                                   1375 	.area _INITIALIZER
+                                   1376 	.area _CABS (ABS)

@@ -1,0 +1,123 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module gbt_player
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl __gbt_channel3_loaded_instrument
+                                     11 	.globl _gbt_play
+                                     12 	.globl _gbt_pause
+                                     13 	.globl _gbt_stop
+                                     14 	.globl _gbt_loop
+                                     15 	.globl _gbt_update
+                                     16 	.globl _gbt_enable_channels
+                                     17 ;--------------------------------------------------------
+                                     18 ; special function registers
+                                     19 ;--------------------------------------------------------
+                         00000000    20 _GG_STATE	=	0x0000
+                         00000001    21 _GG_EXT_7BIT	=	0x0001
+                         00000002    22 _GG_EXT_CTL	=	0x0002
+                         00000003    23 _GG_SIO_SEND	=	0x0003
+                         00000004    24 _GG_SIO_RECV	=	0x0004
+                         00000005    25 _GG_SIO_CTL	=	0x0005
+                         00000006    26 _GG_SOUND_PAN	=	0x0006
+                         0000003E    27 _MEMORY_CTL	=	0x003e
+                         0000003F    28 _JOY_CTL	=	0x003f
+                         0000007E    29 _VCOUNTER	=	0x007e
+                         0000007F    30 _PSG	=	0x007f
+                         0000007F    31 _HCOUNTER	=	0x007f
+                         000000BE    32 _VDP_DATA	=	0x00be
+                         000000BF    33 _VDP_CMD	=	0x00bf
+                         000000BF    34 _VDP_STATUS	=	0x00bf
+                         000000DC    35 _JOY_PORT1	=	0x00dc
+                         000000DD    36 _JOY_PORT2	=	0x00dd
+                         000000F0    37 _FMADDRESS	=	0x00f0
+                         000000F1    38 _FMDATA	=	0x00f1
+                         000000F2    39 _AUDIOCTRL	=	0x00f2
+                                     40 ;--------------------------------------------------------
+                                     41 ; ram data
+                                     42 ;--------------------------------------------------------
+                                     43 	.area _DATA
+                         0000FFFC    44 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    45 _GLASSES_3D	=	0xfff8
+                         0000FFFD    46 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    47 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    48 _MAP_FRAME2	=	0xffff
+    00000000                         49 __gbt_channel3_loaded_instrument::
+    00000000                         50 	.ds 1
+                                     51 ;--------------------------------------------------------
+                                     52 ; ram data
+                                     53 ;--------------------------------------------------------
+                                     54 	.area _INITIALIZED
+                                     55 ;--------------------------------------------------------
+                                     56 ; absolute external ram data
+                                     57 ;--------------------------------------------------------
+                                     58 	.area _DABS (ABS)
+                                     59 ;--------------------------------------------------------
+                                     60 ; global & static initialisations
+                                     61 ;--------------------------------------------------------
+                                     62 	.area _HOME
+                                     63 	.area _GSINIT
+                                     64 	.area _GSFINAL
+                                     65 	.area _GSINIT
+                                     66 ;--------------------------------------------------------
+                                     67 ; Home
+                                     68 ;--------------------------------------------------------
+                                     69 	.area _HOME
+                                     70 	.area _HOME
+                                     71 ;--------------------------------------------------------
+                                     72 ; code
+                                     73 ;--------------------------------------------------------
+                                     74 	.area _CODE
+                                     75 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:3: void gbt_play(void *data, UINT8 bank, UINT8 speed) OLDCALL {
+                                     76 ;	---------------------------------
+                                     77 ; Function gbt_play
+                                     78 ; ---------------------------------
+    00000000                         79 _gbt_play::
+                                     80 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:4: data; bank; speed;
+                                     81 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:5: }
+    00000000 C9               [10]   82 	ret
+                                     83 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:7: void gbt_pause(UINT8 pause) OLDCALL {
+                                     84 ;	---------------------------------
+                                     85 ; Function gbt_pause
+                                     86 ; ---------------------------------
+    00000001                         87 _gbt_pause::
+                                     88 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:8: pause;
+                                     89 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:9: }
+    00000001 C9               [10]   90 	ret
+                                     91 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:11: void gbt_stop(void) OLDCALL {
+                                     92 ;	---------------------------------
+                                     93 ; Function gbt_stop
+                                     94 ; ---------------------------------
+    00000002                         95 _gbt_stop::
+                                     96 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:12: }
+    00000002 C9               [10]   97 	ret
+                                     98 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:14: void gbt_loop(UINT8 loop) OLDCALL {
+                                     99 ;	---------------------------------
+                                    100 ; Function gbt_loop
+                                    101 ; ---------------------------------
+    00000003                        102 _gbt_loop::
+                                    103 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:15: loop;
+                                    104 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:16: }
+    00000003 C9               [10]  105 	ret
+                                    106 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:18: void gbt_update(void) OLDCALL {
+                                    107 ;	---------------------------------
+                                    108 ; Function gbt_update
+                                    109 ; ---------------------------------
+    00000004                        110 _gbt_update::
+                                    111 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:19: }
+    00000004 C9               [10]  112 	ret
+                                    113 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:21: void gbt_enable_channels(UINT8 channel_flags) OLDCALL {
+                                    114 ;	---------------------------------
+                                    115 ; Function gbt_enable_channels
+                                    116 ; ---------------------------------
+    00000005                        117 _gbt_enable_channels::
+                                    118 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:22: channel_flags;
+                                    119 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/gbt_player.c:23: }
+    00000005 C9               [10]  120 	ret
+                                    121 	.area _CODE
+                                    122 	.area _INITIALIZER
+                                    123 	.area _CABS (ABS)

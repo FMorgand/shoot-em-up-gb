@@ -1,0 +1,41 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =   00002710 L
+    .__.ABS.                                                    =   00000000 G
+    .__.CPU.                                                    =   00000000 L
+    .__.H$L.                                                    =   00000000 L
+    _BGP_REG                                                        ******** GX
+  8 _FadeDMG                                                        00000000 GR
+  2 _FadeDMG_colors_10000_276                                       00000000 R
+  8 _FadeIn                                                         00000173 GR
+  8 _FadeOut                                                        0000017A GR
+    _LCDC_REG                                                       ******** GX
+    _OBP0_REG                                                       ******** GX
+    _OBP1_REG                                                       ******** GX
+    _SyncVBlank                                                     ******** GX
+    _display_off                                                    ******** GX
+  8 _pals                                                           0000016D R
+    b_FadeIn                                                    =   00000001 G
+    b_FadeOut                                                   =   00000001 G
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [32-Bits]
+
+Area Table
+
+   0 _CODE                                      size        0   flags    0
+   1 _HRAM                                      size        0   flags    0
+   2 _DATA                                      size        C   flags    0
+   3 _INITIALIZED                               size        0   flags    0
+   4 _DABS                                      size        0   flags    8
+   5 _HOME                                      size        0   flags    0
+   6 _GSINIT                                    size        0   flags    0
+   7 _GSFINAL                                   size        0   flags    0
+   8 _CODE_1                                    size      185   flags    0
+   9 _INITIALIZER                               size        0   flags    0
+   A _CABS                                      size        0   flags    8
+

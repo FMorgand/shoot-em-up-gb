@@ -1,0 +1,294 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module CoroutinesRunner
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _coro_init
+                                     11 	.globl _coro_free_ctx
+                                     12 	.globl _coro_contexts
+                                     13 	.globl _coro_runner_init
+                                     14 	.globl _coro_runner_alloc_ex
+                                     15 	.globl _coro_runner_free
+                                     16 	.globl b_NONE
+                                     17 	.globl _NONE
+                                     18 ;--------------------------------------------------------
+                                     19 ; special function registers
+                                     20 ;--------------------------------------------------------
+                         00000000    21 _GG_STATE	=	0x0000
+                         00000001    22 _GG_EXT_7BIT	=	0x0001
+                         00000002    23 _GG_EXT_CTL	=	0x0002
+                         00000003    24 _GG_SIO_SEND	=	0x0003
+                         00000004    25 _GG_SIO_RECV	=	0x0004
+                         00000005    26 _GG_SIO_CTL	=	0x0005
+                         00000006    27 _GG_SOUND_PAN	=	0x0006
+                         0000003E    28 _MEMORY_CTL	=	0x003e
+                         0000003F    29 _JOY_CTL	=	0x003f
+                         0000007E    30 _VCOUNTER	=	0x007e
+                         0000007F    31 _PSG	=	0x007f
+                         0000007F    32 _HCOUNTER	=	0x007f
+                         000000BE    33 _VDP_DATA	=	0x00be
+                         000000BF    34 _VDP_CMD	=	0x00bf
+                         000000BF    35 _VDP_STATUS	=	0x00bf
+                         000000DC    36 _JOY_PORT1	=	0x00dc
+                         000000DD    37 _JOY_PORT2	=	0x00dd
+                         000000F0    38 _FMADDRESS	=	0x00f0
+                         000000F1    39 _FMDATA	=	0x00f1
+                         000000F2    40 _AUDIOCTRL	=	0x00f2
+                                     41 ;--------------------------------------------------------
+                                     42 ; ram data
+                                     43 ;--------------------------------------------------------
+                                     44 	.area _DATA
+                         0000FFFC    45 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    46 _GLASSES_3D	=	0xfff8
+                         0000FFFD    47 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    48 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    49 _MAP_FRAME2	=	0xffff
+    00000000                         50 _coro_contexts::
+    00000000                         51 	.ds 1680
+                                     52 ;--------------------------------------------------------
+                                     53 ; ram data
+                                     54 ;--------------------------------------------------------
+                                     55 	.area _INITIALIZED
+    00000000                         56 _coro_free_ctx::
+    00000000                         57 	.ds 2
+                                     58 ;--------------------------------------------------------
+                                     59 ; absolute external ram data
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _DABS (ABS)
+                                     62 ;--------------------------------------------------------
+                                     63 ; global & static initialisations
+                                     64 ;--------------------------------------------------------
+                                     65 	.area _HOME
+                                     66 	.area _GSINIT
+                                     67 	.area _GSFINAL
+                                     68 	.area _GSINIT
+                                     69 ;--------------------------------------------------------
+                                     70 ; Home
+                                     71 ;--------------------------------------------------------
+                                     72 	.area _HOME
+                                     73 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:31: static void coro_call_handler(void * handler, uint16_t bank, void * data) NONBANKED NAKED {
+                                     74 ;	---------------------------------
+                                     75 ; Function coro_call_handler
+                                     76 ; ---------------------------------
+    00000000                         77 _coro_call_handler:
+                                     78 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:75: __endasm;
+    00000000 FD E1            [14]   79 	pop	iy
+    00000002 C1               [10]   80 	pop	bc
+    00000003 7C               [ 4]   81 	ld	a, h
+    00000004 B5               [ 4]   82 	or	l
+    00000005 CAr10r00         [10]   83 	jp	z, 1$
+    00000008 FD E5            [15]   84 	push	iy
+    0000000A C5               [11]   85 	push	bc
+    0000000B CDr00r00         [17]   86 	call	___sdcc_bcall_ehl
+    0000000E C1               [10]   87 	pop	bc
+    0000000F C9               [10]   88 	ret
+    00000010                         89 1$:
+    00000010 FD E9            [ 8]   90 	jp	(iy)
+                                     91 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:76: }
+                                     92 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:89: static void __initializer__(void) NONBANKED NAKED {
+                                     93 ;	---------------------------------
+                                     94 ; Function __initializer__
+                                     95 ; ---------------------------------
+    00000012                         96 ___initializer__:
+                                     97 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:101: __endasm;
+                                     98 ;	we inject the call to the coro_runner_init() in the _GSINIT section,
+                                     99 ;	so there will be no need to call it explicitly in the game code
+                                    100 	.AREA	_GSINIT
+    00000000 CDr00r00         [17]  101 	call	_coro_runner_init
+                                    102 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:102: }
+                                    103 	.area _HOME
+                                    104 ;--------------------------------------------------------
+                                    105 ; code
+                                    106 ;--------------------------------------------------------
+                                    107 	.area _CODE
+                                    108 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:10: void coro_runner_init(void) {
+                                    109 ;	---------------------------------
+                                    110 ; Function coro_runner_init
+                                    111 ; ---------------------------------
+    00000000                        112 _coro_runner_init::
+                                    113 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:11: coro_free_ctx = NULL;
+    00000000 21 00 00         [10]  114 	ld	hl, #0x0000
+    00000003 22r00r00         [16]  115 	ld	(_coro_free_ctx), hl
+                                    116 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:12: for (coro_runner_context_t * i = coro_contexts; i != (coro_contexts + CORO_MAX_CONTEXTS); i++) {
+    00000006 11r00r00         [10]  117 	ld	de, #_coro_contexts
+    00000009                        118 00103$:
+    00000009 21r90r06         [10]  119 	ld	hl, #(_coro_contexts + 1680)
+    0000000C BF               [ 4]  120 	cp	a, a
+    0000000D ED 52            [15]  121 	sbc	hl, de
+    0000000F C8               [11]  122 	ret	Z
+                                    123 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:13: i->next = coro_free_ctx;
+    00000010 21 67 00         [10]  124 	ld	hl, #0x0067
+    00000013 19               [11]  125 	add	hl, de
+    00000014 3Ar00r00         [13]  126 	ld	a, (_coro_free_ctx)
+    00000017 77               [ 7]  127 	ld	(hl), a
+    00000018 23               [ 6]  128 	inc	hl
+    00000019 3Ar01r00         [13]  129 	ld	a, (_coro_free_ctx + 1)
+    0000001C 77               [ 7]  130 	ld	(hl), a
+                                    131 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:14: coro_free_ctx = i;
+    0000001D ED 53r00r00      [20]  132 	ld	(_coro_free_ctx), de
+                                    133 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:12: for (coro_runner_context_t * i = coro_contexts; i != (coro_contexts + CORO_MAX_CONTEXTS); i++) {
+    00000021 21 69 00         [10]  134 	ld	hl, #0x0069
+    00000024 19               [11]  135 	add	hl, de
+    00000025 EB               [ 4]  136 	ex	de, hl
+                                    137 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:16: }
+    00000026 18 E1            [12]  138 	jr	00103$
+                                    139 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:18: void * coro_runner_alloc_ex(coro_t coro, uint8_t coro_bank, void * user_data, coro_t destr, uint8_t destr_bank) {
+                                    140 ;	---------------------------------
+                                    141 ; Function coro_runner_alloc_ex
+                                    142 ; ---------------------------------
+    00000028                        143 _coro_runner_alloc_ex::
+    00000028 DD E5            [15]  144 	push	ix
+    0000002A DD 21 00 00      [14]  145 	ld	ix,#0
+    0000002E DD 39            [15]  146 	add	ix,sp
+    00000030 EB               [ 4]  147 	ex	de, hl
+                                    148 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:19: if (coro_free_ctx) {
+    00000031 3Ar01r00         [13]  149 	ld	a, (_coro_free_ctx+1)
+    00000034 FD 21r00r00      [14]  150 	ld	iy, #_coro_free_ctx
+    00000038 FD B6 00         [19]  151 	or	a, 0 (iy)
+    0000003B 28 53            [12]  152 	jr	Z, 00102$
+                                    153 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:20: coro_runner_context_t * tmp = coro_free_ctx;
+    0000003D ED 4Br00r00      [20]  154 	ld	bc, (_coro_free_ctx)
+                                    155 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:21: coro_free_ctx = tmp->next;
+    00000041 69               [ 4]  156 	ld	l, c
+    00000042 60               [ 4]  157 	ld	h, b
+    00000043 C5               [11]  158 	push	bc
+    00000044 01 67 00         [10]  159 	ld	bc, #0x0067
+    00000047 09               [11]  160 	add	hl, bc
+    00000048 C1               [10]  161 	pop	bc
+    00000049 7E               [ 7]  162 	ld	a, (hl)
+    0000004A 23               [ 6]  163 	inc	hl
+    0000004B 32r00r00         [13]  164 	ld	(_coro_free_ctx+0), a
+    0000004E 7E               [ 7]  165 	ld	a, (hl)
+    0000004F 32r01r00         [13]  166 	ld	(_coro_free_ctx+1), a
+                                    167 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:22: coro_init(&tmp->coro_context, coro, coro_bank, user_data, CORO_STACK_SIZE);
+    00000052 69               [ 4]  168 	ld	l, c
+    00000053 60               [ 4]  169 	ld	h, b
+    00000054 C5               [11]  170 	push	bc
+    00000055 01 60 00         [10]  171 	ld	bc, #0x0060
+    00000058 C5               [11]  172 	push	bc
+    00000059 E5               [11]  173 	push	hl
+    0000005A DD 6E 05         [19]  174 	ld	l, 5 (ix)
+    0000005D DD 66 06         [19]  175 	ld	h, 6 (ix)
+    00000060 E3               [19]  176 	ex	(sp), hl
+    00000061 DD 7E 04         [19]  177 	ld	a, 4 (ix)
+    00000064 F5               [11]  178 	push	af
+    00000065 33               [ 6]  179 	inc	sp
+    00000066 CDr00r00         [17]  180 	call	_coro_init
+    00000069 C1               [10]  181 	pop	bc
+                                    182 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:23: tmp->destructor = (uint16_t *)destr;
+    0000006A 21 62 00         [10]  183 	ld	hl, #0x0062
+    0000006D 09               [11]  184 	add	hl, bc
+    0000006E DD 7E 07         [19]  185 	ld	a, 7 (ix)
+    00000071 DD 5E 08         [19]  186 	ld	e, 8 (ix)
+    00000074 77               [ 7]  187 	ld	(hl), a
+    00000075 23               [ 6]  188 	inc	hl
+    00000076 73               [ 7]  189 	ld	(hl), e
+                                    190 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:24: tmp->bank = destr_bank;
+    00000077 21 64 00         [10]  191 	ld	hl, #0x0064
+    0000007A 09               [11]  192 	add	hl, bc
+    0000007B DD 7E 09         [19]  193 	ld	a, 9 (ix)
+    0000007E 77               [ 7]  194 	ld	(hl), a
+                                    195 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:25: tmp->data = user_data;
+    0000007F 21 65 00         [10]  196 	ld	hl, #0x0065
+    00000082 09               [11]  197 	add	hl, bc
+    00000083 DD 7E 05         [19]  198 	ld	a, 5 (ix)
+    00000086 77               [ 7]  199 	ld	(hl), a
+    00000087 23               [ 6]  200 	inc	hl
+    00000088 DD 7E 06         [19]  201 	ld	a, 6 (ix)
+    0000008B 77               [ 7]  202 	ld	(hl), a
+                                    203 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:26: return tmp;
+    0000008C 59               [ 4]  204 	ld	e, c
+    0000008D 50               [ 4]  205 	ld	d, b
+    0000008E 18 03            [12]  206 	jr	00103$
+    00000090                        207 00102$:
+                                    208 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:28: return NULL;
+    00000090 11 00 00         [10]  209 	ld	de, #0x0000
+    00000093                        210 00103$:
+                                    211 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:29: }
+    00000093 DD E1            [14]  212 	pop	ix
+    00000095 E1               [10]  213 	pop	hl
+    00000096 F1               [10]  214 	pop	af
+    00000097 F1               [10]  215 	pop	af
+    00000098 F1               [10]  216 	pop	af
+    00000099 E9               [ 4]  217 	jp	(hl)
+                                    218 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:78: void coro_runner_free(void * ctx) {
+                                    219 ;	---------------------------------
+                                    220 ; Function coro_runner_free
+                                    221 ; ---------------------------------
+    0000009A                        222 _coro_runner_free::
+    0000009A DD E5            [15]  223 	push	ix
+    0000009C DD 21 00 00      [14]  224 	ld	ix,#0
+    000000A0 DD 39            [15]  225 	add	ix,sp
+    000000A2 F5               [11]  226 	push	af
+    000000A3 4D               [ 4]  227 	ld	c, l
+    000000A4 44               [ 4]  228 	ld	b, h
+                                    229 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:79: if (!ctx) return;
+    000000A5 78               [ 4]  230 	ld	a, b
+    000000A6 B1               [ 4]  231 	or	a, c
+    000000A7 28 41            [12]  232 	jr	Z, 00103$
+                                    233 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:80: coro_call_handler(((coro_runner_context_t *)ctx)->destructor, ((coro_runner_context_t *)ctx)->bank, ((coro_runner_context_t *)ctx)->data);
+    000000A9 59               [ 4]  234 	ld	e, c
+    000000AA 50               [ 4]  235 	ld	d, b
+    000000AB 21 65 00         [10]  236 	ld	hl, #101
+    000000AE 19               [11]  237 	add	hl, de
+    000000AF 5E               [ 7]  238 	ld	e, (hl)
+    000000B0 23               [ 6]  239 	inc	hl
+    000000B1 56               [ 7]  240 	ld	d, (hl)
+    000000B2 69               [ 4]  241 	ld	l, c
+    000000B3 60               [ 4]  242 	ld	h, b
+    000000B4 C5               [11]  243 	push	bc
+    000000B5 01 64 00         [10]  244 	ld	bc, #0x0064
+    000000B8 09               [11]  245 	add	hl, bc
+    000000B9 C1               [10]  246 	pop	bc
+    000000BA 7E               [ 7]  247 	ld	a, (hl)
+    000000BB DD 77 FE         [19]  248 	ld	-2 (ix), a
+    000000BE DD 36 FF 00      [19]  249 	ld	-1 (ix), #0x00
+    000000C2 69               [ 4]  250 	ld	l, c
+    000000C3 60               [ 4]  251 	ld	h, b
+    000000C4 C5               [11]  252 	push	bc
+    000000C5 01 63 00         [10]  253 	ld	bc, #0x0063
+    000000C8 09               [11]  254 	add	hl, bc
+    000000C9 C1               [10]  255 	pop	bc
+    000000CA 7E               [ 7]  256 	ld	a, (hl)
+    000000CB 2B               [ 6]  257 	dec	hl
+    000000CC 6E               [ 7]  258 	ld	l, (hl)
+    000000CD C5               [11]  259 	push	bc
+    000000CE D5               [11]  260 	push	de
+    000000CF DD 5E FE         [19]  261 	ld	e, -2 (ix)
+    000000D2 16 00            [ 7]  262 	ld	d, #0x00
+    000000D4 67               [ 4]  263 	ld	h, a
+    000000D5 CDr00r00         [17]  264 	call	_coro_call_handler
+    000000D8 C1               [10]  265 	pop	bc
+                                    266 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:81: ((coro_runner_context_t *)ctx)->next = coro_free_ctx;
+    000000D9 21 67 00         [10]  267 	ld	hl, #0x0067
+    000000DC 09               [11]  268 	add	hl, bc
+    000000DD 3Ar00r00         [13]  269 	ld	a, (_coro_free_ctx)
+    000000E0 77               [ 7]  270 	ld	(hl), a
+    000000E1 23               [ 6]  271 	inc	hl
+    000000E2 3Ar01r00         [13]  272 	ld	a, (_coro_free_ctx + 1)
+    000000E5 77               [ 7]  273 	ld	(hl), a
+                                    274 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:82: coro_free_ctx = (coro_runner_context_t *)ctx;
+    000000E6 ED 43r00r00      [20]  275 	ld	(_coro_free_ctx), bc
+    000000EA                        276 00103$:
+                                    277 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:83: }
+    000000EA DD F9            [10]  278 	ld	sp, ix
+    000000EC DD E1            [14]  279 	pop	ix
+    000000EE C9               [10]  280 	ret
+                                    281 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:85: void NONE(void * data) BANKED {
+                                    282 ;	---------------------------------
+                                    283 ; Function NONE
+                                    284 ; ---------------------------------
+                         00000000   285 	b_NONE	= 0
+    000000EF                        286 _NONE::
+                                    287 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:86: (void)data;
+                                    288 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/CoroutinesRunner.c:87: }
+    000000EF C9               [10]  289 	ret
+                                    290 	.area _CODE
+                                    291 	.area _INITIALIZER
+    00000000                        292 __xinit__coro_free_ctx:
+    00000000 00 00                  293 	.dw #0x0000
+                                    294 	.area _CABS (ABS)

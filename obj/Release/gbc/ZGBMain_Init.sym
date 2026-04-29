@@ -1,0 +1,87 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =   00002710 L
+    .__.ABS.                                                    =   00000000 G
+    .__.CPU.                                                    =   00000000 L
+    .__.H$L.                                                    =   00000000 L
+    _Destroy_SpriteBullet                                           ******** GX
+    _Destroy_SpriteEnemy                                            ******** GX
+    _Destroy_SpritePlayer                                           ******** GX
+  8 _InitSprites                                                    0000003C GR
+  8 _InitStates                                                     00000000 GR
+    _Start_SpriteBullet                                             ******** GX
+    _Start_SpriteEnemy                                              ******** GX
+    _Start_SpritePlayer                                             ******** GX
+    _Start_StateGame                                                ******** GX
+  5 _StateDestroyDefault                                            00000000 GR
+    _Update_SpriteBullet                                            ******** GX
+    _Update_SpriteEnemy                                             ******** GX
+    _Update_SpritePlayer                                            ******** GX
+    _Update_StateGame                                               ******** GX
+    ___bank_SpriteBullet                                            ******** GX
+    ___bank_SpriteEnemy                                             ******** GX
+    ___bank_SpritePlayer                                            ******** GX
+    ___bank_StateGame                                               ******** GX
+    ___bank_bullet                                                  ******** GX
+    ___bank_enemy                                                   ******** GX
+    ___bank_player                                                  ******** GX
+  8 ___destroyFuncs                                                 0000003A R
+  8 ___spriteBanks                                                  00000098 R
+  8 ___spriteDataBanks                                              0000009C R
+  8 ___spriteDatas                                                  000000B8 R
+  8 ___spriteDestroyFuncs                                           000000B0 R
+  8 ___spriteFlips                                                  000000C0 R
+  8 ___spriteStartFuncs                                             000000A0 R
+  8 ___spriteUpdateFuncs                                            000000A8 R
+  8 ___startFuncs                                                   00000036 R
+  8 ___stateBanks                                                   00000035 R
+  8 ___updateFuncs                                                  00000038 R
+    _bullet                                                         ******** GX
+  2 _destroyFuncs                                                   00000005 GR
+    _enemy                                                          ******** GX
+    _memcpy                                                         ******** GX
+    _player                                                         ******** GX
+  2 _spriteBanks                                                    00000007 GR
+  2 _spriteDataBanks                                                0000000A GR
+  2 _spriteDatas                                                    0000001F GR
+  2 _spriteDestroyFuncs                                             00000019 GR
+  2 _spriteFlips                                                    00000025 GR
+  2 _spriteIdxs                                                     00000028 GR
+  2 _spriteIdxsH                                                    0000002B GR
+  2 _spriteIdxsHV                                                   00000031 GR
+  2 _spriteIdxsV                                                    0000002E GR
+  2 _spritePalsOffset                                               00000034 GR
+  2 _spriteStartFuncs                                               0000000D GR
+  2 _spriteUpdateFuncs                                              00000013 GR
+  2 _startFuncs                                                     00000001 GR
+  2 _stateBanks                                                     00000000 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+  2 _updateFuncs                                                    00000003 GR
+    b_InitSprites                                               =   000000FF G
+    b_InitStates                                                =   000000FF G
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 3
+Hexadecimal [32-Bits]
+
+Area Table
+
+   0 _CODE                                      size        0   flags    0
+   1 _HRAM                                      size        0   flags    0
+   2 _DATA                                      size       37   flags    0
+   3 _INITIALIZED                               size        0   flags    0
+   4 _DABS                                      size        0   flags    8
+   5 _HOME                                      size        1   flags    0
+   6 _GSINIT                                    size        0   flags    0
+   7 _GSFINAL                                   size        0   flags    0
+   8 _CODE_255                                  size       C4   flags    0
+   9 _INITIALIZER                               size        0   flags    0
+   A _CABS                                      size        0   flags    8
+

@@ -1,0 +1,41 @@
+XL4
+H B areas 7 global symbols
+M SpriteBullet
+S _THIS Ref00000000
+S .__.ABS. Def00000000
+S _SpriteManagerRemoveSprite Ref00000000
+S ___bank_SpriteBullet Def000000FF
+A _CODE size 0 flags 0 addr 0
+A _HRAM size 0 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_255 size 30 flags 0 addr 0
+S _Update_SpriteBullet Def00000001
+S _Destroy_SpriteBullet Def0000002F
+S _Start_SpriteBullet Def00000000
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00 00
+R 00 00 08 00
+T 00 00 00 00 C9
+R 00 00 08 00
+T 01 00 00 00
+R 00 00 08 00
+T 01 00 00 00 FA 00 00 21 01 00 46 4F 03 03 69 60
+R 00 00 08 00 02 05 00 00 02 08 00 00
+T 0D 00 00 00 2A 66 6F 3E 0C BD 3E 00 9C 30 0C 11
+R 00 00 08 00
+T 19 00 00 00 FC FF 19 5D 54 7B 02 03 7A 02 C9
+R 00 00 08 00
+T 24 00 00 00
+R 00 00 08 00
+T 24 00 00 00 FA 00 00 5F 21 01 00 56 C3 00 00
+R 00 00 08 00 02 05 00 00 02 09 00 00 02 0D 02 00
+T 2F 00 00 00
+R 00 00 08 00
+T 2F 00 00 00 C9
+R 00 00 08 00

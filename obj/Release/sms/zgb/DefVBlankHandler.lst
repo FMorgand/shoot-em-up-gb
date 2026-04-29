@@ -1,0 +1,114 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module DefVBlankHandler
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _VBL_isr
+                                     11 ;--------------------------------------------------------
+                                     12 ; special function registers
+                                     13 ;--------------------------------------------------------
+                         00000000    14 _GG_STATE	=	0x0000
+                         00000001    15 _GG_EXT_7BIT	=	0x0001
+                         00000002    16 _GG_EXT_CTL	=	0x0002
+                         00000003    17 _GG_SIO_SEND	=	0x0003
+                         00000004    18 _GG_SIO_RECV	=	0x0004
+                         00000005    19 _GG_SIO_CTL	=	0x0005
+                         00000006    20 _GG_SOUND_PAN	=	0x0006
+                         0000003E    21 _MEMORY_CTL	=	0x003e
+                         0000003F    22 _JOY_CTL	=	0x003f
+                         0000007E    23 _VCOUNTER	=	0x007e
+                         0000007F    24 _PSG	=	0x007f
+                         0000007F    25 _HCOUNTER	=	0x007f
+                         000000BE    26 _VDP_DATA	=	0x00be
+                         000000BF    27 _VDP_CMD	=	0x00bf
+                         000000BF    28 _VDP_STATUS	=	0x00bf
+                         000000DC    29 _JOY_PORT1	=	0x00dc
+                         000000DD    30 _JOY_PORT2	=	0x00dd
+                         000000F0    31 _FMADDRESS	=	0x00f0
+                         000000F1    32 _FMDATA	=	0x00f1
+                         000000F2    33 _AUDIOCTRL	=	0x00f2
+                                     34 ;--------------------------------------------------------
+                                     35 ; ram data
+                                     36 ;--------------------------------------------------------
+                                     37 	.area _DATA
+                         0000FFFC    38 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    39 _GLASSES_3D	=	0xfff8
+                         0000FFFD    40 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    41 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    42 _MAP_FRAME2	=	0xffff
+                                     43 ;--------------------------------------------------------
+                                     44 ; ram data
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _INITIALIZED
+                                     47 ;--------------------------------------------------------
+                                     48 ; absolute external ram data
+                                     49 ;--------------------------------------------------------
+                                     50 	.area _DABS (ABS)
+                                     51 ;--------------------------------------------------------
+                                     52 ; global & static initialisations
+                                     53 ;--------------------------------------------------------
+                                     54 	.area _HOME
+                                     55 	.area _GSINIT
+                                     56 	.area _GSFINAL
+                                     57 	.area _GSINIT
+                                     58 ;--------------------------------------------------------
+                                     59 ; Home
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _HOME
+                                     62 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVBlankHandler.c:7: void VBL_isr(void) NONBANKED {
+                                     63 ;	---------------------------------
+                                     64 ; Function VBL_isr
+                                     65 ; ---------------------------------
+    00000000                         66 _VBL_isr::
+                                     67 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVBlankHandler.c:8: vbl_count ++;
+    00000000 21r00r00         [10]   68 	ld	hl, #_vbl_count
+    00000003 34               [11]   69 	inc	(hl)
+                                     70 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVBlankHandler.c:12: if (_shadow_OAM_OFF == 0) {
+    00000004 3Ar00r00         [13]   71 	ld	a, (__shadow_OAM_OFF+0)
+    00000007 B7               [ 4]   72 	or	a, a
+    00000008 C0               [11]   73 	ret	NZ
+                                     74 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVBlankHandler.c:13: __WRITE_VDP_REG_UNSAFE(VDP_RSCX, -(scroll_x_vblank + TILE_TO_PX(scroll_offset_x)));
+    00000009 2Ar00r00         [16]   75 	ld	hl, (_scroll_x_vblank)
+    0000000C 3Ar00r00         [13]   76 	ld	a, (_scroll_offset_x+0)
+    0000000F 87               [ 4]   77 	add	a, a
+    00000010 87               [ 4]   78 	add	a, a
+    00000011 87               [ 4]   79 	add	a, a
+    00000012 85               [ 4]   80 	add	a, l
+    00000013 21r00r00         [10]   81 	ld	hl, #_shadow_VDP_RSCX
+    00000016 ED 44            [ 8]   82 	neg
+    00000018 77               [ 7]   83 	ld	(hl), a
+    00000019 3Ar00r00         [13]   84 	ld	a, (_shadow_VDP_RSCX+0)
+    0000001C D3 BF            [11]   85 	out	(_VDP_CMD), a
+    0000001E 3E 88            [ 7]   86 	ld	a, #0x88
+    00000020 D3 BF            [11]   87 	out	(_VDP_CMD), a
+                                     88 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVBlankHandler.c:14: __WRITE_VDP_REG_UNSAFE(VDP_RSCY, (((UINT16)(scroll_y_vblank + TILE_TO_PX(scroll_offset_y))) % TILE_TO_PX(DEVICE_SCREEN_BUFFER_HEIGHT)));
+    00000022 3Ar00r00         [13]   89 	ld	a, (_scroll_offset_y)
+    00000025 26 00            [ 7]   90 	ld	h, #0x00
+    00000027 6F               [ 4]   91 	ld	l, a
+    00000028 29               [11]   92 	add	hl, hl
+    00000029 29               [11]   93 	add	hl, hl
+    0000002A 29               [11]   94 	add	hl, hl
+    0000002B ED 5Br00r00      [20]   95 	ld	de, (_scroll_y_vblank)
+    0000002F 19               [11]   96 	add	hl, de
+    00000030 11 E0 00         [10]   97 	ld	de, #0x00e0
+    00000033 CDr00r00         [17]   98 	call	__moduint
+    00000036 21r00r00         [10]   99 	ld	hl, #_shadow_VDP_RSCY
+    00000039 73               [ 7]  100 	ld	(hl), e
+    0000003A 3Ar00r00         [13]  101 	ld	a, (_shadow_VDP_RSCY+0)
+    0000003D D3 BF            [11]  102 	out	(_VDP_CMD), a
+    0000003F 3E 89            [ 7]  103 	ld	a, #0x89
+    00000041 D3 BF            [11]  104 	out	(_VDP_CMD), a
+                                    105 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefVBlankHandler.c:17: }
+    00000043 C9               [10]  106 	ret
+                                    107 	.area _HOME
+                                    108 ;--------------------------------------------------------
+                                    109 ; code
+                                    110 ;--------------------------------------------------------
+                                    111 	.area _CODE
+                                    112 	.area _CODE
+                                    113 	.area _INITIALIZER
+                                    114 	.area _CABS (ABS)

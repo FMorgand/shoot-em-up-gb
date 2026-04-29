@@ -1,0 +1,54 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module gbc_hicolor
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _hicolor_start
+                                     11 ;--------------------------------------------------------
+                                     12 ; special function registers
+                                     13 ;--------------------------------------------------------
+                                     14 	.area _HRAM
+                                     15 ;--------------------------------------------------------
+                                     16 ; ram data
+                                     17 ;--------------------------------------------------------
+                                     18 	.area _DATA
+                                     19 ;--------------------------------------------------------
+                                     20 ; ram data
+                                     21 ;--------------------------------------------------------
+                                     22 	.area _INITIALIZED
+                                     23 ;--------------------------------------------------------
+                                     24 ; absolute external ram data
+                                     25 ;--------------------------------------------------------
+                                     26 	.area _DABS (ABS)
+                                     27 ;--------------------------------------------------------
+                                     28 ; global & static initialisations
+                                     29 ;--------------------------------------------------------
+                                     30 	.area _HOME
+                                     31 	.area _GSINIT
+                                     32 	.area _GSFINAL
+                                     33 	.area _GSINIT
+                                     34 ;--------------------------------------------------------
+                                     35 ; Home
+                                     36 ;--------------------------------------------------------
+                                     37 	.area _HOME
+                                     38 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gb/gbc_hicolor.c:123: uint8_t hicolor_start(const hicolor_data * p_hicolor, uint8_t hicolor_bank) NONBANKED {
+                                     39 ;	---------------------------------
+                                     40 ; Function hicolor_start
+                                     41 ; ---------------------------------
+    00000000                         42 _hicolor_start::
+                                     43 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gb/gbc_hicolor.c:127: return 0;
+    00000000 AF               [ 4]   44 	xor	a, a
+                                     45 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gb/gbc_hicolor.c:178: }
+    00000001 C9               [16]   46 	ret
+                                     47 	.area _HOME
+                                     48 ;--------------------------------------------------------
+                                     49 ; code
+                                     50 ;--------------------------------------------------------
+                                     51 	.area _CODE
+                                     52 	.area _CODE
+                                     53 	.area _INITIALIZER
+                                     54 	.area _CABS (ABS)

@@ -1,0 +1,153 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 1
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =   00002710 L
+    .__.ABS.                                                    =   00000000 G
+    .__.CPU.                                                    =   00000000 L
+    .__.H$L.                                                    =   00000000 L
+    _AUDIOCTRL                                                  =   000000F2 
+    _ClampScrollLimits                                              ******** GX
+    _FMADDRESS                                                  =   000000F0 
+    _FMDATA                                                     =   000000F1 
+    _GG_EXT_7BIT                                                =   00000001 
+    _GG_EXT_CTL                                                 =   00000002 
+    _GG_SIO_CTL                                                 =   00000005 
+    _GG_SIO_RECV                                                =   00000004 
+    _GG_SIO_SEND                                                =   00000003 
+    _GG_SOUND_PAN                                               =   00000006 
+    _GG_STATE                                                   =   00000000 
+    _GLASSES_3D                                                 =   0000FFF8 
+  0 _GetMapSize                                                     00000A3B GR
+  0 _GetScrollTile                                                  00000A0C GR
+    _HCOUNTER                                                   =   0000007F 
+  0 _InitScroll                                                     0000054D GR
+    _JOY_CTL                                                    =   0000003F 
+    _JOY_PORT1                                                  =   000000DC 
+    _JOY_PORT2                                                  =   000000DD 
+  0 _LoadMap                                                        00000154 GR
+    _MAP_FRAME0                                                 =   0000FFFD 
+    _MAP_FRAME1                                                 =   0000FFFE 
+    _MAP_FRAME2                                                 =   0000FFFF 
+    _MEMORY_CTL                                                 =   0000003E 
+  0 _MoveScroll                                                     000008A5 GR
+  1 _MoveScroll___save_10000_341                                    00000226 R
+  1 _MoveScroll_current_column_10000_341                            0000021E R
+  1 _MoveScroll_current_row_10000_341                               00000222 R
+  1 _MoveScroll_new_column_10000_341                                00000220 R
+  1 _MoveScroll_new_row_10000_341                                   00000224 R
+    _PSG                                                        =   0000007F 
+    _RAM_CONTROL                                                =   0000FFFC 
+  0 _RefreshScroll                                                  0000082A GR
+  0 _ScrollCollisionsReset                                          0000047E GR
+  0 _ScrollInitCollisionGroup                                       0000048C GR
+  0 _ScrollInitCollisionGroupVector                                 0000049E GR
+  0 _ScrollInitCollisions                                           000004CF GR
+  0 _ScrollInitTilesFromMap                                         00000420 GR
+  0 _ScrollRemoveCollisionGroupVector                               000004B5 GR
+  0 _ScrollScreenRedraw                                             000004EA GR
+  0 _ScrollSetMap                                                   00000372 GR
+  0 _ScrollSetTiles                                                 00000000 GR
+  0 _ScrollUpdateColumn                                             00000773 GR
+  0 _ScrollUpdateColumnR                                            000006BA GR
+  0 _ScrollUpdateColumnWithDelay                                    00000720 GR
+  1 _ScrollUpdateColumn___save_10001_330                            0000021D R
+  0 _ScrollUpdateRow                                                0000062A GR
+  0 _ScrollUpdateRowR                                               00000577 GR
+  0 _ScrollUpdateRowWithDelay                                       000005D7 GR
+  1 _ScrollUpdateRow___save_10001_315                               0000021C R
+    _SetPalette                                                     ******** GX
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    _UPDATE_TILE                                                    ******** GX
+  0 _UpdateMapTile                                                  000000F3 GR
+    _VCOUNTER                                                   =   0000007E 
+    _VDP_CMD                                                    =   000000BF 
+    _VDP_DATA                                                   =   000000BE 
+    _VDP_STATUS                                                 =   000000BF 
+    __mulint                                                        ******** GX
+  7 __xinit__clamp_enabled                                          00000014 R
+  7 __xinit__last_tile_loaded                                       0000001D R
+  7 __xinit__pending_h_cmap                                         00000019 R
+  7 __xinit__pending_h_map                                          00000015 R
+  7 __xinit__pending_w_cmap                                         0000001B R
+  7 __xinit__pending_w_map                                          00000017 R
+  7 __xinit__scroll_bottom_movement_limit                           00000001 R
+  7 __xinit__scroll_cmap                                            00000004 R
+  7 __xinit__scroll_h_border                                        00000012 R
+  7 __xinit__scroll_map                                             00000002 R
+  7 __xinit__scroll_offset_x                                        00000010 R
+  7 __xinit__scroll_offset_y                                        00000011 R
+  7 __xinit__scroll_target                                          0000000E R
+  7 __xinit__scroll_top_movement_limit                              00000000 R
+  7 __xinit__scroll_x                                               00000006 R
+  7 __xinit__scroll_x_vblank                                        0000000A R
+  7 __xinit__scroll_y                                               00000008 R
+  7 __xinit__scroll_y_vblank                                        0000000C R
+  2 _clamp_enabled                                                  00000014 GR
+    _get_bkg_xy_addr                                                ******** GX
+  1 _hud_map_offset                                                 00000213 GR
+    _last_bg_pal_loaded                                             ******** GX
+  2 _last_tile_loaded                                               0000001D GR
+    _memset                                                         ******** GX
+  2 _pending_h_cmap                                                 00000019 GR
+  1 _pending_h_i                                                    0000020D GR
+  2 _pending_h_map                                                  00000015 GR
+  1 _pending_h_x                                                    00000209 GR
+  1 _pending_h_y                                                    0000020B GR
+  2 _pending_w_cmap                                                 0000001B GR
+  1 _pending_w_i                                                    00000212 GR
+  2 _pending_w_map                                                  00000017 GR
+  1 _pending_w_x                                                    0000020E GR
+  1 _pending_w_y                                                    00000210 GR
+  1 _scroll_bank                                                    00000208 GR
+  2 _scroll_bottom_movement_limit                                   00000001 GR
+  2 _scroll_cmap                                                    00000004 GR
+  1 _scroll_collisions                                              00000008 GR
+  1 _scroll_cptr                                                    0000021A GR
+  1 _scroll_h                                                       00000002 GR
+  2 _scroll_h_border                                                00000012 GR
+  2 _scroll_map                                                     00000002 GR
+  2 _scroll_offset_x                                                00000010 GR
+  2 _scroll_offset_y                                                00000011 GR
+  1 _scroll_ptr                                                     00000218 GR
+  2 _scroll_target                                                  0000000E GR
+  1 _scroll_tile_info                                               00000108 GR
+  1 _scroll_tiles_h                                                 00000006 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 3
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+  1 _scroll_tiles_w                                                 00000004 GR
+  2 _scroll_top_movement_limit                                      00000000 GR
+  1 _scroll_w                                                       00000000 GR
+  2 _scroll_x                                                       00000006 GR
+  2 _scroll_x_vblank                                                0000000A GR
+  2 _scroll_y                                                       00000008 GR
+  2 _scroll_y_vblank                                                0000000C GR
+    _set_bkg_native_data                                            ******** GX
+    _set_vram_word                                                  ******** GX
+  1 _tiles_0                                                        00000216 GR
+  1 _tiles_bank_0                                                   00000215 GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 4
+Hexadecimal [32-Bits]
+
+Area Table
+
+   0 _CODE                                      size      A8F   flags    0
+   1 _DATA                                      size      227   flags    0
+   2 _INITIALIZED                               size       1E   flags    0
+   3 _DABS                                      size        0   flags    8
+   4 _HOME                                      size        0   flags    0
+   5 _GSINIT                                    size        0   flags    0
+   6 _GSFINAL                                   size        0   flags    0
+   7 _INITIALIZER                               size       1E   flags    0
+   8 _CABS                                      size        0   flags    8
+

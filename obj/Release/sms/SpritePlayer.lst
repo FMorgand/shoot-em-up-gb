@@ -1,0 +1,327 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module SpritePlayer
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _Destroy_SpritePlayer
+                                     11 	.globl _Update_SpritePlayer
+                                     12 	.globl _Start_SpritePlayer
+                                     13 	.globl ___bank_SpritePlayer
+                                     14 ;--------------------------------------------------------
+                                     15 ; special function registers
+                                     16 ;--------------------------------------------------------
+                         00000000    17 _GG_STATE	=	0x0000
+                         00000001    18 _GG_EXT_7BIT	=	0x0001
+                         00000002    19 _GG_EXT_CTL	=	0x0002
+                         00000003    20 _GG_SIO_SEND	=	0x0003
+                         00000004    21 _GG_SIO_RECV	=	0x0004
+                         00000005    22 _GG_SIO_CTL	=	0x0005
+                         00000006    23 _GG_SOUND_PAN	=	0x0006
+                         0000003E    24 _MEMORY_CTL	=	0x003e
+                         0000003F    25 _JOY_CTL	=	0x003f
+                         0000007E    26 _VCOUNTER	=	0x007e
+                         0000007F    27 _PSG	=	0x007f
+                         0000007F    28 _HCOUNTER	=	0x007f
+                         000000BE    29 _VDP_DATA	=	0x00be
+                         000000BF    30 _VDP_CMD	=	0x00bf
+                         000000BF    31 _VDP_STATUS	=	0x00bf
+                         000000DC    32 _JOY_PORT1	=	0x00dc
+                         000000DD    33 _JOY_PORT2	=	0x00dd
+                         000000F0    34 _FMADDRESS	=	0x00f0
+                         000000F1    35 _FMDATA	=	0x00f1
+                         000000F2    36 _AUDIOCTRL	=	0x00f2
+                                     37 ;--------------------------------------------------------
+                                     38 ; ram data
+                                     39 ;--------------------------------------------------------
+                                     40 	.area _DATA
+                         0000FFFC    41 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    42 _GLASSES_3D	=	0xfff8
+                         0000FFFD    43 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    44 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    45 _MAP_FRAME2	=	0xffff
+                                     46 ;--------------------------------------------------------
+                                     47 ; ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area _INITIALIZED
+                                     50 ;--------------------------------------------------------
+                                     51 ; absolute external ram data
+                                     52 ;--------------------------------------------------------
+                                     53 	.area _DABS (ABS)
+                                     54 ;--------------------------------------------------------
+                                     55 ; global & static initialisations
+                                     56 ;--------------------------------------------------------
+                                     57 	.area _HOME
+                                     58 	.area _GSINIT
+                                     59 	.area _GSFINAL
+                                     60 	.area _GSINIT
+                                     61 ;--------------------------------------------------------
+                                     62 ; Home
+                                     63 ;--------------------------------------------------------
+                                     64 	.area _HOME
+                                     65 	.area _HOME
+                                     66 ;--------------------------------------------------------
+                                     67 ; code
+                                     68 ;--------------------------------------------------------
+                                     69 	.area _CODE_255
+                                     70 ;SpritePlayer.c:27: void START(void) {
+                                     71 ;	---------------------------------
+                                     72 ; Function Start_SpritePlayer
+                                     73 ; ---------------------------------
+    00000000                         74 _Start_SpritePlayer::
+                                     75 ;SpritePlayer.c:28: player_form = FORM_OFFENSIVE;
+    00000000 2Ar00r00         [16]   76 	ld	hl, (_THIS)
+    00000003 01 24 00         [10]   77 	ld	bc, #0x0024
+    00000006 09               [11]   78 	add	hl, bc
+    00000007 36 00            [10]   79 	ld	(hl), #0x00
+                                     80 ;SpritePlayer.c:29: }
+    00000009 C9               [10]   81 	ret
+                         000000FF    82 ___bank_SpritePlayer	=	0x00ff
+                                     83 ;SpritePlayer.c:31: void UPDATE(void) {
+                                     84 ;	---------------------------------
+                                     85 ; Function Update_SpritePlayer
+                                     86 ; ---------------------------------
+    0000000A                         87 _Update_SpritePlayer::
+    0000000A DD E5            [15]   88 	push	ix
+    0000000C DD 21 00 00      [14]   89 	ld	ix,#0
+    00000010 DD 39            [15]   90 	add	ix,sp
+    00000012 21 FB FF         [10]   91 	ld	hl, #-5
+    00000015 39               [11]   92 	add	hl, sp
+    00000016 F9               [ 6]   93 	ld	sp, hl
+                                     94 ;SpritePlayer.c:32: INT8 dx = 0;
+    00000017 0E 00            [ 7]   95 	ld	c, #0x00
+                                     96 ;SpritePlayer.c:33: INT8 dy = 0;
+    00000019 DD 36 FB 00      [19]   97 	ld	-5 (ix), #0x00
+                                     98 ;SpritePlayer.c:37: if (KEY_TICKED(J_B)) {
+    0000001D 21r01r00         [10]   99 	ld	hl, #(_joypads + 1)
+    00000020 46               [ 7]  100 	ld	b, (hl)
+    00000021 3Ar01r00         [13]  101 	ld	a, (#(_old_joypads + 1) + 0)
+    00000024 A8               [ 4]  102 	xor	a, b
+    00000025 A0               [ 4]  103 	and	a, b
+    00000026 CB 67            [ 8]  104 	bit	4, a
+    00000028 28 0F            [12]  105 	jr	Z, 00102$
+                                    106 ;SpritePlayer.c:38: player_form = (player_form == FORM_OFFENSIVE) ? FORM_DEFENSIVE : FORM_OFFENSIVE;
+    0000002A 2Ar00r00         [16]  107 	ld	hl, (_THIS)
+    0000002D 11 24 00         [10]  108 	ld	de, #0x0024
+    00000030 19               [11]  109 	add	hl, de
+    00000031 7E               [ 7]  110 	ld	a, (hl)
+    00000032 B7               [ 4]  111 	or	a, a
+    00000033 3E 01            [ 7]  112 	ld	a, #0x01
+    00000035 28 01            [12]  113 	jr	Z, 00130$
+    00000037 AF               [ 4]  114 	xor	a, a
+    00000038                        115 00130$:
+    00000038 77               [ 7]  116 	ld	(hl), a
+    00000039                        117 00102$:
+    00000039 2Ar00r00         [16]  118 	ld	hl, (_THIS)
+    0000003C DD 75 FC         [19]  119 	ld	-4 (ix), l
+    0000003F DD 74 FD         [19]  120 	ld	-3 (ix), h
+    00000042 11 24 00         [10]  121 	ld	de, #36
+    00000045 19               [11]  122 	add	hl, de
+    00000046 7E               [ 7]  123 	ld	a, (hl)
+                                    124 ;SpritePlayer.c:45: speed = (player_form == FORM_OFFENSIVE) ? SPEED_SLOW : SPEED_FAST;
+    00000047 B7               [ 4]  125 	or	a, a
+    00000048 1E 01            [ 7]  126 	ld	e, #0x01
+    0000004A 28 02            [12]  127 	jr	Z, 00132$
+    0000004C 1E 03            [ 7]  128 	ld	e, #0x03
+    0000004E                        129 00132$:
+                                    130 ;SpritePlayer.c:48: if (KEY_PRESSED(J_LEFT))  dx = -1;
+    0000004E 21r01r00         [10]  131 	ld	hl, #(_joypads + 1)
+    00000051 46               [ 7]  132 	ld	b, (hl)
+    00000052 CB 50            [ 8]  133 	bit	2, b
+    00000054 28 02            [12]  134 	jr	Z, 00104$
+    00000056 0E FF            [ 7]  135 	ld	c, #0xff
+    00000058                        136 00104$:
+                                    137 ;SpritePlayer.c:49: if (KEY_PRESSED(J_RIGHT)) dx = 1;
+    00000058 CB 58            [ 8]  138 	bit	3, b
+    0000005A 28 02            [12]  139 	jr	Z, 00106$
+    0000005C 0E 01            [ 7]  140 	ld	c, #0x01
+    0000005E                        141 00106$:
+                                    142 ;SpritePlayer.c:50: if (KEY_PRESSED(J_UP))    dy = -1;
+    0000005E CB 40            [ 8]  143 	bit	0, b
+    00000060 28 04            [12]  144 	jr	Z, 00108$
+    00000062 DD 36 FB FF      [19]  145 	ld	-5 (ix), #0xff
+    00000066                        146 00108$:
+                                    147 ;SpritePlayer.c:51: if (KEY_PRESSED(J_DOWN))  dy = 1;
+    00000066 CB 48            [ 8]  148 	bit	1, b
+    00000068 28 04            [12]  149 	jr	Z, 00110$
+    0000006A DD 36 FB 01      [19]  150 	ld	-5 (ix), #0x01
+    0000006E                        151 00110$:
+                                    152 ;SpritePlayer.c:54: UINT8 spd_diag = (player_form == FORM_OFFENSIVE) ? SPEED_SLOW_DIAG : SPEED_FAST_DIAG;
+    0000006E B7               [ 4]  153 	or	a, a
+    0000006F 3E 01            [ 7]  154 	ld	a, #0x01
+    00000071 28 02            [12]  155 	jr	Z, 00134$
+    00000073 3E 02            [ 7]  156 	ld	a, #0x02
+    00000075                        157 00134$:
+    00000075 DD 77 FE         [19]  158 	ld	-2 (ix), a
+                                    159 ;SpritePlayer.c:58: dx = (dx > 0) ? (INT8)spd_diag : -(INT8)spd_diag;
+    00000078 AF               [ 4]  160 	xor	a, a
+    00000079 91               [ 4]  161 	sub	a, c
+    0000007A E2r7Fr00         [10]  162 	jp	PO, 00288$
+    0000007D EE 80            [ 7]  163 	xor	a, #0x80
+    0000007F                        164 00288$:
+    0000007F 07               [ 4]  165 	rlca
+    00000080 E6 01            [ 7]  166 	and	a,#0x01
+    00000082 47               [ 4]  167 	ld	b, a
+                                    168 ;SpritePlayer.c:59: dy = (dy > 0) ? (INT8)spd_diag : -(INT8)spd_diag;
+    00000083 AF               [ 4]  169 	xor	a, a
+    00000084 DD 96 FB         [19]  170 	sub	a, -5 (ix)
+    00000087 E2r8Cr00         [10]  171 	jp	PO, 00289$
+    0000008A EE 80            [ 7]  172 	xor	a, #0x80
+    0000008C                        173 00289$:
+    0000008C 07               [ 4]  174 	rlca
+    0000008D E6 01            [ 7]  175 	and	a,#0x01
+    0000008F DD 77 FF         [19]  176 	ld	-1 (ix), a
+                                    177 ;SpritePlayer.c:56: if (dx != 0 && dy != 0) {
+    00000092 79               [ 4]  178 	ld	a, c
+    00000093 B7               [ 4]  179 	or	a, a
+    00000094 28 20            [12]  180 	jr	Z, 00116$
+    00000096 DD 7E FB         [19]  181 	ld	a, -5 (ix)
+    00000099 B7               [ 4]  182 	or	a, a
+    0000009A 28 1A            [12]  183 	jr	Z, 00116$
+                                    184 ;SpritePlayer.c:58: dx = (dx > 0) ? (INT8)spd_diag : -(INT8)spd_diag;
+    0000009C DD 5E FE         [19]  185 	ld	e, -2 (ix)
+    0000009F AF               [ 4]  186 	xor	a, a
+    000000A0 93               [ 4]  187 	sub	a, e
+    000000A1 57               [ 4]  188 	ld	d, a
+    000000A2 78               [ 4]  189 	ld	a, b
+    000000A3 B7               [ 4]  190 	or	a, a
+    000000A4 28 03            [12]  191 	jr	Z, 00135$
+    000000A6 4B               [ 4]  192 	ld	c, e
+    000000A7 18 01            [12]  193 	jr	00136$
+    000000A9                        194 00135$:
+    000000A9 4A               [ 4]  195 	ld	c, d
+    000000AA                        196 00136$:
+                                    197 ;SpritePlayer.c:59: dy = (dy > 0) ? (INT8)spd_diag : -(INT8)spd_diag;
+    000000AA DD 7E FF         [19]  198 	ld	a, -1 (ix)
+    000000AD B7               [ 4]  199 	or	a, a
+    000000AE 20 01            [12]  200 	jr	NZ, 00138$
+    000000B0 5A               [ 4]  201 	ld	e, d
+    000000B1                        202 00138$:
+    000000B1 DD 73 FB         [19]  203 	ld	-5 (ix), e
+    000000B4 18 1F            [12]  204 	jr	00117$
+    000000B6                        205 00116$:
+                                    206 ;SpritePlayer.c:62: if (dx != 0) dx = (dx > 0) ? (INT8)speed : -(INT8)speed;
+    000000B6 AF               [ 4]  207 	xor	a, a
+    000000B7 93               [ 4]  208 	sub	a, e
+    000000B8 6F               [ 4]  209 	ld	l, a
+    000000B9 79               [ 4]  210 	ld	a, c
+    000000BA B7               [ 4]  211 	or	a, a
+    000000BB 28 08            [12]  212 	jr	Z, 00112$
+    000000BD 78               [ 4]  213 	ld	a, b
+    000000BE B7               [ 4]  214 	or	a, a
+    000000BF 28 03            [12]  215 	jr	Z, 00139$
+    000000C1 4B               [ 4]  216 	ld	c, e
+    000000C2 18 01            [12]  217 	jr	00140$
+    000000C4                        218 00139$:
+    000000C4 4D               [ 4]  219 	ld	c, l
+    000000C5                        220 00140$:
+    000000C5                        221 00112$:
+                                    222 ;SpritePlayer.c:63: if (dy != 0) dy = (dy > 0) ? (INT8)speed : -(INT8)speed;
+    000000C5 DD 7E FB         [19]  223 	ld	a, -5 (ix)
+    000000C8 B7               [ 4]  224 	or	a, a
+    000000C9 28 0A            [12]  225 	jr	Z, 00117$
+    000000CB DD 7E FF         [19]  226 	ld	a, -1 (ix)
+    000000CE B7               [ 4]  227 	or	a, a
+    000000CF 20 01            [12]  228 	jr	NZ, 00142$
+    000000D1 5D               [ 4]  229 	ld	e, l
+    000000D2                        230 00142$:
+    000000D2 DD 73 FB         [19]  231 	ld	-5 (ix), e
+    000000D5                        232 00117$:
+                                    233 ;SpritePlayer.c:67: INT16 new_x = (INT16)THIS->x + (INT16)dx;
+    000000D5 2Ar00r00         [16]  234 	ld	hl, (_THIS)
+    000000D8 DD 75 FE         [19]  235 	ld	-2 (ix), l
+    000000DB DD 74 FF         [19]  236 	ld	-1 (ix), h
+    000000DE 7E               [ 7]  237 	ld	a, (hl)
+    000000DF 23               [ 6]  238 	inc	hl
+    000000E0 66               [ 7]  239 	ld	h, (hl)
+    000000E1 6F               [ 4]  240 	ld	l, a
+    000000E2 79               [ 4]  241 	ld	a, c
+    000000E3 07               [ 4]  242 	rlca
+    000000E4 9F               [ 4]  243 	sbc	a, a
+    000000E5 47               [ 4]  244 	ld	b, a
+    000000E6 09               [11]  245 	add	hl, bc
+    000000E7 4D               [ 4]  246 	ld	c, l
+    000000E8 44               [ 4]  247 	ld	b, h
+                                    248 ;SpritePlayer.c:68: INT16 new_y = (INT16)THIS->y + (INT16)dy;
+    000000E9 DD 6E FC         [19]  249 	ld	l, -4 (ix)
+    000000EC DD 66 FD         [19]  250 	ld	h, -3 (ix)
+    000000EF 23               [ 6]  251 	inc	hl
+    000000F0 23               [ 6]  252 	inc	hl
+    000000F1 5E               [ 7]  253 	ld	e, (hl)
+    000000F2 23               [ 6]  254 	inc	hl
+    000000F3 56               [ 7]  255 	ld	d, (hl)
+    000000F4 DD 7E FB         [19]  256 	ld	a, -5 (ix)
+    000000F7 6F               [ 4]  257 	ld	l, a
+    000000F8 07               [ 4]  258 	rlca
+    000000F9 9F               [ 4]  259 	sbc	a, a
+    000000FA 67               [ 4]  260 	ld	h, a
+    000000FB 19               [11]  261 	add	hl, de
+    000000FC EB               [ 4]  262 	ex	de, hl
+                                    263 ;SpritePlayer.c:70: if (new_x < PLAYER_MIN_X) new_x = PLAYER_MIN_X;
+    000000FD 79               [ 4]  264 	ld	a, c
+    000000FE D6 08            [ 7]  265 	sub	a, #0x08
+    00000100 78               [ 4]  266 	ld	a, b
+    00000101 17               [ 4]  267 	rla
+    00000102 3F               [ 4]  268 	ccf
+    00000103 1F               [ 4]  269 	rra
+    00000104 DE 80            [ 7]  270 	sbc	a, #0x80
+    00000106 30 03            [12]  271 	jr	NC, 00120$
+    00000108 01 08 00         [10]  272 	ld	bc, #0x0008
+    0000010B                        273 00120$:
+                                    274 ;SpritePlayer.c:71: if (new_x > PLAYER_MAX_X) new_x = PLAYER_MAX_X;
+    0000010B 3E 90            [ 7]  275 	ld	a, #0x90
+    0000010D B9               [ 4]  276 	cp	a, c
+    0000010E 3E 00            [ 7]  277 	ld	a, #0x00
+    00000110 98               [ 4]  278 	sbc	a, b
+    00000111 30 03            [12]  279 	jr	NC, 00122$
+    00000113 01 90 00         [10]  280 	ld	bc, #0x0090
+    00000116                        281 00122$:
+                                    282 ;SpritePlayer.c:72: if (new_y < PLAYER_MIN_Y) new_y = PLAYER_MIN_Y;
+    00000116 7B               [ 4]  283 	ld	a, e
+    00000117 D6 10            [ 7]  284 	sub	a, #0x10
+    00000119 7A               [ 4]  285 	ld	a, d
+    0000011A 17               [ 4]  286 	rla
+    0000011B 3F               [ 4]  287 	ccf
+    0000011C 1F               [ 4]  288 	rra
+    0000011D DE 80            [ 7]  289 	sbc	a, #0x80
+    0000011F 30 03            [12]  290 	jr	NC, 00124$
+    00000121 11 10 00         [10]  291 	ld	de, #0x0010
+    00000124                        292 00124$:
+                                    293 ;SpritePlayer.c:73: if (new_y > PLAYER_MAX_Y) new_y = PLAYER_MAX_Y;
+    00000124 3E 80            [ 7]  294 	ld	a, #0x80
+    00000126 BB               [ 4]  295 	cp	a, e
+    00000127 3E 00            [ 7]  296 	ld	a, #0x00
+    00000129 9A               [ 4]  297 	sbc	a, d
+    0000012A 30 03            [12]  298 	jr	NC, 00126$
+    0000012C 11 80 00         [10]  299 	ld	de, #0x0080
+    0000012F                        300 00126$:
+                                    301 ;SpritePlayer.c:75: THIS->x = (UINT16)new_x;
+    0000012F DD 6E FE         [19]  302 	ld	l, -2 (ix)
+    00000132 DD 66 FF         [19]  303 	ld	h, -1 (ix)
+    00000135 71               [ 7]  304 	ld	(hl), c
+    00000136 23               [ 6]  305 	inc	hl
+    00000137 70               [ 7]  306 	ld	(hl), b
+                                    307 ;SpritePlayer.c:76: THIS->y = (UINT16)new_y;
+    00000138 2Ar00r00         [16]  308 	ld	hl, (_THIS)
+    0000013B 23               [ 6]  309 	inc	hl
+    0000013C 23               [ 6]  310 	inc	hl
+    0000013D 73               [ 7]  311 	ld	(hl), e
+    0000013E 23               [ 6]  312 	inc	hl
+    0000013F 72               [ 7]  313 	ld	(hl), d
+                                    314 ;SpritePlayer.c:77: }
+    00000140 DD F9            [10]  315 	ld	sp, ix
+    00000142 DD E1            [14]  316 	pop	ix
+    00000144 C9               [10]  317 	ret
+                                    318 ;SpritePlayer.c:79: void DESTROY(void) {
+                                    319 ;	---------------------------------
+                                    320 ; Function Destroy_SpritePlayer
+                                    321 ; ---------------------------------
+    00000145                        322 _Destroy_SpritePlayer::
+                                    323 ;SpritePlayer.c:80: }
+    00000145 C9               [10]  324 	ret
+                                    325 	.area _CODE_255
+                                    326 	.area _INITIALIZER
+                                    327 	.area _CABS (ABS)

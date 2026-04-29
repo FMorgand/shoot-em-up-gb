@@ -1,0 +1,289 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module ScrollUpdateTile
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _UPDATE_TILE
+                                     11 	.globl _GetTileReplacement
+                                     12 	.globl _SpriteManagerAddEx
+                                     13 	.globl _set_attributed_tile_xy
+                                     14 ;--------------------------------------------------------
+                                     15 ; special function registers
+                                     16 ;--------------------------------------------------------
+                         00000000    17 _GG_STATE	=	0x0000
+                         00000001    18 _GG_EXT_7BIT	=	0x0001
+                         00000002    19 _GG_EXT_CTL	=	0x0002
+                         00000003    20 _GG_SIO_SEND	=	0x0003
+                         00000004    21 _GG_SIO_RECV	=	0x0004
+                         00000005    22 _GG_SIO_CTL	=	0x0005
+                         00000006    23 _GG_SOUND_PAN	=	0x0006
+                         0000003E    24 _MEMORY_CTL	=	0x003e
+                         0000003F    25 _JOY_CTL	=	0x003f
+                         0000007E    26 _VCOUNTER	=	0x007e
+                         0000007F    27 _PSG	=	0x007f
+                         0000007F    28 _HCOUNTER	=	0x007f
+                         000000BE    29 _VDP_DATA	=	0x00be
+                         000000BF    30 _VDP_CMD	=	0x00bf
+                         000000BF    31 _VDP_STATUS	=	0x00bf
+                         000000DC    32 _JOY_PORT1	=	0x00dc
+                         000000DD    33 _JOY_PORT2	=	0x00dd
+                         000000F0    34 _FMADDRESS	=	0x00f0
+                         000000F1    35 _FMDATA	=	0x00f1
+                         000000F2    36 _AUDIOCTRL	=	0x00f2
+                                     37 ;--------------------------------------------------------
+                                     38 ; ram data
+                                     39 ;--------------------------------------------------------
+                                     40 	.area _DATA
+                         0000FFFC    41 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    42 _GLASSES_3D	=	0xfff8
+                         0000FFFD    43 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    44 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    45 _MAP_FRAME2	=	0xffff
+    00000000                         46 _UPDATE_TILE_replacement_10000_235:
+    00000000                         47 	.ds 1
+    00000001                         48 _UPDATE_TILE_type_30000_238:
+    00000001                         49 	.ds 1
+    00000002                         50 _UPDATE_TILE_i_50000_240:
+    00000002                         51 	.ds 1
+    00000003                         52 _UPDATE_TILE_id_50000_240:
+    00000003                         53 	.ds 2
+                                     54 ;--------------------------------------------------------
+                                     55 ; ram data
+                                     56 ;--------------------------------------------------------
+                                     57 	.area _INITIALIZED
+                                     58 ;--------------------------------------------------------
+                                     59 ; absolute external ram data
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _DABS (ABS)
+                                     62 ;--------------------------------------------------------
+                                     63 ; global & static initialisations
+                                     64 ;--------------------------------------------------------
+                                     65 	.area _HOME
+                                     66 	.area _GSINIT
+                                     67 	.area _GSFINAL
+                                     68 	.area _GSINIT
+                                     69 ;--------------------------------------------------------
+                                     70 ; Home
+                                     71 ;--------------------------------------------------------
+                                     72 	.area _HOME
+                                     73 	.area _HOME
+                                     74 ;--------------------------------------------------------
+                                     75 ; code
+                                     76 ;--------------------------------------------------------
+                                     77 	.area _CODE
+                                     78 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:15: void UPDATE_TILE(INT16 x, INT16 y) {
+                                     79 ;	---------------------------------
+                                     80 ; Function UPDATE_TILE
+                                     81 ; ---------------------------------
+    00000000                         82 _UPDATE_TILE::
+    00000000 DD E5            [15]   83 	push	ix
+    00000002 DD 21 00 00      [14]   84 	ld	ix,#0
+    00000006 DD 39            [15]   85 	add	ix,sp
+    00000008 F5               [11]   86 	push	af
+    00000009 3B               [ 6]   87 	dec	sp
+    0000000A 4D               [ 4]   88 	ld	c, l
+    0000000B 44               [ 4]   89 	ld	b, h
+    0000000C DD 73 FE         [19]   90 	ld	-2 (ix), e
+    0000000F DD 72 FF         [19]   91 	ld	-1 (ix), d
+                                     92 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:18: if(((UINT16)x >= scroll_tiles_w) || ((UINT16)y >= scroll_tiles_h)) { //This also checks x < 0 || y < 0
+    00000012 59               [ 4]   93 	ld	e, c
+    00000013 50               [ 4]   94 	ld	d, b
+    00000014 21r00r00         [10]   95 	ld	hl, #_scroll_tiles_w
+    00000017 7B               [ 4]   96 	ld	a, e
+    00000018 96               [ 7]   97 	sub	a, (hl)
+    00000019 23               [ 6]   98 	inc	hl
+    0000001A 7A               [ 4]   99 	ld	a, d
+    0000001B 9E               [ 7]  100 	sbc	a, (hl)
+    0000001C 30 10            [12]  101 	jr	NC, 00109$
+    0000001E DD 5E FE         [19]  102 	ld	e, -2 (ix)
+    00000021 DD 56 FF         [19]  103 	ld	d, -1 (ix)
+    00000024 21r00r00         [10]  104 	ld	hl, #_scroll_tiles_h
+    00000027 7B               [ 4]  105 	ld	a, e
+    00000028 96               [ 7]  106 	sub	a, (hl)
+    00000029 23               [ 6]  107 	inc	hl
+    0000002A 7A               [ 4]  108 	ld	a, d
+    0000002B 9E               [ 7]  109 	sbc	a, (hl)
+    0000002C 38 07            [12]  110 	jr	C, 00110$
+    0000002E                        111 00109$:
+                                    112 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:19: replacement = 0;
+    0000002E AF               [ 4]  113 	xor	a, a
+    0000002F 32r00r00         [13]  114 	ld	(_UPDATE_TILE_replacement_10000_235+0), a
+    00000032 C3rF7r00         [10]  115 	jp	00111$
+    00000035                        116 00110$:
+                                    117 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:22: replacement = *scroll_ptr;
+    00000035 2Ar00r00         [16]  118 	ld	hl, (_scroll_ptr)
+    00000038 7E               [ 7]  119 	ld	a, (hl)
+    00000039 32r00r00         [13]  120 	ld	(_UPDATE_TILE_replacement_10000_235+0), a
+                                    121 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:23: type = GetTileReplacement(scroll_ptr, &replacement);
+    0000003C C5               [11]  122 	push	bc
+    0000003D 11r00r00         [10]  123 	ld	de, #_UPDATE_TILE_replacement_10000_235
+    00000040 2Ar00r00         [16]  124 	ld	hl, (_scroll_ptr)
+    00000043 CDr00r00         [17]  125 	call	_GetTileReplacement
+    00000046 C1               [10]  126 	pop	bc
+    00000047 32r01r00         [13]  127 	ld	(_UPDATE_TILE_type_30000_238+0), a
+                                    128 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:24: if(type != 255u) {
+    0000004A 3Ar01r00         [13]  129 	ld	a, (_UPDATE_TILE_type_30000_238+0)
+    0000004D 3C               [ 4]  130 	inc	a
+    0000004E CArF7r00         [10]  131 	jp	Z, 00111$
+                                    132 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:27: id = SPRITE_UNIQUE_ID(x, y);
+    00000051 69               [ 4]  133 	ld	l, c
+    00000052 DD 66 FE         [19]  134 	ld	h, -2 (ix)
+    00000055 22r03r00         [16]  135 	ld	(_UPDATE_TILE_id_50000_240), hl
+                                    136 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:28: for (i = VECTOR_LEN(sprite_manager_updatables); (i); i--) {
+    00000058 3Ar00r00         [13]  137 	ld	a, (#_sprite_manager_updatables + 0)
+    0000005B 32r02r00         [13]  138 	ld	(_UPDATE_TILE_i_50000_240+0), a
+    0000005E                        139 00116$:
+    0000005E 3Ar02r00         [13]  140 	ld	a, (_UPDATE_TILE_i_50000_240+0)
+    00000061 B7               [ 4]  141 	or	a, a
+    00000062 28 39            [12]  142 	jr	Z, 00104$
+                                    143 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:29: Sprite* s = sprite_manager_sprites[sprite_manager_updatables[i]];
+    00000064 21r00r00         [10]  144 	ld	hl, #_sprite_manager_updatables
+    00000067 3Ar02r00         [13]  145 	ld	a, (_UPDATE_TILE_i_50000_240)
+    0000006A 5F               [ 4]  146 	ld	e, a
+    0000006B 16 00            [ 7]  147 	ld	d, #0x00
+    0000006D 19               [11]  148 	add	hl, de
+    0000006E 6E               [ 7]  149 	ld	l, (hl)
+    0000006F 26 00            [ 7]  150 	ld	h, #0x00
+    00000071 29               [11]  151 	add	hl, hl
+    00000072 11r00r00         [10]  152 	ld	de, #_sprite_manager_sprites
+    00000075 19               [11]  153 	add	hl, de
+    00000076 5E               [ 7]  154 	ld	e, (hl)
+    00000077 23               [ 6]  155 	inc	hl
+    00000078 56               [ 7]  156 	ld	d, (hl)
+                                    157 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:30: if ((s->type == type) && (s->unique_id == id)) {
+    00000079 6B               [ 4]  158 	ld	l, e
+    0000007A 62               [ 4]  159 	ld	h, d
+    0000007B C5               [11]  160 	push	bc
+    0000007C 01 1D 00         [10]  161 	ld	bc, #0x001d
+    0000007F 09               [11]  162 	add	hl, bc
+    00000080 C1               [10]  163 	pop	bc
+    00000081 6E               [ 7]  164 	ld	l, (hl)
+    00000082 3Ar01r00         [13]  165 	ld	a, (_UPDATE_TILE_type_30000_238)
+    00000085 95               [ 4]  166 	sub	a, l
+    00000086 20 0F            [12]  167 	jr	NZ, 00117$
+    00000088 21 1F 00         [10]  168 	ld	hl, #31
+    0000008B 19               [11]  169 	add	hl, de
+    0000008C 5E               [ 7]  170 	ld	e, (hl)
+    0000008D 23               [ 6]  171 	inc	hl
+    0000008E 56               [ 7]  172 	ld	d, (hl)
+    0000008F 2Ar03r00         [16]  173 	ld	hl, (_UPDATE_TILE_id_50000_240)
+    00000092 BF               [ 4]  174 	cp	a, a
+    00000093 ED 52            [15]  175 	sbc	hl, de
+    00000095 28 06            [12]  176 	jr	Z, 00104$
+                                    177 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:31: break;
+    00000097                        178 00117$:
+                                    179 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:28: for (i = VECTOR_LEN(sprite_manager_updatables); (i); i--) {
+    00000097 21r02r00         [10]  180 	ld	hl, #_UPDATE_TILE_i_50000_240
+    0000009A 35               [11]  181 	dec	(hl)
+    0000009B 18 C1            [12]  182 	jr	00116$
+    0000009D                        183 00104$:
+                                    184 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:34: if (i == 0) {
+    0000009D 3Ar02r00         [13]  185 	ld	a, (_UPDATE_TILE_i_50000_240+0)
+    000000A0 B7               [ 4]  186 	or	a, a
+    000000A1 20 54            [12]  187 	jr	NZ, 00111$
+                                    188 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:35: UINT8 __save = CURRENT_BANK;
+    000000A3 3A FE FF         [13]  189 	ld	a, (_MAP_FRAME1+0)
+    000000A6 DD 77 FD         [19]  190 	ld	-3 (ix), a
+                                    191 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:36: SWITCH_ROM(spriteDataBanks[type]);
+    000000A9 21r00r00         [10]  192 	ld	hl, #_spriteDataBanks
+    000000AC 3Ar01r00         [13]  193 	ld	a, (_UPDATE_TILE_type_30000_238)
+    000000AF 5F               [ 4]  194 	ld	e, a
+    000000B0 16 00            [ 7]  195 	ld	d, #0x00
+    000000B2 19               [11]  196 	add	hl, de
+    000000B3 7E               [ 7]  197 	ld	a, (hl)
+    000000B4 32 FE FF         [13]  198 	ld	(_MAP_FRAME1+0), a
+                                    199 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:37: UINT16 sprite_y = TILE_TO_PX(y + 1) - spriteDatas[type]->height;
+    000000B7 DD 5E FE         [19]  200 	ld	e, -2 (ix)
+    000000BA DD 56 FF         [19]  201 	ld	d, -1 (ix)
+    000000BD 13               [ 6]  202 	inc	de
+    000000BE EB               [ 4]  203 	ex	de, hl
+    000000BF 29               [11]  204 	add	hl, hl
+    000000C0 29               [11]  205 	add	hl, hl
+    000000C1 29               [11]  206 	add	hl, hl
+    000000C2 EB               [ 4]  207 	ex	de, hl
+    000000C3 3Ar01r00         [13]  208 	ld	a, (_UPDATE_TILE_type_30000_238)
+    000000C6 26 00            [ 7]  209 	ld	h, #0x00
+    000000C8 6F               [ 4]  210 	ld	l, a
+    000000C9 29               [11]  211 	add	hl, hl
+    000000CA D5               [11]  212 	push	de
+    000000CB 11r00r00         [10]  213 	ld	de, #_spriteDatas
+    000000CE 19               [11]  214 	add	hl, de
+    000000CF D1               [10]  215 	pop	de
+    000000D0 7E               [ 7]  216 	ld	a, (hl)
+    000000D1 23               [ 6]  217 	inc	hl
+    000000D2 66               [ 7]  218 	ld	h, (hl)
+    000000D3 6F               [ 4]  219 	ld	l, a
+    000000D4 23               [ 6]  220 	inc	hl
+    000000D5 6E               [ 7]  221 	ld	l, (hl)
+    000000D6 26 00            [ 7]  222 	ld	h, #0x00
+    000000D8 7B               [ 4]  223 	ld	a, e
+    000000D9 95               [ 4]  224 	sub	a, l
+    000000DA 5F               [ 4]  225 	ld	e, a
+    000000DB 7A               [ 4]  226 	ld	a, d
+    000000DC 9C               [ 4]  227 	sbc	a, h
+    000000DD 57               [ 4]  228 	ld	d, a
+                                    229 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:38: SWITCH_ROM(__save);
+    000000DE DD 7E FD         [19]  230 	ld	a, -3 (ix)
+    000000E1 32 FE FF         [13]  231 	ld	(_MAP_FRAME1+0), a
+                                    232 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:39: SpriteManagerAdd(type, TILE_TO_PX(x), sprite_y);
+    000000E4 69               [ 4]  233 	ld	l, c
+    000000E5 60               [ 4]  234 	ld	h, b
+    000000E6 29               [11]  235 	add	hl, hl
+    000000E7 29               [11]  236 	add	hl, hl
+    000000E8 29               [11]  237 	add	hl, hl
+    000000E9 3Ar01r00         [13]  238 	ld	a, (_UPDATE_TILE_type_30000_238)
+                                    239 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/SpriteManager.h:45: return SpriteManagerAddEx(sprite_type, x, y, NULL);
+    000000EC C5               [11]  240 	push	bc
+    000000ED 01 00 00         [10]  241 	ld	bc, #0x0000
+    000000F0 C5               [11]  242 	push	bc
+    000000F1 EB               [ 4]  243 	ex	de, hl
+    000000F2 E5               [11]  244 	push	hl
+    000000F3 CDr00r00         [17]  245 	call	_SpriteManagerAddEx
+    000000F6 C1               [10]  246 	pop	bc
+                                    247 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:39: SpriteManagerAdd(type, TILE_TO_PX(x), sprite_y);
+    000000F7                        248 00111$:
+                                    249 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:44: ScrollSetAttrTileXY(SCREEN_BKG_OFFSET_X + x + scroll_offset_x, y + scroll_offset_y, replacement, ((scroll_cptr) ? *scroll_cptr : scroll_tile_info[replacement]));
+    000000F7 3Ar01r00         [13]  250 	ld	a, (_scroll_cptr+1)
+    000000FA 21r00r00         [10]  251 	ld	hl, #_scroll_cptr
+    000000FD B6               [ 7]  252 	or	a, (hl)
+    000000FE 28 06            [12]  253 	jr	Z, 00120$
+    00000100 2Ar00r00         [16]  254 	ld	hl, (_scroll_cptr)
+    00000103 5E               [ 7]  255 	ld	e, (hl)
+    00000104 18 0B            [12]  256 	jr	00121$
+    00000106                        257 00120$:
+    00000106 11r00r00         [10]  258 	ld	de, #_scroll_tile_info+0
+    00000109 3Ar00r00         [13]  259 	ld	a, (_UPDATE_TILE_replacement_10000_235)
+    0000010C 6F               [ 4]  260 	ld	l, a
+    0000010D 26 00            [ 7]  261 	ld	h, #0x00
+    0000010F 19               [11]  262 	add	hl, de
+    00000110 5E               [ 7]  263 	ld	e, (hl)
+    00000111                        264 00121$:
+    00000111 3Ar00r00         [13]  265 	ld	a, (_UPDATE_TILE_replacement_10000_235)
+    00000114 6F               [ 4]  266 	ld	l, a
+    00000115 DD 56 FE         [19]  267 	ld	d, -2 (ix)
+    00000118 3Ar00r00         [13]  268 	ld	a, (_scroll_offset_y)
+    0000011B 82               [ 4]  269 	add	a, d
+    0000011C 57               [ 4]  270 	ld	d, a
+    0000011D 3Ar00r00         [13]  271 	ld	a, (_scroll_offset_x)
+    00000120 81               [ 4]  272 	add	a, c
+                                    273 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Scroll.h:190: set_attributed_tile_xy(x, y, (UINT16)(c << 8) | t);
+    00000121 43               [ 4]  274 	ld	b, e
+    00000122 4D               [ 4]  275 	ld	c, l
+    00000123 C5               [11]  276 	push	bc
+    00000124 D5               [11]  277 	push	de
+    00000125 33               [ 6]  278 	inc	sp
+    00000126 F5               [11]  279 	push	af
+    00000127 33               [ 6]  280 	inc	sp
+    00000128 CDr00r00         [17]  281 	call	_set_attributed_tile_xy
+                                    282 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:44: ScrollSetAttrTileXY(SCREEN_BKG_OFFSET_X + x + scroll_offset_x, y + scroll_offset_y, replacement, ((scroll_cptr) ? *scroll_cptr : scroll_tile_info[replacement]));
+                                    283 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/ScrollUpdateTile.c:45: }
+    0000012B DD F9            [10]  284 	ld	sp, ix
+    0000012D DD E1            [14]  285 	pop	ix
+    0000012F C9               [10]  286 	ret
+                                    287 	.area _CODE
+                                    288 	.area _INITIALIZER
+                                    289 	.area _CABS (ABS)

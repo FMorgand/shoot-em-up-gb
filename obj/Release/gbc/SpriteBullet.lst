@@ -1,0 +1,105 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module SpriteBullet
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _Destroy_SpriteBullet
+                                     11 	.globl _Update_SpriteBullet
+                                     12 	.globl _Start_SpriteBullet
+                                     13 	.globl _SpriteManagerRemoveSprite
+                                     14 	.globl ___bank_SpriteBullet
+                                     15 ;--------------------------------------------------------
+                                     16 ; special function registers
+                                     17 ;--------------------------------------------------------
+                                     18 	.area _HRAM
+                                     19 ;--------------------------------------------------------
+                                     20 ; ram data
+                                     21 ;--------------------------------------------------------
+                                     22 	.area _DATA
+                                     23 ;--------------------------------------------------------
+                                     24 ; ram data
+                                     25 ;--------------------------------------------------------
+                                     26 	.area _INITIALIZED
+                                     27 ;--------------------------------------------------------
+                                     28 ; absolute external ram data
+                                     29 ;--------------------------------------------------------
+                                     30 	.area _DABS (ABS)
+                                     31 ;--------------------------------------------------------
+                                     32 ; global & static initialisations
+                                     33 ;--------------------------------------------------------
+                                     34 	.area _HOME
+                                     35 	.area _GSINIT
+                                     36 	.area _GSFINAL
+                                     37 	.area _GSINIT
+                                     38 ;--------------------------------------------------------
+                                     39 ; Home
+                                     40 ;--------------------------------------------------------
+                                     41 	.area _HOME
+                                     42 	.area _HOME
+                                     43 ;--------------------------------------------------------
+                                     44 ; code
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _CODE_255
+                                     47 ;SpriteBullet.c:8: void START(void) {
+                                     48 ;	---------------------------------
+                                     49 ; Function Start_SpriteBullet
+                                     50 ; ---------------------------------
+    00000000                         51 _Start_SpriteBullet::
+                                     52 ;SpriteBullet.c:9: }
+    00000000 C9               [16]   53 	ret
+                         000000FF    54 ___bank_SpriteBullet	=	0x00ff
+                                     55 ;SpriteBullet.c:11: void UPDATE(void) {
+                                     56 ;	---------------------------------
+                                     57 ; Function Update_SpriteBullet
+                                     58 ; ---------------------------------
+    00000001                         59 _Update_SpriteBullet::
+                                     60 ;SpriteBullet.c:13: if (THIS->y > BULLET_MIN_Y + BULLET_SPEED) {
+    00000001 FAr00r00         [16]   61 	ld	a, (_THIS)
+    00000004 21r01r00         [12]   62 	ld	hl, #_THIS + 1
+    00000007 46               [ 8]   63 	ld	b, (hl)
+    00000008 4F               [ 4]   64 	ld	c, a
+    00000009 03               [ 8]   65 	inc	bc
+    0000000A 03               [ 8]   66 	inc	bc
+    0000000B 69               [ 4]   67 	ld	l, c
+    0000000C 60               [ 4]   68 	ld	h, b
+    0000000D 2A               [ 8]   69 	ld	a,	(hl+)
+    0000000E 66               [ 8]   70 	ld	h, (hl)
+    0000000F 6F               [ 4]   71 	ld	l, a
+    00000010 3E 0C            [ 8]   72 	ld	a, #0x0c
+    00000012 BD               [ 4]   73 	cp	a, l
+    00000013 3E 00            [ 8]   74 	ld	a, #0x00
+    00000015 9C               [ 4]   75 	sbc	a, h
+    00000016 30 0C            [12]   76 	jr	NC, 00102$
+                                     77 ;SpriteBullet.c:14: THIS->y -= BULLET_SPEED;
+    00000018 11 FC FF         [12]   78 	ld	de, #0xfffc
+    0000001B 19               [ 8]   79 	add	hl, de
+    0000001C 5D               [ 4]   80 	ld	e, l
+    0000001D 54               [ 4]   81 	ld	d, h
+    0000001E 7B               [ 4]   82 	ld	a, e
+    0000001F 02               [ 8]   83 	ld	(bc), a
+    00000020 03               [ 8]   84 	inc	bc
+    00000021 7A               [ 4]   85 	ld	a, d
+    00000022 02               [ 8]   86 	ld	(bc), a
+    00000023 C9               [16]   87 	ret
+    00000024                         88 00102$:
+                                     89 ;SpriteBullet.c:16: SpriteManagerRemoveSprite(THIS);
+    00000024 FAr00r00         [16]   90 	ld	a, (_THIS)
+    00000027 5F               [ 4]   91 	ld	e, a
+    00000028 21r01r00         [12]   92 	ld	hl, #_THIS + 1
+    0000002B 56               [ 8]   93 	ld	d, (hl)
+                                     94 ;SpriteBullet.c:18: }
+    0000002C C3r00r00         [16]   95 	jp	_SpriteManagerRemoveSprite
+                                     96 ;SpriteBullet.c:20: void DESTROY(void) {
+                                     97 ;	---------------------------------
+                                     98 ; Function Destroy_SpriteBullet
+                                     99 ; ---------------------------------
+    0000002F                        100 _Destroy_SpriteBullet::
+                                    101 ;SpriteBullet.c:21: }
+    0000002F C9               [16]  102 	ret
+                                    103 	.area _CODE_255
+                                    104 	.area _INITIALIZER
+                                    105 	.area _CABS (ABS)

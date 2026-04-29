@@ -1,0 +1,426 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module main
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _main
+                                     11 	.globl b_InitSprites
+                                     12 	.globl _InitSprites
+                                     13 	.globl b_InitStates
+                                     14 	.globl _InitStates
+                                     15 	.globl _InitWindow
+                                     16 	.globl _VBL_isr
+                                     17 	.globl b_SetDefaultColorPalettes
+                                     18 	.globl _SetDefaultColorPalettes
+                                     19 	.globl b_FadeOut
+                                     20 	.globl _FadeOut
+                                     21 	.globl b_FadeIn
+                                     22 	.globl _FadeIn
+                                     23 	.globl _MUSIC_isr
+                                     24 	.globl _SyncVBlank
+                                     25 	.globl _SetWindowPos
+                                     26 	.globl _SpriteManagerUpdate
+                                     27 	.globl _SpriteManagerReset
+                                     28 	.globl _InitOAMs
+                                     29 	.globl _sgb_check
+                                     30 	.globl _cpu_fast
+                                     31 	.globl _display_off
+                                     32 	.globl _vsync
+                                     33 	.globl _set_interrupts
+                                     34 	.globl _joypad_ex
+                                     35 	.globl _joypad_init
+                                     36 	.globl _add_low_priority_TIM
+                                     37 	.globl _add_VBL
+                                     38 	.globl _vbl_count
+                                     39 	.globl _fade_mode
+                                     40 	.globl _state_running
+                                     41 	.globl __is_SGB
+                                     42 	.globl _current_state
+                                     43 	.globl _delta_time
+                                     44 	.globl _SetState
+                                     45 ;--------------------------------------------------------
+                                     46 ; special function registers
+                                     47 ;--------------------------------------------------------
+                                     48 	.area _HRAM
+                                     49 ;--------------------------------------------------------
+                                     50 ; ram data
+                                     51 ;--------------------------------------------------------
+                                     52 	.area _DATA
+    00000000                         53 _delta_time::
+    00000000                         54 	.ds 1
+    00000001                         55 _current_state::
+    00000001                         56 	.ds 1
+                                     57 ;--------------------------------------------------------
+                                     58 ; ram data
+                                     59 ;--------------------------------------------------------
+                                     60 	.area _INITIALIZED
+    00000000                         61 __is_SGB::
+    00000000                         62 	.ds 1
+    00000001                         63 _state_running::
+    00000001                         64 	.ds 1
+    00000002                         65 _fade_mode::
+    00000002                         66 	.ds 1
+    00000003                         67 _vbl_count::
+    00000003                         68 	.ds 1
+                                     69 ;--------------------------------------------------------
+                                     70 ; absolute external ram data
+                                     71 ;--------------------------------------------------------
+                                     72 	.area _DABS (ABS)
+                                     73 ;--------------------------------------------------------
+                                     74 ; global & static initialisations
+                                     75 ;--------------------------------------------------------
+                                     76 	.area _HOME
+                                     77 	.area _GSINIT
+                                     78 	.area _GSFINAL
+                                     79 	.area _GSINIT
+                                     80 ;--------------------------------------------------------
+                                     81 ; Home
+                                     82 ;--------------------------------------------------------
+                                     83 	.area _HOME
+                                     84 	.area _HOME
+                                     85 ;--------------------------------------------------------
+                                     86 ; code
+                                     87 ;--------------------------------------------------------
+                                     88 	.area _CODE
+                                     89 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:21: static void __force_use_font(void) NAKED { __asm__(".globl _font_recode_table"); }
+                                     90 ;	---------------------------------
+                                     91 ; Function __force_use_font
+                                     92 ; ---------------------------------
+    00000000                         93 ___force_use_font:
+                                     94 	.globl	_font_recode_table
+                                     95 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:33: void SetState(UINT8 state) {
+                                     96 ;	---------------------------------
+                                     97 ; Function SetState
+                                     98 ; ---------------------------------
+    00000000                         99 _SetState::
+    00000000 EAr00r00         [16]  100 	ld	(#_next_state),a
+                                    101 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:34: state_running = FALSE;
+    00000003 AF               [ 4]  102 	xor	a, a
+    00000004 EAr01r00         [16]  103 	ld	(#_state_running),a
+                                    104 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:35: next_state = state;
+                                    105 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:36: }
+    00000007 C9               [16]  106 	ret
+                                    107 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:46: void main(void) {
+                                    108 ;	---------------------------------
+                                    109 ; Function main
+                                    110 ; ---------------------------------
+    00000008                        111 _main::
+    00000008 3B               [ 8]  112 	dec	sp
+    00000009 3B               [ 8]  113 	dec	sp
+                                    114 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:49: for (UINT8 i = 4; i != 0; i--) vsync();
+    0000000A 0E 04            [ 8]  115 	ld	c, #0x04
+    0000000C                        116 00126$:
+    0000000C 79               [ 4]  117 	ld	a, c
+    0000000D B7               [ 4]  118 	or	a, a
+    0000000E 28 06            [12]  119 	jr	Z, 00101$
+    00000010 CDr00r00         [24]  120 	call	_vsync
+    00000013 0D               [ 4]  121 	dec	c
+    00000014 18 F6            [12]  122 	jr	00126$
+    00000016                        123 00101$:
+                                    124 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:51: _is_SGB = sgb_check();
+    00000016 CDr00r00         [24]  125 	call	_sgb_check
+    00000019 21r00r00         [12]  126 	ld	hl, #__is_SGB
+    0000001C 73               [ 8]  127 	ld	(hl), e
+                                    128 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:53: cpu_fast();
+    0000001D CDr00r00         [24]  129 	call	_cpu_fast
+                                    130 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Keys.h:12: joypad_init(4, &joypads);
+    00000020 11r00r00         [12]  131 	ld	de, #_joypads
+    00000023 D5               [16]  132 	push	de
+    00000024 3E 04            [ 8]  133 	ld	a, #0x04
+    00000026 F5               [16]  134 	push	af
+    00000027 33               [ 8]  135 	inc	sp
+    00000028 CDr00r00         [24]  136 	call	_joypad_init
+    0000002B E8 03            [16]  137 	add	sp, #3
+                                    138 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:63: InitOAMs();
+    0000002D CDr00r00         [24]  139 	call	_InitOAMs
+                                    140 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sound.h:35: NR52_REG = SFX_CH_ENABLE, NR51_REG = 0xFF, NR50_REG = 0x77;  // enable sound
+    00000030 3E 80            [ 8]  141 	ld	a, #0x80
+    00000032 E0r00            [12]  142 	ldh	(_NR52_REG + 0), a
+    00000034 3E FF            [ 8]  143 	ld	a, #0xff
+    00000036 E0r00            [12]  144 	ldh	(_NR51_REG + 0), a
+    00000038 3E 77            [ 8]  145 	ld	a, #0x77
+    0000003A E0r00            [12]  146 	ldh	(_NR50_REG + 0), a
+                                    147 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sound.h:75: NR12_REG = NR22_REG = NR32_REG = NR42_REG = 0;
+    0000003C AF               [ 4]  148 	xor	a, a
+    0000003D E0r00            [12]  149 	ldh	(_NR42_REG + 0), a
+    0000003F AF               [ 4]  150 	xor	a, a
+    00000040 E0r00            [12]  151 	ldh	(_NR32_REG + 0), a
+    00000042 AF               [ 4]  152 	xor	a, a
+    00000043 E0r00            [12]  153 	ldh	(_NR22_REG + 0), a
+    00000045 AF               [ 4]  154 	xor	a, a
+    00000046 E0r00            [12]  155 	ldh	(_NR12_REG + 0), a
+                                    156 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sound.h:76: NR14_REG = NR24_REG = NR44_REG = SFX_CH_RETRIGGER;
+    00000048 3E C0            [ 8]  157 	ld	a, #0xc0
+    0000004A E0r00            [12]  158 	ldh	(_NR44_REG + 0), a
+    0000004C 3E C0            [ 8]  159 	ld	a, #0xc0
+    0000004E E0r00            [12]  160 	ldh	(_NR24_REG + 0), a
+    00000050 3E C0            [ 8]  161 	ld	a, #0xc0
+    00000052 E0r00            [12]  162 	ldh	(_NR14_REG + 0), a
+                                    163 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sound.h:77: NR51_REG = 0xFF;
+    00000054 3E FF            [ 8]  164 	ld	a, #0xff
+    00000056 E0r00            [12]  165 	ldh	(_NR51_REG + 0), a
+                                    166 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Music.h:87: }
+    00000058 F3               [ 4]  167 	di
+                                    168 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Music.h:77: TMA_REG = (_cpu == CGB_TYPE) ? 0x78u : 0xBCu;
+    00000059 FAr00r00         [16]  169 	ld	a, (#__cpu)
+    0000005C D6 11            [ 8]  170 	sub	a, #0x11
+    0000005E 3E 78            [ 8]  171 	ld	a, #0x78
+    00000060 28 02            [12]  172 	jr	Z, 00131$
+    00000062 3E BC            [ 8]  173 	ld	a, #0xbc
+    00000064                        174 00131$:
+    00000064 E0r00            [12]  175 	ldh	(_TMA_REG + 0), a
+                                    176 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Music.h:81: TAC_REG = 0x04u;
+    00000066 3E 04            [ 8]  177 	ld	a, #0x04
+    00000068 E0r00            [12]  178 	ldh	(_TAC_REG + 0), a
+                                    179 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Music.h:82: add_low_priority_TIM(MUSIC_isr);
+    0000006A 11r00r00         [12]  180 	ld	de, #_MUSIC_isr
+    0000006D CDr00r00         [24]  181 	call	_add_low_priority_TIM
+    00000070 FB               [ 4]  182 	ei
+                                    183 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Music.h:89: set_interrupts(IE_REG | TIM_IFLAG);
+    00000071 F0r00            [12]  184 	ldh	a, (_IE_REG + 0)
+    00000073 CB D7            [ 8]  185 	set	2, a
+    00000075 CDr00r00         [24]  186 	call	_set_interrupts
+                                    187 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:67: InitStates();
+    00000078 1Er00            [ 8]  188 	ld	e, #b_InitStates
+    0000007A 21r00r00         [12]  189 	ld	hl, #_InitStates
+    0000007D CDr00r00         [24]  190 	call	___sdcc_bcall_ehl
+                                    191 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:68: InitSprites();
+    00000080 1Er00            [ 8]  192 	ld	e, #b_InitSprites
+    00000082 21r00r00         [12]  193 	ld	hl, #_InitSprites
+    00000085 CDr00r00         [24]  194 	call	___sdcc_bcall_ehl
+                                    195 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:73: }
+    00000088 F3               [ 4]  196 	di
+                                    197 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:72: add_VBL(VBL_isr);
+    00000089 11r00r00         [12]  198 	ld	de, #_VBL_isr
+    0000008C CDr00r00         [24]  199 	call	_add_VBL
+    0000008F FB               [ 4]  200 	ei
+                                    201 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:75: InitWindow();
+    00000090 CDr00r00         [24]  202 	call	_InitWindow
+                                    203 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:80: SPRITES_8x16;
+    00000093 F0r00            [12]  204 	ldh	a, (_LCDC_REG + 0)
+    00000095 F6 04            [ 8]  205 	or	a, #0x04
+    00000097 E0r00            [12]  206 	ldh	(_LCDC_REG + 0), a
+                                    207 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:82: SHOW_SPRITES; SHOW_BKG;
+    00000099 F0r00            [12]  208 	ldh	a, (_LCDC_REG + 0)
+    0000009B F6 02            [ 8]  209 	or	a, #0x02
+    0000009D E0r00            [12]  210 	ldh	(_LCDC_REG + 0), a
+    0000009F F0r00            [12]  211 	ldh	a, (_LCDC_REG + 0)
+    000000A1 F6 01            [ 8]  212 	or	a, #0x01
+    000000A3 E0r00            [12]  213 	ldh	(_LCDC_REG + 0), a
+                                    214 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:84: WY_REG = (UINT8)(DEVICE_WINDOW_PX_OFFSET_Y + DEVICE_SCREEN_PX_HEIGHT);
+    000000A5 3E 90            [ 8]  215 	ld	a, #0x90
+    000000A7 E0r00            [12]  216 	ldh	(_WY_REG + 0), a
+                                    217 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:90: SetDefaultColorPalettes();
+    000000A9 1Er00            [ 8]  218 	ld	e, #b_SetDefaultColorPalettes
+    000000AB 21r00r00         [12]  219 	ld	hl, #_SetDefaultColorPalettes
+    000000AE CDr00r00         [24]  220 	call	___sdcc_bcall_ehl
+                                    221 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:93: DISPLAY_OFF;
+    000000B1 CDr00r00         [24]  222 	call	_display_off
+                                    223 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:94: while(TRUE) {
+    000000B4                        224 00118$:
+                                    225 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:96: if (fade_mode != FADE_MANUAL) {
+    000000B4 FAr02r00         [16]  226 	ld	a, (#_fade_mode)
+    000000B7 D6 02            [ 8]  227 	sub	a, #0x02
+    000000B9 28 0C            [12]  228 	jr	Z, 00103$
+                                    229 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:97: BGP_REG = OBP0_REG = DMG_PALETTE(DMG_WHITE, DMG_LITE_GRAY, DMG_DARK_GRAY, DMG_BLACK);
+    000000BB 3E E4            [ 8]  230 	ld	a, #0xe4
+    000000BD E0r00            [12]  231 	ldh	(_OBP0_REG + 0), a
+    000000BF 3E E4            [ 8]  232 	ld	a, #0xe4
+    000000C1 E0r00            [12]  233 	ldh	(_BGP_REG + 0), a
+                                    234 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:98: OBP1_REG = DMG_PALETTE(DMG_WHITE, DMG_WHITE, DMG_DARK_GRAY, DMG_BLACK);
+    000000C3 3E E0            [ 8]  235 	ld	a, #0xe0
+    000000C5 E0r00            [12]  236 	ldh	(_OBP1_REG + 0), a
+    000000C7                        237 00103$:
+                                    238 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:104: SpriteManagerReset();                           // reset sprite manager and remove all sprites
+    000000C7 CDr00r00         [24]  239 	call	_SpriteManagerReset
+                                    240 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:105: scroll_target = NULL;                           // reset scroll target
+    000000CA AF               [ 4]  241 	xor	a, a
+    000000CB 21r00r00         [12]  242 	ld	hl, #_scroll_target
+    000000CE 22               [ 8]  243 	ld	(hl+), a
+    000000CF 77               [ 8]  244 	ld	(hl), a
+                                    245 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:107: state_running = TRUE;
+    000000D0 21r01r00         [12]  246 	ld	hl, #_state_running
+    000000D3 36 01            [12]  247 	ld	(hl), #0x01
+                                    248 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:108: current_state = next_state;                     // switch to the next scene
+    000000D5 FAr00r00         [16]  249 	ld	a, (#_next_state)
+    000000D8 EAr01r00         [16]  250 	ld	(#_current_state),a
+                                    251 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:110: last_tile_loaded = 0;                           // reset tile allocator
+                                    252 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:112: last_bg_pal_loaded = 0;                         // reset palette allocator for CGB/SMS/GG
+    000000DB AF               [ 4]  253 	xor	a, a
+    000000DC EAr00r00         [16]  254 	ld	(#_last_tile_loaded), a
+    000000DF EAr00r00         [16]  255 	ld	(#_last_bg_pal_loaded),a
+                                    256 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:114: scroll_x_vblank = scroll_offset_x = 0;          // reset the scroll position;
+    000000E2 AF               [ 4]  257 	xor	a, a
+    000000E3 EAr00r00         [16]  258 	ld	(#_scroll_offset_x), a
+    000000E6 21r00r00         [12]  259 	ld	hl, #_scroll_x_vblank
+    000000E9 22               [ 8]  260 	ld	(hl+), a
+    000000EA 77               [ 8]  261 	ld	(hl), a
+                                    262 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:115: scroll_y_vblank = scroll_offset_y = 0;
+    000000EB AF               [ 4]  263 	xor	a, a
+    000000EC EAr00r00         [16]  264 	ld	(#_scroll_offset_y), a
+    000000EF 21r00r00         [12]  265 	ld	hl, #_scroll_y_vblank
+    000000F2 22               [ 8]  266 	ld	(hl+), a
+    000000F3 77               [ 8]  267 	ld	(hl), a
+                                    268 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:117: HIDE_HUD;                                       // force hiding HUD
+    000000F4 AF               [ 4]  269 	xor	a, a
+    000000F5 F5               [16]  270 	push	af
+    000000F6 33               [ 8]  271 	inc	sp
+    000000F7 1E 00            [ 8]  272 	ld	e, #0x00
+    000000F9 3E 07            [ 8]  273 	ld	a, #0x07
+    000000FB CDr00r00         [24]  274 	call	_SetWindowPos
+                                    275 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:119: SWITCH_ROM(stateBanks[current_state]);          // switch to the current state bank and stay
+    000000FE 3Er00            [ 8]  276 	ld	a, #<(_stateBanks)
+    00000100 21r01r00         [12]  277 	ld	hl, #_current_state
+    00000103 86               [ 8]  278 	add	a, (hl)
+    00000104 4F               [ 4]  279 	ld	c, a
+    00000105 3Es00            [ 8]  280 	ld	a, #>(_stateBanks)
+    00000107 CE 00            [ 8]  281 	adc	a, #0x00
+    00000109 47               [ 4]  282 	ld	b, a
+    0000010A 0A               [ 8]  283 	ld	a, (bc)
+    0000010B E0r00            [12]  284 	ldh	(__current_bank + 0), a
+    0000010D EAr00r00         [16]  285 	ld	(#_rROMB0),a
+                                    286 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:121: startFuncs[current_state]();                    // initialize current state
+    00000110 01r00r00         [12]  287 	ld	bc, #_startFuncs+0
+    00000113 FAr01r00         [16]  288 	ld	a, (_current_state)
+    00000116 26 00            [ 8]  289 	ld	h, #0x00
+    00000118 6F               [ 4]  290 	ld	l, a
+    00000119 29               [ 8]  291 	add	hl, hl
+    0000011A 09               [ 8]  292 	add	hl, bc
+    0000011B 4E               [ 8]  293 	ld	c, (hl)
+    0000011C 23               [ 8]  294 	inc	hl
+    0000011D 46               [ 8]  295 	ld	b, (hl)
+    0000011E 69               [ 4]  296 	ld	l, c
+    0000011F 60               [ 4]  297 	ld	h, b
+    00000120 CDr00r00         [24]  298 	call	___sdcc_call_hl
+                                    299 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:123: scroll_x_vblank = scroll_x, scroll_y_vblank = scroll_y;
+    00000123 FAr00r00         [16]  300 	ld	a, (#_scroll_x)
+    00000126 EAr00r00         [16]  301 	ld	(#_scroll_x_vblank),a
+    00000129 FAr01r00         [16]  302 	ld	a, (#_scroll_x + 1)
+    0000012C EAr01r00         [16]  303 	ld	(#_scroll_x_vblank + 1),a
+    0000012F FAr00r00         [16]  304 	ld	a, (#_scroll_y)
+    00000132 EAr00r00         [16]  305 	ld	(#_scroll_y_vblank),a
+    00000135 FAr01r00         [16]  306 	ld	a, (#_scroll_y + 1)
+    00000138 EAr01r00         [16]  307 	ld	(#_scroll_y_vblank + 1),a
+                                    308 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:125: if (VECTOR_LEN(sprite_manager_updatables)) {
+    0000013B FAr00r00         [16]  309 	ld	a, (#_sprite_manager_updatables + 0)
+    0000013E B7               [ 4]  310 	or	a, a
+    0000013F 28 06            [12]  311 	jr	Z, 00105$
+                                    312 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:126: SpriteManagerUpdate();                  // render sprites on screen if START() of the state spawns any
+    00000141 CDr00r00         [24]  313 	call	_SpriteManagerUpdate
+                                    314 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:127: SyncVBlank();                           // wait until sprites are actually rendered to OAM
+    00000144 CDr00r00         [24]  315 	call	_SyncVBlank
+    00000147                        316 00105$:
+                                    317 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:130: if (state_running) {                            // initialization function may change state in START()
+    00000147 FAr01r00         [16]  318 	ld	a, (#_state_running)
+    0000014A B7               [ 4]  319 	or	a, a
+    0000014B 28 72            [12]  320 	jr	Z, 00116$
+                                    321 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:132: switch (fade_mode) {                    // show screen content
+    0000014D FAr02r00         [16]  322 	ld	a, (#_fade_mode)
+    00000150 3D               [ 4]  323 	dec	a
+    00000151 20 0A            [12]  324 	jr	NZ, 00107$
+                                    325 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:133: case FADE_ON : FadeOut(); break;
+    00000153 1Er00            [ 8]  326 	ld	e, #b_FadeOut
+    00000155 21r00r00         [12]  327 	ld	hl, #_FadeOut
+    00000158 CDr00r00         [24]  328 	call	___sdcc_bcall_ehl
+    0000015B 18 06            [12]  329 	jr	00108$
+                                    330 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:134: default: DISPLAY_ON; break;
+    0000015D                        331 00107$:
+    0000015D F0r00            [12]  332 	ldh	a, (_LCDC_REG + 0)
+    0000015F F6 80            [ 8]  333 	or	a, #0x80
+    00000161 E0r00            [12]  334 	ldh	(_LCDC_REG + 0), a
+                                    335 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:135: }
+    00000163                        336 00108$:
+                                    337 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:137: Void_Func_Void current_update = updateFuncs[current_state];
+    00000163 01r00r00         [12]  338 	ld	bc, #_updateFuncs+0
+    00000166 FAr01r00         [16]  339 	ld	a, (_current_state)
+    00000169 26 00            [ 8]  340 	ld	h, #0x00
+    0000016B 6F               [ 4]  341 	ld	l, a
+    0000016C 29               [ 8]  342 	add	hl, hl
+    0000016D 09               [ 8]  343 	add	hl, bc
+    0000016E 5D               [ 4]  344 	ld	e, l
+    0000016F 54               [ 4]  345 	ld	d, h
+    00000170 1A               [ 8]  346 	ld	a, (de)
+    00000171 F8 00            [12]  347 	ldhl	sp,	#0
+    00000173 22               [ 8]  348 	ld	(hl+), a
+    00000174 13               [ 8]  349 	inc	de
+    00000175 1A               [ 8]  350 	ld	a, (de)
+    00000176 77               [ 8]  351 	ld	(hl), a
+                                    352 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:139: while (state_running) {
+    00000177                        353 00109$:
+    00000177 FAr01r00         [16]  354 	ld	a, (#_state_running)
+    0000017A B7               [ 4]  355 	or	a, a
+    0000017B 28 29            [12]  356 	jr	Z, 00111$
+                                    357 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:140: delta_time = SyncVBlank();      // wait VBlank if not slowdown
+    0000017D CDr00r00         [24]  358 	call	_SyncVBlank
+    00000180 EAr00r00         [16]  359 	ld	(#_delta_time),a
+                                    360 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Keys.h:16: old_joypads.joy0 = joypads.joy0, old_joypads.joy1 = joypads.joy1, old_joypads.joy2 = joypads.joy2, old_joypads.joy3 = joypads.joy3;
+    00000183 FAr01r00         [16]  361 	ld	a, (#(_joypads + 1) + 0)
+    00000186 21r01r00         [12]  362 	ld	hl, #(_old_joypads + 1)
+    00000189 22               [ 8]  363 	ld	(hl+), a
+    0000018A FAr02r00         [16]  364 	ld	a, (#(_joypads + 2) + 0)
+    0000018D 22               [ 8]  365 	ld	(hl+), a
+    0000018E FAr03r00         [16]  366 	ld	a, (#(_joypads + 3) + 0)
+    00000191 22               [ 8]  367 	ld	(hl+), a
+    00000192 FAr04r00         [16]  368 	ld	a, (#(_joypads + 4) + 0)
+    00000195 77               [ 8]  369 	ld	(hl), a
+                                    370 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Keys.h:17: joypad_ex(&joypads);
+    00000196 11r00r00         [12]  371 	ld	de, #_joypads
+    00000199 CDr00r00         [24]  372 	call	_joypad_ex
+                                    373 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:144: SpriteManagerUpdate();          // render sprites on screen
+    0000019C CDr00r00         [24]  374 	call	_SpriteManagerUpdate
+                                    375 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:146: current_update();               // update current state
+    0000019F E1               [12]  376 	pop	hl
+    000001A0 E5               [16]  377 	push	hl
+    000001A1 CDr00r00         [24]  378 	call	___sdcc_call_hl
+    000001A4 18 D1            [12]  379 	jr	00109$
+    000001A6                        380 00111$:
+                                    381 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:149: switch (fade_mode) {                    // hide screen content
+    000001A6 FAr02r00         [16]  382 	ld	a, (#_fade_mode)
+    000001A9 B7               [ 4]  383 	or	a, a
+    000001AA 28 10            [12]  384 	jr	Z, 00113$
+    000001AC FAr02r00         [16]  385 	ld	a, (#_fade_mode)
+    000001AF 3D               [ 4]  386 	dec	a
+    000001B0 20 0D            [12]  387 	jr	NZ, 00116$
+                                    388 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:150: case FADE_ON : FadeIn(); break;
+    000001B2 1Er00            [ 8]  389 	ld	e, #b_FadeIn
+    000001B4 21r00r00         [12]  390 	ld	hl, #_FadeIn
+    000001B7 CDr00r00         [24]  391 	call	___sdcc_bcall_ehl
+    000001BA 18 03            [12]  392 	jr	00116$
+                                    393 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:151: case FADE_OFF: DISPLAY_OFF; break;
+    000001BC                        394 00113$:
+    000001BC CDr00r00         [24]  395 	call	_display_off
+                                    396 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:152: }
+    000001BF                        397 00116$:
+                                    398 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:155: destroyFuncs[current_state]();                  // destroy current state
+    000001BF FAr01r00         [16]  399 	ld	a, (_current_state)
+    000001C2 26 00            [ 8]  400 	ld	h, #0x00
+    000001C4 6F               [ 4]  401 	ld	l, a
+    000001C5 29               [ 8]  402 	add	hl, hl
+    000001C6 11r00r00         [12]  403 	ld	de, #_destroyFuncs
+    000001C9 19               [ 8]  404 	add	hl, de
+    000001CA 4E               [ 8]  405 	ld	c, (hl)
+    000001CB 23               [ 8]  406 	inc	hl
+    000001CC 46               [ 8]  407 	ld	b, (hl)
+    000001CD 69               [ 4]  408 	ld	l, c
+    000001CE 60               [ 4]  409 	ld	h, b
+    000001CF CDr00r00         [24]  410 	call	___sdcc_call_hl
+    000001D2 C3rB4r00         [16]  411 	jp	00118$
+                                    412 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/main.c:157: }
+    000001D5 33               [ 8]  413 	inc	sp
+    000001D6 33               [ 8]  414 	inc	sp
+    000001D7 C9               [16]  415 	ret
+                                    416 	.area _CODE
+                                    417 	.area _INITIALIZER
+    00000000                        418 __xinit___is_SGB:
+    00000000 00                     419 	.db #0x00	; 0
+    00000001                        420 __xinit__state_running:
+    00000001 00                     421 	.db #0x00	; 0
+    00000002                        422 __xinit__fade_mode:
+    00000002 01                     423 	.db #0x01	; 1
+    00000003                        424 __xinit__vbl_count:
+    00000003 00                     425 	.db #0x00	; 0
+                                    426 	.area _CABS (ABS)

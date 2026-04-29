@@ -1,0 +1,107 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 1
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =   00002710 L
+    .__.ABS.                                                    =   00000000 G
+    .__.CPU.                                                    =   00000000 L
+    .__.H$L.                                                    =   00000000 L
+    _AUDIOCTRL                                                  =   000000F2 
+    _BufferExchange                                                 ******** GX
+    _BufferRotate                                                   ******** GX
+    _ClearOAMs                                                      ******** GX
+    _DrawSprite                                                     ******** GX
+    _FMADDRESS                                                  =   000000F0 
+    _FMDATA                                                     =   000000F1 
+    _GG_EXT_7BIT                                                =   00000001 
+    _GG_EXT_CTL                                                 =   00000002 
+    _GG_SIO_CTL                                                 =   00000005 
+    _GG_SIO_RECV                                                =   00000004 
+    _GG_SIO_SEND                                                =   00000003 
+    _GG_SOUND_PAN                                               =   00000006 
+    _GG_STATE                                                   =   00000000 
+    _GLASSES_3D                                                 =   0000FFF8 
+    _HCOUNTER                                                   =   0000007F 
+    _InitSprite                                                     ******** GX
+    _JOY_CTL                                                    =   0000003F 
+    _JOY_PORT1                                                  =   000000DC 
+    _JOY_PORT2                                                  =   000000DD 
+    _MAP_FRAME0                                                 =   0000FFFD 
+    _MAP_FRAME1                                                 =   0000FFFE 
+    _MAP_FRAME2                                                 =   0000FFFF 
+    _MEMORY_CTL                                                 =   0000003E 
+    _PSG                                                        =   0000007F 
+    _RAM_CONTROL                                                =   0000FFFC 
+    _RefreshScroll                                                  ******** GX
+    _SetPalette                                                     ******** GX
+  0 _SpriteManagerAddEx                                             000003AE GR
+  0 _SpriteManagerFlushRemove                                       00000517 GR
+  0 _SpriteManagerLoad                                              000000F1 GR
+  0 _SpriteManagerRemove                                            000004EC GR
+  0 _SpriteManagerRemoveSprite                                      0000050B GR
+  0 _SpriteManagerReset                                             00000000 GR
+  0 _SpriteManagerUpdate                                            000005E4 GR
+  1 _SpriteManagerUpdate___save_10000_287                           000003C7 R
+    _SwapOAMs                                                       ******** GX
+  2 _THIS                                                           00000006 GR
+  2 _THIS_IDX                                                       00000005 GR
+    _VCOUNTER                                                   =   0000007E 
+    _VDP_CMD                                                    =   000000BF 
+    _VDP_DATA                                                   =   000000BE 
+    _VDP_STATUS                                                 =   000000BF 
+    ___sdcc_call_hl                                                 ******** GX
+    ___sdcc_call_iy                                                 ******** GX
+  7 __xinit__THIS                                                   00000006 R
+  7 __xinit__THIS_IDX                                               00000005 R
+  7 __xinit__enable_flickering                                      00000004 R
+  7 __xinit__sprite_manager_sprites_pool                            00000000 R
+  7 __xinit__sprite_tile_allocator_top                              00000002 R
+  2 _enable_flickering                                              00000004 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+  1 _last_sprite_loaded                                             000003C2 GR
+  1 _last_sprite_pal_loaded                                         000003C4 GR
+    _memset                                                         ******** GX
+  1 _prev_scroll_target                                             000003C5 GR
+    _scroll_target                                                  ******** GX
+    _set_sprite_data_flip                                           ******** GX
+    _set_sprite_native_data                                         ******** GX
+    _spriteBanks                                                    ******** GX
+    _spriteDataBanks                                                ******** GX
+    _spriteDatas                                                    ******** GX
+    _spriteDestroyFuncs                                             ******** GX
+    _spriteFlips                                                    ******** GX
+    _spriteIdxs                                                     ******** GX
+    _spriteIdxsH                                                    ******** GX
+    _spriteIdxsHV                                                   ******** GX
+    _spriteIdxsV                                                    ******** GX
+    _spritePalsOffset                                               ******** GX
+    _spriteStartFuncs                                               ******** GX
+    _spriteUpdateFuncs                                              ******** GX
+  1 _sprite_manager_removal_check                                   000003C1 GR
+  1 _sprite_manager_sprites                                         00000370 GR
+  1 _sprite_manager_sprites_mem                                     00000000 GR
+  2 _sprite_manager_sprites_pool                                    00000000 GR
+  1 _sprite_manager_sprites_poolSTACK                               00000398 GR
+  1 _sprite_manager_updatables                                      000003AC GR
+  2 _sprite_tile_allocator_top                                      00000002 GR
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 3
+Hexadecimal [32-Bits]
+
+Area Table
+
+   0 _CODE                                      size      729   flags    0
+   1 _DATA                                      size      3C8   flags    0
+   2 _INITIALIZED                               size        8   flags    0
+   3 _DABS                                      size        0   flags    8
+   4 _HOME                                      size        0   flags    0
+   5 _GSINIT                                    size        0   flags    0
+   6 _GSFINAL                                   size        0   flags    0
+   7 _INITIALIZER                               size        8   flags    0
+   8 _CABS                                      size        0   flags    8
+

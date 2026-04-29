@@ -1,0 +1,77 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module Sound
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _PlayFx
+                                     11 ;--------------------------------------------------------
+                                     12 ; special function registers
+                                     13 ;--------------------------------------------------------
+                         00000000    14 _GG_STATE	=	0x0000
+                         00000001    15 _GG_EXT_7BIT	=	0x0001
+                         00000002    16 _GG_EXT_CTL	=	0x0002
+                         00000003    17 _GG_SIO_SEND	=	0x0003
+                         00000004    18 _GG_SIO_RECV	=	0x0004
+                         00000005    19 _GG_SIO_CTL	=	0x0005
+                         00000006    20 _GG_SOUND_PAN	=	0x0006
+                         0000003E    21 _MEMORY_CTL	=	0x003e
+                         0000003F    22 _JOY_CTL	=	0x003f
+                         0000007E    23 _VCOUNTER	=	0x007e
+                         0000007F    24 _PSG	=	0x007f
+                         0000007F    25 _HCOUNTER	=	0x007f
+                         000000BE    26 _VDP_DATA	=	0x00be
+                         000000BF    27 _VDP_CMD	=	0x00bf
+                         000000BF    28 _VDP_STATUS	=	0x00bf
+                         000000DC    29 _JOY_PORT1	=	0x00dc
+                         000000DD    30 _JOY_PORT2	=	0x00dd
+                         000000F0    31 _FMADDRESS	=	0x00f0
+                         000000F1    32 _FMDATA	=	0x00f1
+                         000000F2    33 _AUDIOCTRL	=	0x00f2
+                                     34 ;--------------------------------------------------------
+                                     35 ; ram data
+                                     36 ;--------------------------------------------------------
+                                     37 	.area _DATA
+                         0000FFFC    38 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    39 _GLASSES_3D	=	0xfff8
+                         0000FFFD    40 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    41 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    42 _MAP_FRAME2	=	0xffff
+                                     43 ;--------------------------------------------------------
+                                     44 ; ram data
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _INITIALIZED
+                                     47 ;--------------------------------------------------------
+                                     48 ; absolute external ram data
+                                     49 ;--------------------------------------------------------
+                                     50 	.area _DABS (ABS)
+                                     51 ;--------------------------------------------------------
+                                     52 ; global & static initialisations
+                                     53 ;--------------------------------------------------------
+                                     54 	.area _HOME
+                                     55 	.area _GSINIT
+                                     56 	.area _GSFINAL
+                                     57 	.area _GSINIT
+                                     58 ;--------------------------------------------------------
+                                     59 ; Home
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _HOME
+                                     62 	.area _HOME
+                                     63 ;--------------------------------------------------------
+                                     64 ; code
+                                     65 ;--------------------------------------------------------
+                                     66 	.area _CODE
+                                     67 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/Sound.c:6: void PlayFx(SOUND_CHANNEL channel, UINT8 mute_frames, ...) {
+                                     68 ;	---------------------------------
+                                     69 ; Function PlayFx
+                                     70 ; ---------------------------------
+    00000000                         71 _PlayFx::
+                                     72 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/Sound.c:7: channel; mute_frames;
+                                     73 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/gg/Sound.c:8: }
+    00000000 C9               [10]   74 	ret
+                                     75 	.area _CODE
+                                     76 	.area _INITIALIZER
+                                     77 	.area _CABS (ABS)

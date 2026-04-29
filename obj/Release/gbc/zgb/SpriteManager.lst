@@ -1,0 +1,1436 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module SpriteManager
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _set_sprite_native_data_wrap
+                                     11 	.globl _SetPalette
+                                     12 	.globl _RefreshScroll
+                                     13 	.globl _DrawSprite
+                                     14 	.globl _InitSprite
+                                     15 	.globl _ClearOAMs
+                                     16 	.globl _SwapOAMs
+                                     17 	.globl _BufferExchange
+                                     18 	.globl _BufferRotate
+                                     19 	.globl _memcmp
+                                     20 	.globl _memset
+                                     21 	.globl _THIS
+                                     22 	.globl _THIS_IDX
+                                     23 	.globl _enable_flickering
+                                     24 	.globl _sprite_tile_allocator_top
+                                     25 	.globl _sprite_manager_sprites_pool
+                                     26 	.globl _prev_scroll_target
+                                     27 	.globl _last_sprite_pal_loaded
+                                     28 	.globl _last_sprite_loaded
+                                     29 	.globl _sprite_manager_removal_check
+                                     30 	.globl _sprite_manager_updatables
+                                     31 	.globl _sprite_manager_sprites_poolSTACK
+                                     32 	.globl _sprite_manager_sprites
+                                     33 	.globl _sprite_manager_sprites_mem
+                                     34 	.globl _SpriteManagerReset
+                                     35 	.globl _SpriteManagerLoad
+                                     36 	.globl _SpriteManagerAddEx
+                                     37 	.globl _SpriteManagerRemove
+                                     38 	.globl _SpriteManagerRemoveSprite
+                                     39 	.globl _SpriteManagerFlushRemove
+                                     40 	.globl _SpriteManagerUpdate
+                                     41 ;--------------------------------------------------------
+                                     42 ; special function registers
+                                     43 ;--------------------------------------------------------
+                                     44 	.area _HRAM
+                                     45 ;--------------------------------------------------------
+                                     46 ; ram data
+                                     47 ;--------------------------------------------------------
+                                     48 	.area _DATA
+    00000000                         49 _sprite_manager_sprites_mem::
+    00000000                         50 	.ds 880
+    00000370                         51 _sprite_manager_sprites::
+    00000370                         52 	.ds 40
+    00000398                         53 _sprite_manager_sprites_poolSTACK::
+    00000398                         54 	.ds 20
+    000003AC                         55 _sprite_manager_updatables::
+    000003AC                         56 	.ds 21
+    000003C1                         57 _sprite_manager_removal_check::
+    000003C1                         58 	.ds 1
+    000003C2                         59 _last_sprite_loaded::
+    000003C2                         60 	.ds 2
+    000003C4                         61 _last_sprite_pal_loaded::
+    000003C4                         62 	.ds 1
+    000003C5                         63 _prev_scroll_target::
+    000003C5                         64 	.ds 2
+    000003C7                         65 _SpriteManagerUpdate___save_10000_319:
+    000003C7                         66 	.ds 1
+                                     67 ;--------------------------------------------------------
+                                     68 ; ram data
+                                     69 ;--------------------------------------------------------
+                                     70 	.area _INITIALIZED
+    00000000                         71 _sprite_manager_sprites_pool::
+    00000000                         72 	.ds 2
+    00000002                         73 _sprite_tile_allocator_top::
+    00000002                         74 	.ds 2
+    00000004                         75 _enable_flickering::
+    00000004                         76 	.ds 1
+    00000005                         77 _THIS_IDX::
+    00000005                         78 	.ds 1
+    00000006                         79 _THIS::
+    00000006                         80 	.ds 2
+                                     81 ;--------------------------------------------------------
+                                     82 ; absolute external ram data
+                                     83 ;--------------------------------------------------------
+                                     84 	.area _DABS (ABS)
+                                     85 ;--------------------------------------------------------
+                                     86 ; global & static initialisations
+                                     87 ;--------------------------------------------------------
+                                     88 	.area _HOME
+                                     89 	.area _GSINIT
+                                     90 	.area _GSFINAL
+                                     91 	.area _GSINIT
+                                     92 ;--------------------------------------------------------
+                                     93 ; Home
+                                     94 ;--------------------------------------------------------
+                                     95 	.area _HOME
+                                     96 	.area _HOME
+                                     97 ;--------------------------------------------------------
+                                     98 ; code
+                                     99 ;--------------------------------------------------------
+                                    100 	.area _CODE
+                                    101 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:36: void SpriteManagerReset(void) {
+                                    102 ;	---------------------------------
+                                    103 ; Function SpriteManagerReset
+                                    104 ; ---------------------------------
+    00000000                        105 _SpriteManagerReset::
+    00000000 3B               [ 8]  106 	dec	sp
+                                    107 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:37: prev_scroll_target = NULL;
+    00000001 AF               [ 4]  108 	xor	a, a
+    00000002 21rC5r03         [12]  109 	ld	hl, #_prev_scroll_target
+    00000005 22               [ 8]  110 	ld	(hl+), a
+    00000006 77               [ 8]  111 	ld	(hl), a
+                                    112 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:39: last_sprite_loaded = sprite_tile_allocator_top;
+    00000007 FAr02r00         [16]  113 	ld	a, (#_sprite_tile_allocator_top)
+    0000000A EArC2r03         [16]  114 	ld	(#_last_sprite_loaded),a
+    0000000D FAr03r00         [16]  115 	ld	a, (#_sprite_tile_allocator_top + 1)
+    00000010 EArC3r03         [16]  116 	ld	(#_last_sprite_loaded + 1),a
+                                    117 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:40: last_sprite_pal_loaded = 0;
+    00000013 AF               [ 4]  118 	xor	a, a
+    00000014 EArC4r03         [16]  119 	ld	(#_last_sprite_pal_loaded),a
+                                    120 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:42: UINT8 __save = CURRENT_BANK;
+    00000017 F0r00            [12]  121 	ldh	a, (__current_bank + 0)
+    00000019 4F               [ 4]  122 	ld	c, a
+                                    123 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:44: for(UINT8 i = 0u; i != VECTOR_LEN(sprite_manager_updatables); ++ i) {
+    0000001A 06 00            [ 8]  124 	ld	b, #0x00
+    0000001C                        125 00104$:
+    0000001C FArACr03         [16]  126 	ld	a, (#_sprite_manager_updatables + 0)
+    0000001F 90               [ 4]  127 	sub	a, b
+    00000020 28 58            [12]  128 	jr	Z, 00101$
+                                    129 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:45: THIS = sprite_manager_sprites[VECTOR_GET(sprite_manager_updatables, i)];
+    00000022 04               [ 4]  130 	inc	b
+    00000023 3ErAC            [ 8]  131 	ld	a, #<(_sprite_manager_updatables)
+    00000025 80               [ 4]  132 	add	a, b
+    00000026 6F               [ 4]  133 	ld	l, a
+    00000027 3Es03            [ 8]  134 	ld	a, #>(_sprite_manager_updatables)
+    00000029 CE 00            [ 8]  135 	adc	a, #0x00
+    0000002B 67               [ 4]  136 	ld	h, a
+    0000002C 6E               [ 8]  137 	ld	l, (hl)
+    0000002D AF               [ 4]  138 	xor	a, a
+    0000002E 67               [ 4]  139 	ld	h, a
+    0000002F 29               [ 8]  140 	add	hl, hl
+    00000030 11r70r03         [12]  141 	ld	de, #_sprite_manager_sprites
+    00000033 19               [ 8]  142 	add	hl, de
+    00000034 5D               [ 4]  143 	ld	e, l
+    00000035 54               [ 4]  144 	ld	d, h
+    00000036 1A               [ 8]  145 	ld	a, (de)
+    00000037 21r06r00         [12]  146 	ld	hl, #_THIS
+    0000003A 22               [ 8]  147 	ld	(hl+), a
+    0000003B 13               [ 8]  148 	inc	de
+    0000003C 1A               [ 8]  149 	ld	a, (de)
+    0000003D 77               [ 8]  150 	ld	(hl), a
+                                    151 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:46: SWITCH_ROM(spriteBanks[THIS->type]);
+    0000003E FAr06r00         [16]  152 	ld	a, (_THIS)
+    00000041 21r07r00         [12]  153 	ld	hl, #_THIS + 1
+    00000044 56               [ 8]  154 	ld	d, (hl)
+    00000045 C6 1D            [ 8]  155 	add	a, #0x1d
+    00000047 5F               [ 4]  156 	ld	e, a
+    00000048 30 01            [12]  157 	jr	NC, 00141$
+    0000004A 14               [ 4]  158 	inc	d
+    0000004B                        159 00141$:
+    0000004B 1A               [ 8]  160 	ld	a, (de)
+    0000004C C6r00            [ 8]  161 	add	a, #<(_spriteBanks)
+    0000004E 6F               [ 4]  162 	ld	l, a
+    0000004F 3E 00            [ 8]  163 	ld	a, #0x00
+    00000051 CEs00            [ 8]  164 	adc	a, #>(_spriteBanks)
+    00000053 67               [ 4]  165 	ld	h, a
+    00000054 7E               [ 8]  166 	ld	a, (hl)
+    00000055 E0r00            [12]  167 	ldh	(__current_bank + 0), a
+    00000057 1A               [ 8]  168 	ld	a, (de)
+    00000058 C6r00            [ 8]  169 	add	a, #<(_spriteBanks)
+    0000005A 6F               [ 4]  170 	ld	l, a
+    0000005B 3E 00            [ 8]  171 	ld	a, #0x00
+    0000005D CEs00            [ 8]  172 	adc	a, #>(_spriteBanks)
+    0000005F 67               [ 4]  173 	ld	h, a
+    00000060 7E               [ 8]  174 	ld	a, (hl)
+    00000061 EAr00r00         [16]  175 	ld	(#_rROMB0),a
+                                    176 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:47: spriteDestroyFuncs[THIS->type]();
+    00000064 1A               [ 8]  177 	ld	a, (de)
+    00000065 26 00            [ 8]  178 	ld	h, #0x00
+    00000067 6F               [ 4]  179 	ld	l, a
+    00000068 29               [ 8]  180 	add	hl, hl
+    00000069 11r00r00         [12]  181 	ld	de, #_spriteDestroyFuncs
+    0000006C 19               [ 8]  182 	add	hl, de
+    0000006D 2A               [ 8]  183 	ld	a,	(hl+)
+    0000006E 66               [ 8]  184 	ld	h, (hl)
+    0000006F 6F               [ 4]  185 	ld	l, a
+    00000070 C5               [16]  186 	push	bc
+    00000071 01r77r00         [12]  187 	ld	bc, #00142$
+    00000074 C5               [16]  188 	push	bc
+    00000075 E5               [16]  189 	push	hl
+    00000076 C9               [16]  190 	ret
+    00000077                        191 00142$:
+    00000077 C1               [12]  192 	pop	bc
+                                    193 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:44: for(UINT8 i = 0u; i != VECTOR_LEN(sprite_manager_updatables); ++ i) {
+    00000078 18 A2            [12]  194 	jr	00104$
+    0000007A                        195 00101$:
+                                    196 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:49: SWITCH_ROM(__save);
+    0000007A 79               [ 4]  197 	ld	a, c
+    0000007B E0r00            [12]  198 	ldh	(__current_bank + 0), a
+    0000007D 21r00r00         [12]  199 	ld	hl, #_rROMB0
+    00000080 71               [ 8]  200 	ld	(hl), c
+                                    201 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:52: StackClear(sprite_manager_sprites_pool);
+    00000081 21r00r00         [12]  202 	ld	hl, #_sprite_manager_sprites_pool
+    00000084 36r97            [12]  203 	ld	(hl), #<((_sprite_manager_sprites_poolSTACK - 1))
+    00000086 23               [ 8]  204 	inc	hl
+    00000087 36s03            [12]  205 	ld	(hl), #>((_sprite_manager_sprites_poolSTACK - 1))
+                                    206 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:53: for(UINT8 i = 0; i != N_SPRITE_MANAGER_SPRITES; ++i) {
+    00000089 F8 00            [12]  207 	ldhl	sp,	#0
+    0000008B 36 00            [12]  208 	ld	(hl), #0x00
+    0000008D                        209 00107$:
+    0000008D F8 00            [12]  210 	ldhl	sp,	#0
+    0000008F 7E               [ 8]  211 	ld	a, (hl)
+    00000090 D6 14            [ 8]  212 	sub	a, #0x14
+    00000092 28 3D            [12]  213 	jr	Z, 00102$
+                                    214 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:54: sprite_manager_sprites[i] = &sprite_manager_sprites_mem[i];
+    00000094 F8 00            [12]  215 	ldhl	sp,	#0
+    00000096 4E               [ 8]  216 	ld	c, (hl)
+    00000097 06 00            [ 8]  217 	ld	b, #0x00
+    00000099 CB 21            [ 8]  218 	sla	c
+    0000009B CB 10            [ 8]  219 	rl	b
+    0000009D 21r70r03         [12]  220 	ld	hl, #_sprite_manager_sprites
+    000000A0 09               [ 8]  221 	add	hl, bc
+    000000A1 4D               [ 4]  222 	ld	c, l
+    000000A2 44               [ 4]  223 	ld	b, h
+    000000A3 F8 00            [12]  224 	ldhl	sp,	#0
+    000000A5 5E               [ 8]  225 	ld	e, (hl)
+    000000A6 16 00            [ 8]  226 	ld	d, #0x00
+    000000A8 6B               [ 4]  227 	ld	l, e
+    000000A9 62               [ 4]  228 	ld	h, d
+    000000AA 29               [ 8]  229 	add	hl, hl
+    000000AB 29               [ 8]  230 	add	hl, hl
+    000000AC 19               [ 8]  231 	add	hl, de
+    000000AD 29               [ 8]  232 	add	hl, hl
+    000000AE 19               [ 8]  233 	add	hl, de
+    000000AF 29               [ 8]  234 	add	hl, hl
+    000000B0 29               [ 8]  235 	add	hl, hl
+    000000B1 11r00r00         [12]  236 	ld	de, #_sprite_manager_sprites_mem
+    000000B4 19               [ 8]  237 	add	hl, de
+    000000B5 7D               [ 4]  238 	ld	a, l
+    000000B6 02               [ 8]  239 	ld	(bc), a
+    000000B7 03               [ 8]  240 	inc	bc
+    000000B8 7C               [ 4]  241 	ld	a, h
+    000000B9 02               [ 8]  242 	ld	(bc), a
+                                    243 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:55: StackPush(sprite_manager_sprites_pool, i);
+    000000BA 21r00r00         [12]  244 	ld	hl, #_sprite_manager_sprites_pool
+    000000BD 34               [12]  245 	inc	(hl)
+    000000BE 20 02            [12]  246 	jr	NZ, 00145$
+    000000C0 23               [ 8]  247 	inc	hl
+    000000C1 34               [12]  248 	inc	(hl)
+    000000C2                        249 00145$:
+    000000C2 FAr00r00         [16]  250 	ld	a, (_sprite_manager_sprites_pool)
+    000000C5 4F               [ 4]  251 	ld	c, a
+    000000C6 21r01r00         [12]  252 	ld	hl, #_sprite_manager_sprites_pool + 1
+    000000C9 46               [ 8]  253 	ld	b, (hl)
+    000000CA F8 00            [12]  254 	ldhl	sp,	#0
+    000000CC 7E               [ 8]  255 	ld	a, (hl)
+    000000CD 02               [ 8]  256 	ld	(bc), a
+                                    257 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:53: for(UINT8 i = 0; i != N_SPRITE_MANAGER_SPRITES; ++i) {
+    000000CE 34               [12]  258 	inc	(hl)
+    000000CF 18 BC            [12]  259 	jr	00107$
+    000000D1                        260 00102$:
+                                    261 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:57: ClearOAMs();
+    000000D1 CDr00r00         [24]  262 	call	_ClearOAMs
+                                    263 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:59: memset(spriteIdxs,   (UINT8)SPRITE_TILE_ALLOC_BOTTOM, SPRITES_ARRAY_LEN);
+    000000D4 11 03 00         [12]  264 	ld	de, #0x0003
+    000000D7 D5               [16]  265 	push	de
+    000000D8 AF               [ 4]  266 	xor	a, a
+    000000D9 F5               [16]  267 	push	af
+    000000DA 11r00r00         [12]  268 	ld	de, #_spriteIdxs
+    000000DD D5               [16]  269 	push	de
+    000000DE CDr00r00         [24]  270 	call	_memset
+    000000E1 E8 06            [16]  271 	add	sp, #6
+                                    272 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:60: memset(spriteIdxsH,  (UINT8)SPRITE_TILE_ALLOC_BOTTOM, SPRITES_ARRAY_LEN);
+    000000E3 11 03 00         [12]  273 	ld	de, #0x0003
+    000000E6 D5               [16]  274 	push	de
+    000000E7 AF               [ 4]  275 	xor	a, a
+    000000E8 F5               [16]  276 	push	af
+    000000E9 11r00r00         [12]  277 	ld	de, #_spriteIdxsH
+    000000EC D5               [16]  278 	push	de
+    000000ED CDr00r00         [24]  279 	call	_memset
+    000000F0 E8 06            [16]  280 	add	sp, #6
+                                    281 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:61: memset(spriteIdxsV,  (UINT8)SPRITE_TILE_ALLOC_BOTTOM, SPRITES_ARRAY_LEN);
+    000000F2 11 03 00         [12]  282 	ld	de, #0x0003
+    000000F5 D5               [16]  283 	push	de
+    000000F6 AF               [ 4]  284 	xor	a, a
+    000000F7 F5               [16]  285 	push	af
+    000000F8 11r00r00         [12]  286 	ld	de, #_spriteIdxsV
+    000000FB D5               [16]  287 	push	de
+    000000FC CDr00r00         [24]  288 	call	_memset
+    000000FF E8 06            [16]  289 	add	sp, #6
+                                    290 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:62: memset(spriteIdxsHV, (UINT8)SPRITE_TILE_ALLOC_BOTTOM, SPRITES_ARRAY_LEN);
+    00000101 11 03 00         [12]  291 	ld	de, #0x0003
+    00000104 D5               [16]  292 	push	de
+    00000105 AF               [ 4]  293 	xor	a, a
+    00000106 F5               [16]  294 	push	af
+    00000107 11r00r00         [12]  295 	ld	de, #_spriteIdxsHV
+    0000010A D5               [16]  296 	push	de
+    0000010B CDr00r00         [24]  297 	call	_memset
+    0000010E E8 06            [16]  298 	add	sp, #6
+                                    299 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:65: VECTOR_CLEAR(sprite_manager_updatables);
+    00000110 21rACr03         [12]  300 	ld	hl, #_sprite_manager_updatables
+    00000113 36 00            [12]  301 	ld	(hl), #0x00
+                                    302 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:66: sprite_manager_removal_check = FALSE;
+    00000115 AF               [ 4]  303 	xor	a, a
+    00000116 EArC1r03         [16]  304 	ld	(#_sprite_manager_removal_check),a
+                                    305 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:67: }
+    00000119 33               [ 8]  306 	inc	sp
+    0000011A C9               [16]  307 	ret
+                                    308 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:73: UINT8 SpriteManagerLoad(UINT8 sprite_type) {
+                                    309 ;	---------------------------------
+                                    310 ; Function SpriteManagerLoad
+                                    311 ; ---------------------------------
+    0000011B                        312 _SpriteManagerLoad::
+    0000011B E8 F3            [16]  313 	add	sp, #-13
+    0000011D F8 0B            [12]  314 	ldhl	sp,	#11
+    0000011F 77               [ 8]  315 	ld	(hl), a
+                                    316 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:75: if (((INT8)spriteIdxs[sprite_type]) >= last_sprite_loaded)
+    00000120 11r00r00         [12]  317 	ld	de, #_spriteIdxs
+    00000123 6E               [ 8]  318 	ld	l, (hl)
+    00000124 26 00            [ 8]  319 	ld	h, #0x00
+    00000126 19               [ 8]  320 	add	hl, de
+    00000127 E5               [16]  321 	push	hl
+    00000128 7D               [ 4]  322 	ld	a, l
+    00000129 F8 09            [12]  323 	ldhl	sp,	#9
+    0000012B 77               [ 8]  324 	ld	(hl), a
+    0000012C E1               [12]  325 	pop	hl
+    0000012D 7C               [ 4]  326 	ld	a, h
+    0000012E F8 08            [12]  327 	ldhl	sp,	#8
+    00000130 32               [ 8]  328 	ld	(hl-), a
+    00000131 2A               [ 8]  329 	ld	a, (hl+)
+    00000132 5F               [ 4]  330 	ld	e, a
+    00000133 56               [ 8]  331 	ld	d, (hl)
+    00000134 1A               [ 8]  332 	ld	a, (de)
+    00000135 4F               [ 4]  333 	ld	c, a
+    00000136 07               [ 4]  334 	rlca
+    00000137 9F               [ 4]  335 	sbc	a, a
+    00000138 47               [ 4]  336 	ld	b, a
+    00000139 21rC2r03         [12]  337 	ld	hl, #_last_sprite_loaded
+    0000013C 79               [ 4]  338 	ld	a, c
+    0000013D 96               [ 8]  339 	sub	a, (hl)
+    0000013E 23               [ 8]  340 	inc	hl
+    0000013F 78               [ 4]  341 	ld	a, b
+    00000140 9E               [ 8]  342 	sbc	a, (hl)
+    00000141 78               [ 4]  343 	ld	a, b
+    00000142 57               [ 4]  344 	ld	d, a
+    00000143 5E               [ 8]  345 	ld	e, (hl)
+    00000144 CB 7B            [ 8]  346 	bit	7, e
+    00000146 28 07            [12]  347 	jr	Z, 00185$
+    00000148 CB 7A            [ 8]  348 	bit	7, d
+    0000014A 20 08            [12]  349 	jr	NZ, 00186$
+    0000014C BF               [ 4]  350 	cp	a, a
+    0000014D 18 05            [12]  351 	jr	00186$
+    0000014F                        352 00185$:
+    0000014F CB 7A            [ 8]  353 	bit	7, d
+    00000151 28 01            [12]  354 	jr	Z, 00186$
+    00000153 37               [ 4]  355 	scf
+    00000154                        356 00186$:
+    00000154 38 05            [12]  357 	jr	C, 00102$
+                                    358 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:76: return TRUE;
+    00000156 3E 01            [ 8]  359 	ld	a, #0x01
+    00000158 C3r1Ar03         [16]  360 	jp	00117$
+    0000015B                        361 00102$:
+                                    362 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:78: UINT8 __save = CURRENT_BANK;
+    0000015B F0r00            [12]  363 	ldh	a, (__current_bank + 0)
+    0000015D F8 00            [12]  364 	ldhl	sp,	#0
+    0000015F 77               [ 8]  365 	ld	(hl), a
+                                    366 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:79: SWITCH_ROM(spriteDataBanks[sprite_type]);
+    00000160 01r00r00         [12]  367 	ld	bc, #_spriteDataBanks+0
+    00000163 F8 0B            [12]  368 	ldhl	sp,	#11
+    00000165 6E               [ 8]  369 	ld	l, (hl)
+    00000166 26 00            [ 8]  370 	ld	h, #0x00
+    00000168 09               [ 8]  371 	add	hl, bc
+    00000169 4D               [ 4]  372 	ld	c, l
+    0000016A 44               [ 4]  373 	ld	b, h
+    0000016B 0A               [ 8]  374 	ld	a, (bc)
+    0000016C E0r00            [12]  375 	ldh	(__current_bank + 0), a
+    0000016E EAr00r00         [16]  376 	ld	(#_rROMB0),a
+                                    377 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:81: const struct MetaSpriteInfo* data = spriteDatas[sprite_type];
+    00000171 01r00r00         [12]  378 	ld	bc, #_spriteDatas+0
+    00000174 F8 0B            [12]  379 	ldhl	sp,	#11
+    00000176 5E               [ 8]  380 	ld	e, (hl)
+    00000177 AF               [ 4]  381 	xor	a, a
+    00000178 6B               [ 4]  382 	ld	l, e
+    00000179 67               [ 4]  383 	ld	h, a
+    0000017A 29               [ 8]  384 	add	hl, hl
+    0000017B 09               [ 8]  385 	add	hl, bc
+    0000017C 5D               [ 4]  386 	ld	e, l
+    0000017D 54               [ 4]  387 	ld	d, h
+    0000017E 1A               [ 8]  388 	ld	a, (de)
+    0000017F F8 09            [12]  389 	ldhl	sp,	#9
+    00000181 22               [ 8]  390 	ld	(hl+), a
+    00000182 13               [ 8]  391 	inc	de
+    00000183 1A               [ 8]  392 	ld	a, (de)
+    00000184 77               [ 8]  393 	ld	(hl), a
+                                    394 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:82: UINT8 n_tiles = data->num_tiles;
+    00000185 F8 09            [12]  395 	ldhl	sp,	#9
+    00000187 2A               [ 8]  396 	ld	a, (hl+)
+    00000188 4F               [ 4]  397 	ld	c, a
+    00000189 2A               [ 8]  398 	ld	a, (hl+)
+    0000018A 23               [ 8]  399 	inc	hl
+    0000018B 47               [ 4]  400 	ld	b, a
+    0000018C 03               [ 8]  401 	inc	bc
+    0000018D 03               [ 8]  402 	inc	bc
+    0000018E 0A               [ 8]  403 	ld	a, (bc)
+    0000018F 77               [ 8]  404 	ld	(hl), a
+                                    405 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:85: if ((last_sprite_loaded - n_tiles) < SPRITE_TILE_ALLOC_BOTTOM) {
+    00000190 4E               [ 8]  406 	ld	c, (hl)
+    00000191 06 00            [ 8]  407 	ld	b, #0x00
+    00000193 21rC2r03         [12]  408 	ld	hl, #_last_sprite_loaded
+    00000196 2A               [ 8]  409 	ld	a, (hl+)
+    00000197 91               [ 4]  410 	sub	a, c
+    00000198 4F               [ 4]  411 	ld	c, a
+    00000199 7E               [ 8]  412 	ld	a, (hl)
+    0000019A 98               [ 4]  413 	sbc	a, b
+    0000019B 47               [ 4]  414 	ld	b, a
+    0000019C 79               [ 4]  415 	ld	a, c
+    0000019D D6 80            [ 8]  416 	sub	a, #0x80
+    0000019F 78               [ 4]  417 	ld	a, b
+    000001A0 17               [ 4]  418 	rla
+    000001A1 3F               [ 4]  419 	ccf
+    000001A2 1F               [ 4]  420 	rra
+    000001A3 DE 7F            [ 8]  421 	sbc	a, #0x7f
+    000001A5 30 0D            [12]  422 	jr	NC, 00104$
+                                    423 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:86: SWITCH_ROM(__save);
+    000001A7 F8 00            [12]  424 	ldhl	sp,	#0
+    000001A9 7E               [ 8]  425 	ld	a, (hl)
+    000001AA E0r00            [12]  426 	ldh	(__current_bank + 0), a
+    000001AC 7E               [ 8]  427 	ld	a, (hl)
+    000001AD EAr00r00         [16]  428 	ld	(#_rROMB0),a
+                                    429 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:87: return FALSE;
+    000001B0 AF               [ 4]  430 	xor	a, a
+    000001B1 C3r1Ar03         [16]  431 	jp	00117$
+    000001B4                        432 00104$:
+                                    433 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:91: last_sprite_loaded -= n_tiles;
+    000001B4 21rC2r03         [12]  434 	ld	hl, #_last_sprite_loaded
+    000001B7 79               [ 4]  435 	ld	a, c
+    000001B8 22               [ 8]  436 	ld	(hl+), a
+                                    437 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:93: spriteIdxs[sprite_type] = last_sprite_loaded;
+    000001B9 78               [ 4]  438 	ld	a, b
+    000001BA 32               [ 8]  439 	ld	(hl-), a
+    000001BB 7E               [ 8]  440 	ld	a, (hl)
+    000001BC F8 07            [12]  441 	ldhl	sp,	#7
+    000001BE 5E               [ 8]  442 	ld	e, (hl)
+    000001BF 23               [ 8]  443 	inc	hl
+    000001C0 66               [ 8]  444 	ld	h, (hl)
+    000001C1 6B               [ 4]  445 	ld	l, e
+    000001C2 77               [ 8]  446 	ld	(hl), a
+                                    447 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:94: spriteIdxsH[sprite_type] = last_sprite_loaded;
+    000001C3 01r00r00         [12]  448 	ld	bc, #_spriteIdxsH+0
+    000001C6 F8 0B            [12]  449 	ldhl	sp,	#11
+    000001C8 6E               [ 8]  450 	ld	l, (hl)
+    000001C9 26 00            [ 8]  451 	ld	h, #0x00
+    000001CB 09               [ 8]  452 	add	hl, bc
+    000001CC 4D               [ 4]  453 	ld	c, l
+    000001CD 44               [ 4]  454 	ld	b, h
+    000001CE FArC2r03         [16]  455 	ld	a, (_last_sprite_loaded)
+    000001D1 02               [ 8]  456 	ld	(bc), a
+                                    457 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:95: spriteIdxsV[sprite_type] = last_sprite_loaded;
+    000001D2 01r00r00         [12]  458 	ld	bc, #_spriteIdxsV+0
+    000001D5 F8 0B            [12]  459 	ldhl	sp,	#11
+    000001D7 6E               [ 8]  460 	ld	l, (hl)
+    000001D8 26 00            [ 8]  461 	ld	h, #0x00
+    000001DA 09               [ 8]  462 	add	hl, bc
+    000001DB 4D               [ 4]  463 	ld	c, l
+    000001DC 44               [ 4]  464 	ld	b, h
+    000001DD FArC2r03         [16]  465 	ld	a, (_last_sprite_loaded)
+    000001E0 02               [ 8]  466 	ld	(bc), a
+                                    467 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:96: spriteIdxsHV[sprite_type] = last_sprite_loaded;
+    000001E1 01r00r00         [12]  468 	ld	bc, #_spriteIdxsHV+0
+    000001E4 F8 0B            [12]  469 	ldhl	sp,	#11
+    000001E6 6E               [ 8]  470 	ld	l, (hl)
+    000001E7 26 00            [ 8]  471 	ld	h, #0x00
+    000001E9 09               [ 8]  472 	add	hl, bc
+    000001EA 4D               [ 4]  473 	ld	c, l
+    000001EB 44               [ 4]  474 	ld	b, h
+    000001EC FArC2r03         [16]  475 	ld	a, (_last_sprite_loaded)
+    000001EF 02               [ 8]  476 	ld	(bc), a
+                                    477 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:98: if (n_tiles) {
+    000001F0 F8 0C            [12]  478 	ldhl	sp,	#12
+    000001F2 7E               [ 8]  479 	ld	a, (hl)
+    000001F3 B7               [ 4]  480 	or	a, a
+    000001F4 28 15            [12]  481 	jr	Z, 00106$
+                                    482 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:101: set_sprite_native_data_wrap(last_sprite_loaded, n_tiles, data->data);
+    000001F6 F8 09            [12]  483 	ldhl	sp,	#9
+    000001F8 2A               [ 8]  484 	ld	a, (hl+)
+    000001F9 66               [ 8]  485 	ld	h, (hl)
+    000001FA 6F               [ 4]  486 	ld	l, a
+    000001FB 23               [ 8]  487 	inc	hl
+    000001FC 23               [ 8]  488 	inc	hl
+    000001FD 23               [ 8]  489 	inc	hl
+    000001FE 2A               [ 8]  490 	ld	a, (hl+)
+    000001FF 4F               [ 4]  491 	ld	c, a
+    00000200 46               [ 8]  492 	ld	b, (hl)
+    00000201 FArC2r03         [16]  493 	ld	a, (_last_sprite_loaded)
+    00000204 C5               [16]  494 	push	bc
+    00000205 F8 0E            [12]  495 	ldhl	sp,	#14
+    00000207 5E               [ 8]  496 	ld	e, (hl)
+    00000208 CDr00r00         [24]  497 	call	_set_sprite_native_data_wrap
+    0000020B                        498 00106$:
+                                    499 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:138: if (n_pals = data->num_palettes) {
+    0000020B F8 09            [12]  500 	ldhl	sp,#9
+    0000020D 2A               [ 8]  501 	ld	a, (hl+)
+    0000020E 5F               [ 4]  502 	ld	e, a
+    0000020F 56               [ 8]  503 	ld	d, (hl)
+    00000210 21 05 00         [12]  504 	ld	hl, #0x0005
+    00000213 19               [ 8]  505 	add	hl, de
+    00000214 4D               [ 4]  506 	ld	c, l
+    00000215 44               [ 4]  507 	ld	b, h
+    00000216 0A               [ 8]  508 	ld	a, (bc)
+    00000217 F8 01            [12]  509 	ldhl	sp,	#1
+    00000219 77               [ 8]  510 	ld	(hl), a
+    0000021A B7               [ 4]  511 	or	a, a
+    0000021B CAr0Fr03         [16]  512 	jp	Z, 00113$
+                                    513 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:142: for (search_index = 0; search_index != last_sprite_pal_loaded; ++search_index) {
+    0000021E F8 09            [12]  514 	ldhl	sp,#9
+    00000220 2A               [ 8]  515 	ld	a, (hl+)
+    00000221 5F               [ 4]  516 	ld	e, a
+    00000222 56               [ 8]  517 	ld	d, (hl)
+    00000223 21 06 00         [12]  518 	ld	hl, #0x0006
+    00000226 19               [ 8]  519 	add	hl, de
+    00000227 E5               [16]  520 	push	hl
+    00000228 7D               [ 4]  521 	ld	a, l
+    00000229 F8 04            [12]  522 	ldhl	sp,	#4
+    0000022B 77               [ 8]  523 	ld	(hl), a
+    0000022C E1               [12]  524 	pop	hl
+    0000022D 7C               [ 4]  525 	ld	a, h
+    0000022E F8 03            [12]  526 	ldhl	sp,	#3
+    00000230 77               [ 8]  527 	ld	(hl), a
+    00000231 F8 0C            [12]  528 	ldhl	sp,	#12
+    00000233 36 00            [12]  529 	ld	(hl), #0x00
+    00000235                        530 00115$:
+                                    531 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:143: if (memcmp(ZGB_Fading_SPal + (search_index * N_PALETTE_COLORS), data->palettes, n_pals * PALETTE_SIZE) == 0)
+    00000235 F8 01            [12]  532 	ldhl	sp,	#1
+    00000237 7E               [ 8]  533 	ld	a, (hl)
+    00000238 F8 04            [12]  534 	ldhl	sp,	#4
+    0000023A 22               [ 8]  535 	ld	(hl+), a
+    0000023B 36 00            [12]  536 	ld	(hl), #0x00
+    0000023D F8 0C            [12]  537 	ldhl	sp,	#12
+    0000023F 7E               [ 8]  538 	ld	a, (hl)
+    00000240 F8 06            [12]  539 	ldhl	sp,	#6
+    00000242 22               [ 8]  540 	ld	(hl+), a
+    00000243 36 00            [12]  541 	ld	(hl), #0x00
+                                    542 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:142: for (search_index = 0; search_index != last_sprite_pal_loaded; ++search_index) {
+    00000245 FArC4r03         [16]  543 	ld	a, (#_last_sprite_pal_loaded)
+    00000248 F8 0C            [12]  544 	ldhl	sp,	#12
+    0000024A 96               [ 8]  545 	sub	a, (hl)
+    0000024B 28 48            [12]  546 	jr	Z, 00130$
+                                    547 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:143: if (memcmp(ZGB_Fading_SPal + (search_index * N_PALETTE_COLORS), data->palettes, n_pals * PALETTE_SIZE) == 0)
+    0000024D F8 04            [12]  548 	ldhl	sp,	#4
+    0000024F 7E               [ 8]  549 	ld	a, (hl)
+    00000250 F8 09            [12]  550 	ldhl	sp,	#9
+    00000252 22               [ 8]  551 	ld	(hl+), a
+    00000253 36 00            [12]  552 	ld	(hl), #0x00
+    00000255 3E 03            [ 8]  553 	ld	a, #0x03
+    00000257                        554 00188$:
+    00000257 F8 09            [12]  555 	ldhl	sp,	#9
+    00000259 CB 26            [16]  556 	sla	(hl)
+    0000025B 23               [ 8]  557 	inc	hl
+    0000025C CB 16            [16]  558 	rl	(hl)
+    0000025E 3D               [ 4]  559 	dec	a
+    0000025F 20 F6            [12]  560 	jr	NZ, 00188$
+    00000261 F8 02            [12]  561 	ldhl	sp,#2
+    00000263 2A               [ 8]  562 	ld	a, (hl+)
+    00000264 5F               [ 4]  563 	ld	e, a
+    00000265 56               [ 8]  564 	ld	d, (hl)
+    00000266 1A               [ 8]  565 	ld	a, (de)
+    00000267 4F               [ 4]  566 	ld	c, a
+    00000268 13               [ 8]  567 	inc	de
+    00000269 1A               [ 8]  568 	ld	a, (de)
+    0000026A 47               [ 4]  569 	ld	b, a
+    0000026B F8 06            [12]  570 	ldhl	sp,	#6
+    0000026D 7E               [ 8]  571 	ld	a, (hl)
+    0000026E 1E 00            [ 8]  572 	ld	e, #0x00
+    00000270 87               [ 4]  573 	add	a, a
+    00000271 CB 13            [ 8]  574 	rl	e
+    00000273 87               [ 4]  575 	add	a, a
+    00000274 CB 13            [ 8]  576 	rl	e
+    00000276 6F               [ 4]  577 	ld	l, a
+    00000277 63               [ 4]  578 	ld	h, e
+    00000278 29               [ 8]  579 	add	hl, hl
+    00000279 11r00r00         [12]  580 	ld	de, #_ZGB_Fading_SPal
+    0000027C 19               [ 8]  581 	add	hl, de
+    0000027D 5D               [ 4]  582 	ld	e, l
+    0000027E 54               [ 4]  583 	ld	d, h
+    0000027F F8 09            [12]  584 	ldhl	sp,	#9
+    00000281 2A               [ 8]  585 	ld	a, (hl+)
+    00000282 66               [ 8]  586 	ld	h, (hl)
+    00000283 6F               [ 4]  587 	ld	l, a
+    00000284 E5               [16]  588 	push	hl
+    00000285 C5               [16]  589 	push	bc
+    00000286 D5               [16]  590 	push	de
+    00000287 CDr00r00         [24]  591 	call	_memcmp
+    0000028A E8 06            [16]  592 	add	sp, #6
+    0000028C 7A               [ 4]  593 	ld	a, d
+    0000028D B3               [ 4]  594 	or	a, e
+    0000028E 28 05            [12]  595 	jr	Z, 00130$
+                                    596 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:142: for (search_index = 0; search_index != last_sprite_pal_loaded; ++search_index) {
+    00000290 F8 0C            [12]  597 	ldhl	sp,	#12
+    00000292 34               [12]  598 	inc	(hl)
+    00000293 18 A0            [12]  599 	jr	00115$
+    00000295                        600 00130$:
+    00000295 F8 0C            [12]  601 	ldhl	sp,	#12
+    00000297 7E               [ 8]  602 	ld	a, (hl)
+    00000298 F8 08            [12]  603 	ldhl	sp,	#8
+    0000029A 77               [ 8]  604 	ld	(hl), a
+                                    605 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:148: spritePalsOffset[sprite_type] = ((search_index > (MAX_PALETTES - n_pals)) ? (MAX_PALETTES - n_pals) : search_index);
+    0000029B 11r00r00         [12]  606 	ld	de, #_spritePalsOffset
+    0000029E F8 0B            [12]  607 	ldhl	sp,	#11
+    000002A0 6E               [ 8]  608 	ld	l, (hl)
+    000002A1 26 00            [ 8]  609 	ld	h, #0x00
+    000002A3 19               [ 8]  610 	add	hl, de
+    000002A4 4D               [ 4]  611 	ld	c, l
+    000002A5 44               [ 4]  612 	ld	b, h
+    000002A6 11 08 00         [12]  613 	ld	de, #0x0008
+    000002A9 F8 04            [12]  614 	ldhl	sp,	#4
+    000002AB 2A               [ 8]  615 	ld	a,	(hl+)
+    000002AC 66               [ 8]  616 	ld	h, (hl)
+    000002AD 6F               [ 4]  617 	ld	l, a
+    000002AE 7B               [ 4]  618 	ld	a, e
+    000002AF 95               [ 4]  619 	sub	a, l
+    000002B0 5F               [ 4]  620 	ld	e, a
+    000002B1 7A               [ 4]  621 	ld	a, d
+    000002B2 9C               [ 4]  622 	sbc	a, h
+    000002B3 F8 0A            [12]  623 	ldhl	sp,	#10
+    000002B5 32               [ 8]  624 	ld	(hl-), a
+    000002B6 73               [ 8]  625 	ld	(hl), e
+    000002B7 F8 09            [12]  626 	ldhl	sp,	#9
+    000002B9 5D               [ 4]  627 	ld	e, l
+    000002BA 54               [ 4]  628 	ld	d, h
+    000002BB F8 06            [12]  629 	ldhl	sp,	#6
+    000002BD 1A               [ 8]  630 	ld	a, (de)
+    000002BE 13               [ 8]  631 	inc	de
+    000002BF 96               [ 8]  632 	sub	a, (hl)
+    000002C0 23               [ 8]  633 	inc	hl
+    000002C1 1A               [ 8]  634 	ld	a, (de)
+    000002C2 9E               [ 8]  635 	sbc	a, (hl)
+    000002C3 1A               [ 8]  636 	ld	a, (de)
+    000002C4 57               [ 4]  637 	ld	d, a
+    000002C5 5E               [ 8]  638 	ld	e, (hl)
+    000002C6 CB 7B            [ 8]  639 	bit	7, e
+    000002C8 28 07            [12]  640 	jr	Z, 00190$
+    000002CA CB 7A            [ 8]  641 	bit	7, d
+    000002CC 20 08            [12]  642 	jr	NZ, 00191$
+    000002CE BF               [ 4]  643 	cp	a, a
+    000002CF 18 05            [12]  644 	jr	00191$
+    000002D1                        645 00190$:
+    000002D1 CB 7A            [ 8]  646 	bit	7, d
+    000002D3 28 01            [12]  647 	jr	Z, 00191$
+    000002D5 37               [ 4]  648 	scf
+    000002D6                        649 00191$:
+    000002D6 30 08            [12]  650 	jr	NC, 00119$
+    000002D8 F8 01            [12]  651 	ldhl	sp,	#1
+    000002DA 5E               [ 8]  652 	ld	e, (hl)
+    000002DB 3E 08            [ 8]  653 	ld	a, #0x08
+    000002DD 93               [ 4]  654 	sub	a, e
+    000002DE 18 03            [12]  655 	jr	00120$
+    000002E0                        656 00119$:
+    000002E0 F8 0C            [12]  657 	ldhl	sp,	#12
+    000002E2 7E               [ 8]  658 	ld	a, (hl)
+    000002E3                        659 00120$:
+    000002E3 02               [ 8]  660 	ld	(bc), a
+                                    661 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:151: if (search_index == last_sprite_pal_loaded) {
+    000002E4 FArC4r03         [16]  662 	ld	a, (#_last_sprite_pal_loaded)
+    000002E7 F8 08            [12]  663 	ldhl	sp,	#8
+    000002E9 96               [ 8]  664 	sub	a, (hl)
+    000002EA 20 23            [12]  665 	jr	NZ, 00113$
+                                    666 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:152: last_sprite_pal_loaded += SetPalette(SPRITES_PALETTE, last_sprite_pal_loaded, n_pals, data->palettes, CURRENT_BANK);
+    000002EC F8 02            [12]  667 	ldhl	sp,#2
+    000002EE 2A               [ 8]  668 	ld	a, (hl+)
+    000002EF 5F               [ 4]  669 	ld	e, a
+    000002F0 3A               [ 8]  670 	ld	a, (hl-)
+    000002F1 2B               [ 8]  671 	dec	hl
+    000002F2 57               [ 4]  672 	ld	d, a
+    000002F3 1A               [ 8]  673 	ld	a, (de)
+    000002F4 4F               [ 4]  674 	ld	c, a
+    000002F5 13               [ 8]  675 	inc	de
+    000002F6 1A               [ 8]  676 	ld	a, (de)
+    000002F7 47               [ 4]  677 	ld	b, a
+    000002F8 F0r00            [12]  678 	ldh	a, (__current_bank + 0)
+    000002FA F5               [16]  679 	push	af
+    000002FB 33               [ 8]  680 	inc	sp
+    000002FC C5               [16]  681 	push	bc
+    000002FD 7E               [ 8]  682 	ld	a, (hl)
+    000002FE F5               [16]  683 	push	af
+    000002FF 33               [ 8]  684 	inc	sp
+    00000300 FArC4r03         [16]  685 	ld	a, (_last_sprite_pal_loaded)
+    00000303 5F               [ 4]  686 	ld	e, a
+    00000304 3E 01            [ 8]  687 	ld	a, #0x01
+    00000306 CDr00r00         [24]  688 	call	_SetPalette
+    00000309 21rC4r03         [12]  689 	ld	hl, #_last_sprite_pal_loaded
+    0000030C 4E               [ 8]  690 	ld	c, (hl)
+    0000030D 81               [ 4]  691 	add	a, c
+    0000030E 77               [ 8]  692 	ld	(hl), a
+    0000030F                        693 00113$:
+                                    694 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:164: SWITCH_ROM(__save);
+    0000030F F8 00            [12]  695 	ldhl	sp,	#0
+    00000311 7E               [ 8]  696 	ld	a, (hl)
+    00000312 E0r00            [12]  697 	ldh	(__current_bank + 0), a
+    00000314 7E               [ 8]  698 	ld	a, (hl)
+    00000315 EAr00r00         [16]  699 	ld	(#_rROMB0),a
+                                    700 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:166: return TRUE;
+    00000318 3E 01            [ 8]  701 	ld	a, #0x01
+    0000031A                        702 00117$:
+                                    703 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:167: }
+    0000031A E8 0D            [16]  704 	add	sp, #13
+    0000031C C9               [16]  705 	ret
+                                    706 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:169: Sprite* SpriteManagerAddEx(UINT8 sprite_type, UINT16 x, UINT16 y, void* data) {
+                                    707 ;	---------------------------------
+                                    708 ; Function SpriteManagerAddEx
+                                    709 ; ---------------------------------
+    0000031D                        710 _SpriteManagerAddEx::
+    0000031D E8 F7            [16]  711 	add	sp, #-9
+    0000031F F8 08            [12]  712 	ldhl	sp,	#8
+    00000321 32               [ 8]  713 	ld	(hl-), a
+    00000322 2B               [ 8]  714 	dec	hl
+    00000323 7B               [ 4]  715 	ld	a, e
+    00000324 22               [ 8]  716 	ld	(hl+), a
+    00000325 72               [ 8]  717 	ld	(hl), d
+                                    718 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:173: if (VECTOR_LEN(sprite_manager_updatables) > (N_SPRITE_MANAGER_SPRITES - 1)) return NULL;
+    00000326 FArACr03         [16]  719 	ld	a, (#_sprite_manager_updatables + 0)
+    00000329 FE 14            [ 8]  720 	cp	a, #0x14
+    0000032B 38 06            [12]  721 	jr	C, 00102$
+    0000032D 01 00 00         [12]  722 	ld	bc, #0x0000
+    00000330 C3r84r04         [16]  723 	jp	00105$
+    00000333                        724 00102$:
+                                    725 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:175: if (!SpriteManagerLoad(sprite_type)) return NULL;
+    00000333 F8 08            [12]  726 	ldhl	sp,	#8
+    00000335 7E               [ 8]  727 	ld	a, (hl)
+    00000336 CDr1Br01         [24]  728 	call	_SpriteManagerLoad
+    00000339 B7               [ 4]  729 	or	a, a
+    0000033A 20 06            [12]  730 	jr	NZ, 00104$
+    0000033C 01 00 00         [12]  731 	ld	bc, #0x0000
+    0000033F C3r84r04         [16]  732 	jp	00105$
+    00000342                        733 00104$:
+                                    734 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:177: sprite_idx = StackPop(sprite_manager_sprites_pool);
+    00000342 FAr00r00         [16]  735 	ld	a, (_sprite_manager_sprites_pool)
+    00000345 21r01r00         [12]  736 	ld	hl, #_sprite_manager_sprites_pool + 1
+    00000348 66               [ 8]  737 	ld	h, (hl)
+    00000349 6F               [ 4]  738 	ld	l, a
+    0000034A 7E               [ 8]  739 	ld	a, (hl)
+    0000034B F8 05            [12]  740 	ldhl	sp,	#5
+    0000034D 77               [ 8]  741 	ld	(hl), a
+    0000034E 21r00r00         [12]  742 	ld	hl, #_sprite_manager_sprites_pool
+    00000351 2A               [ 8]  743 	ld	a, (hl+)
+    00000352 5F               [ 4]  744 	ld	e, a
+    00000353 3A               [ 8]  745 	ld	a, (hl-)
+    00000354 57               [ 4]  746 	ld	d, a
+    00000355 1B               [ 8]  747 	dec	de
+    00000356 7B               [ 4]  748 	ld	a, e
+    00000357 22               [ 8]  749 	ld	(hl+), a
+    00000358 72               [ 8]  750 	ld	(hl), d
+                                    751 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:178: sprite = sprite_manager_sprites[sprite_idx];
+    00000359 01r70r03         [12]  752 	ld	bc, #_sprite_manager_sprites+0
+    0000035C F8 05            [12]  753 	ldhl	sp,	#5
+    0000035E 5E               [ 8]  754 	ld	e, (hl)
+    0000035F AF               [ 4]  755 	xor	a, a
+    00000360 6B               [ 4]  756 	ld	l, e
+    00000361 67               [ 4]  757 	ld	h, a
+    00000362 29               [ 8]  758 	add	hl, hl
+    00000363 09               [ 8]  759 	add	hl, bc
+    00000364 2A               [ 8]  760 	ld	a, (hl+)
+    00000365 4F               [ 4]  761 	ld	c, a
+    00000366 46               [ 8]  762 	ld	b, (hl)
+                                    763 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:179: sprite->type = sprite_type;
+    00000367 21 1D 00         [12]  764 	ld	hl, #0x001d
+    0000036A 09               [ 8]  765 	add	hl, bc
+    0000036B 5D               [ 4]  766 	ld	e, l
+    0000036C 54               [ 4]  767 	ld	d, h
+    0000036D F8 08            [12]  768 	ldhl	sp,	#8
+    0000036F 7E               [ 8]  769 	ld	a, (hl)
+    00000370 12               [ 8]  770 	ld	(de), a
+                                    771 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:180: sprite->marked_for_removal = FALSE;
+    00000371 21 1E 00         [12]  772 	ld	hl, #0x001e
+    00000374 09               [ 8]  773 	add	hl, bc
+    00000375 36 00            [12]  774 	ld	(hl), #0x00
+                                    775 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:181: sprite->lim_x = SPRITE_LIMIT_X;
+    00000377 21 19 00         [12]  776 	ld	hl, #0x0019
+    0000037A 09               [ 8]  777 	add	hl, bc
+    0000037B 3E 20            [ 8]  778 	ld	a, #0x20
+    0000037D 22               [ 8]  779 	ld	(hl+), a
+    0000037E 36 00            [12]  780 	ld	(hl), #0x00
+                                    781 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:182: sprite->lim_y = SPRITE_LIMIT_Y;
+    00000380 21 1B 00         [12]  782 	ld	hl, #0x001b
+    00000383 09               [ 8]  783 	add	hl, bc
+    00000384 3E 20            [ 8]  784 	ld	a, #0x20
+    00000386 22               [ 8]  785 	ld	(hl+), a
+    00000387 36 00            [12]  786 	ld	(hl), #0x00
+                                    787 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:183: sprite->mirror = NO_MIRROR;
+    00000389 21 16 00         [12]  788 	ld	hl, #0x0016
+    0000038C 09               [ 8]  789 	add	hl, bc
+    0000038D 36 00            [12]  790 	ld	(hl), #0x00
+                                    791 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:185: VectorAdd(sprite_manager_updatables, sprite_idx);
+    0000038F FArACr03         [16]  792 	ld	a, (#_sprite_manager_updatables + 0)
+    00000392 3C               [ 4]  793 	inc	a
+    00000393 EArACr03         [16]  794 	ld	(#_sprite_manager_updatables),a
+    00000396 C6rAC            [ 8]  795 	add	a, #<(_sprite_manager_updatables)
+    00000398 5F               [ 4]  796 	ld	e, a
+    00000399 3E 00            [ 8]  797 	ld	a, #0x00
+    0000039B CEs03            [ 8]  798 	adc	a, #>(_sprite_manager_updatables)
+    0000039D 57               [ 4]  799 	ld	d, a
+    0000039E F8 05            [12]  800 	ldhl	sp,	#5
+    000003A0 7E               [ 8]  801 	ld	a, (hl)
+    000003A1 12               [ 8]  802 	ld	(de), a
+                                    803 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:187: InitSprite(sprite, sprite_type);
+    000003A2 C5               [16]  804 	push	bc
+    000003A3 F8 0A            [12]  805 	ldhl	sp,	#10
+    000003A5 7E               [ 8]  806 	ld	a, (hl)
+    000003A6 59               [ 4]  807 	ld	e, c
+    000003A7 50               [ 4]  808 	ld	d, b
+    000003A8 CDr00r00         [24]  809 	call	_InitSprite
+    000003AB C1               [12]  810 	pop	bc
+                                    811 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:188: sprite->x = x;
+    000003AC 59               [ 4]  812 	ld	e, c
+    000003AD 50               [ 4]  813 	ld	d, b
+    000003AE F8 06            [12]  814 	ldhl	sp,	#6
+    000003B0 2A               [ 8]  815 	ld	a, (hl+)
+    000003B1 12               [ 8]  816 	ld	(de), a
+    000003B2 13               [ 8]  817 	inc	de
+    000003B3 7E               [ 8]  818 	ld	a, (hl)
+    000003B4 12               [ 8]  819 	ld	(de), a
+                                    820 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:189: sprite->y = y;
+    000003B5 59               [ 4]  821 	ld	e, c
+    000003B6 50               [ 4]  822 	ld	d, b
+    000003B7 13               [ 8]  823 	inc	de
+    000003B8 13               [ 8]  824 	inc	de
+    000003B9 F8 0B            [12]  825 	ldhl	sp,	#11
+    000003BB 2A               [ 8]  826 	ld	a, (hl+)
+    000003BC 12               [ 8]  827 	ld	(de), a
+    000003BD 13               [ 8]  828 	inc	de
+    000003BE 7E               [ 8]  829 	ld	a, (hl)
+    000003BF 12               [ 8]  830 	ld	(de), a
+                                    831 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:190: sprite->unique_id = SPRITE_UNIQUE_ID(PX_TO_TILE(x), PX_TO_TILE(y + sprite->coll_h - 1));
+    000003C0 21 1F 00         [12]  832 	ld	hl, #0x001f
+    000003C3 09               [ 8]  833 	add	hl, bc
+    000003C4 33               [ 8]  834 	inc	sp
+    000003C5 33               [ 8]  835 	inc	sp
+    000003C6 E5               [16]  836 	push	hl
+    000003C7 F8 06            [12]  837 	ldhl	sp,#6
+    000003C9 2A               [ 8]  838 	ld	a, (hl+)
+    000003CA 5F               [ 4]  839 	ld	e, a
+    000003CB 56               [ 8]  840 	ld	d, (hl)
+    000003CC CB 3A            [ 8]  841 	srl	d
+    000003CE CB 1B            [ 8]  842 	rr	e
+    000003D0 CB 3A            [ 8]  843 	srl	d
+    000003D2 CB 1B            [ 8]  844 	rr	e
+    000003D4 CB 3A            [ 8]  845 	srl	d
+    000003D6 CB 1B            [ 8]  846 	rr	e
+    000003D8 F8 02            [12]  847 	ldhl	sp,	#2
+    000003DA 7B               [ 4]  848 	ld	a, e
+    000003DB 22               [ 8]  849 	ld	(hl+), a
+    000003DC 36 00            [12]  850 	ld	(hl), #0x00
+    000003DE 21 05 00         [12]  851 	ld	hl, #0x0005
+    000003E1 09               [ 8]  852 	add	hl, bc
+    000003E2 5E               [ 8]  853 	ld	e, (hl)
+    000003E3 16 00            [ 8]  854 	ld	d, #0x00
+    000003E5 F8 0B            [12]  855 	ldhl	sp,	#11
+    000003E7 2A               [ 8]  856 	ld	a,	(hl+)
+    000003E8 66               [ 8]  857 	ld	h, (hl)
+    000003E9 6F               [ 4]  858 	ld	l, a
+    000003EA 19               [ 8]  859 	add	hl, de
+    000003EB 5D               [ 4]  860 	ld	e, l
+    000003EC 54               [ 4]  861 	ld	d, h
+    000003ED 1B               [ 8]  862 	dec	de
+    000003EE CB 3A            [ 8]  863 	srl	d
+    000003F0 CB 1B            [ 8]  864 	rr	e
+    000003F2 CB 3A            [ 8]  865 	srl	d
+    000003F4 CB 1B            [ 8]  866 	rr	e
+    000003F6 CB 3A            [ 8]  867 	srl	d
+    000003F8 CB 1B            [ 8]  868 	rr	e
+    000003FA F8 02            [12]  869 	ldhl	sp,	#2
+    000003FC 2A               [ 8]  870 	ld	a, (hl+)
+    000003FD 23               [ 8]  871 	inc	hl
+    000003FE 22               [ 8]  872 	ld	(hl+), a
+    000003FF 7B               [ 4]  873 	ld	a, e
+    00000400 32               [ 8]  874 	ld	(hl-), a
+    00000401 D1               [12]  875 	pop	de
+    00000402 D5               [16]  876 	push	de
+    00000403 2A               [ 8]  877 	ld	a, (hl+)
+    00000404 12               [ 8]  878 	ld	(de), a
+    00000405 13               [ 8]  879 	inc	de
+    00000406 7E               [ 8]  880 	ld	a, (hl)
+    00000407 12               [ 8]  881 	ld	(de), a
+                                    882 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:193: cached_sprite = THIS;
+    00000408 FAr06r00         [16]  883 	ld	a, (#_THIS)
+    0000040B F8 02            [12]  884 	ldhl	sp,	#2
+    0000040D 77               [ 8]  885 	ld	(hl), a
+    0000040E FAr07r00         [16]  886 	ld	a, (#_THIS + 1)
+    00000411 F8 03            [12]  887 	ldhl	sp,	#3
+    00000413 77               [ 8]  888 	ld	(hl), a
+                                    889 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:194: cached_sprite_idx = THIS_IDX;
+    00000414 FAr05r00         [16]  890 	ld	a, (#_THIS_IDX)
+    00000417 F8 04            [12]  891 	ldhl	sp,	#4
+    00000419 77               [ 8]  892 	ld	(hl), a
+                                    893 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:195: THIS = sprite;
+    0000041A 21r06r00         [12]  894 	ld	hl, #_THIS
+    0000041D 79               [ 4]  895 	ld	a, c
+    0000041E 22               [ 8]  896 	ld	(hl+), a
+    0000041F 70               [ 8]  897 	ld	(hl), b
+                                    898 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:196: THIS_IDX = VECTOR_LEN(sprite_manager_updatables) - 1;
+    00000420 FArACr03         [16]  899 	ld	a, (#_sprite_manager_updatables + 0)
+    00000423 3D               [ 4]  900 	dec	a
+    00000424 EAr05r00         [16]  901 	ld	(#_THIS_IDX),a
+                                    902 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:198: UINT8 __save = CURRENT_BANK;
+    00000427 F0r00            [12]  903 	ldh	a, (__current_bank + 0)
+    00000429 F8 05            [12]  904 	ldhl	sp,	#5
+    0000042B 77               [ 8]  905 	ld	(hl), a
+                                    906 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:199: SWITCH_ROM(spriteBanks[sprite->type]);
+    0000042C 21 1D 00         [12]  907 	ld	hl, #0x001d
+    0000042F 09               [ 8]  908 	add	hl, bc
+    00000430 5D               [ 4]  909 	ld	e, l
+    00000431 54               [ 4]  910 	ld	d, h
+    00000432 1A               [ 8]  911 	ld	a, (de)
+    00000433 C6r00            [ 8]  912 	add	a, #<(_spriteBanks)
+    00000435 6F               [ 4]  913 	ld	l, a
+    00000436 3E 00            [ 8]  914 	ld	a, #0x00
+    00000438 CEs00            [ 8]  915 	adc	a, #>(_spriteBanks)
+    0000043A 67               [ 4]  916 	ld	h, a
+    0000043B 7E               [ 8]  917 	ld	a, (hl)
+    0000043C E0r00            [12]  918 	ldh	(__current_bank + 0), a
+    0000043E 1A               [ 8]  919 	ld	a, (de)
+    0000043F C6r00            [ 8]  920 	add	a, #<(_spriteBanks)
+    00000441 6F               [ 4]  921 	ld	l, a
+    00000442 3E 00            [ 8]  922 	ld	a, #0x00
+    00000444 CEs00            [ 8]  923 	adc	a, #>(_spriteBanks)
+    00000446 67               [ 4]  924 	ld	h, a
+    00000447 7E               [ 8]  925 	ld	a, (hl)
+    00000448 EAr00r00         [16]  926 	ld	(#_rROMB0),a
+                                    927 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:200: spriteStartFuncs[sprite->type](data);
+    0000044B 1A               [ 8]  928 	ld	a, (de)
+    0000044C 26 00            [ 8]  929 	ld	h, #0x00
+    0000044E 6F               [ 4]  930 	ld	l, a
+    0000044F 29               [ 8]  931 	add	hl, hl
+    00000450 11r00r00         [12]  932 	ld	de, #_spriteStartFuncs
+    00000453 19               [ 8]  933 	add	hl, de
+    00000454 2A               [ 8]  934 	ld	a,	(hl+)
+    00000455 66               [ 8]  935 	ld	h, (hl)
+    00000456 6F               [ 4]  936 	ld	l, a
+    00000457 C5               [16]  937 	push	bc
+    00000458 E5               [16]  938 	push	hl
+    00000459 F8 11            [12]  939 	ldhl	sp,	#17
+    0000045B 5E               [ 8]  940 	ld	e, (hl)
+    0000045C F8 12            [12]  941 	ldhl	sp,	#18
+    0000045E 56               [ 8]  942 	ld	d, (hl)
+    0000045F E1               [12]  943 	pop	hl
+    00000460 01r68r04         [12]  944 	ld	bc, #00121$
+    00000463 C5               [16]  945 	push	bc
+    00000464 4D               [ 4]  946 	ld	c, l
+    00000465 44               [ 4]  947 	ld	b, h
+    00000466 C5               [16]  948 	push	bc
+    00000467 C9               [16]  949 	ret
+    00000468                        950 00121$:
+    00000468 C1               [12]  951 	pop	bc
+                                    952 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:201: SWITCH_ROM(__save);
+    00000469 F8 05            [12]  953 	ldhl	sp,	#5
+    0000046B 7E               [ 8]  954 	ld	a, (hl)
+    0000046C E0r00            [12]  955 	ldh	(__current_bank + 0), a
+    0000046E 7E               [ 8]  956 	ld	a, (hl)
+    0000046F EAr00r00         [16]  957 	ld	(#_rROMB0),a
+                                    958 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:204: THIS = cached_sprite;
+    00000472 F8 02            [12]  959 	ldhl	sp,	#2
+    00000474 7E               [ 8]  960 	ld	a, (hl)
+    00000475 EAr06r00         [16]  961 	ld	(#_THIS),a
+    00000478 F8 03            [12]  962 	ldhl	sp,	#3
+    0000047A 7E               [ 8]  963 	ld	a, (hl)
+    0000047B EAr07r00         [16]  964 	ld	(#_THIS + 1),a
+                                    965 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:205: THIS_IDX = cached_sprite_idx;
+    0000047E F8 04            [12]  966 	ldhl	sp,	#4
+    00000480 7E               [ 8]  967 	ld	a, (hl)
+    00000481 EAr05r00         [16]  968 	ld	(#_THIS_IDX),a
+                                    969 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:206: return sprite;
+    00000484                        970 00105$:
+                                    971 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:207: }
+    00000484 E8 09            [16]  972 	add	sp, #9
+    00000486 E1               [12]  973 	pop	hl
+    00000487 E8 04            [16]  974 	add	sp, #4
+    00000489 E9               [ 4]  975 	jp	(hl)
+                                    976 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:209: void SpriteManagerRemove(UINT8 idx) {
+                                    977 ;	---------------------------------
+                                    978 ; Function SpriteManagerRemove
+                                    979 ; ---------------------------------
+    0000048A                        980 _SpriteManagerRemove::
+    0000048A 5F               [ 4]  981 	ld	e, a
+                                    982 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:210: sprite_manager_sprites[VECTOR_GET(sprite_manager_updatables, idx)]->marked_for_removal = TRUE;
+    0000048B 01r70r03         [12]  983 	ld	bc, #_sprite_manager_sprites+0
+    0000048E 1C               [ 4]  984 	inc	e
+    0000048F 6B               [ 4]  985 	ld	l, e
+    00000490 26 00            [ 8]  986 	ld	h, #0x00
+    00000492 11rACr03         [12]  987 	ld	de, #_sprite_manager_updatables
+    00000495 19               [ 8]  988 	add	hl, de
+    00000496 6E               [ 8]  989 	ld	l, (hl)
+    00000497 AF               [ 4]  990 	xor	a, a
+    00000498 67               [ 4]  991 	ld	h, a
+    00000499 29               [ 8]  992 	add	hl, hl
+    0000049A 09               [ 8]  993 	add	hl, bc
+    0000049B 2A               [ 8]  994 	ld	a, (hl+)
+    0000049C 4F               [ 4]  995 	ld	c, a
+    0000049D 46               [ 8]  996 	ld	b, (hl)
+    0000049E 21 1E 00         [12]  997 	ld	hl, #0x001e
+    000004A1 09               [ 8]  998 	add	hl, bc
+    000004A2 36 01            [12]  999 	ld	(hl), #0x01
+                                   1000 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:211: sprite_manager_removal_check = TRUE;
+    000004A4 21rC1r03         [12] 1001 	ld	hl, #_sprite_manager_removal_check
+    000004A7 36 01            [12] 1002 	ld	(hl), #0x01
+                                   1003 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:212: }
+    000004A9 C9               [16] 1004 	ret
+                                   1005 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:214: void SpriteManagerRemoveSprite(Sprite* sprite) {
+                                   1006 ;	---------------------------------
+                                   1007 ; Function SpriteManagerRemoveSprite
+                                   1008 ; ---------------------------------
+    000004AA                       1009 _SpriteManagerRemoveSprite::
+                                   1010 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:215: sprite->marked_for_removal = TRUE;
+    000004AA 21 1E 00         [12] 1011 	ld	hl, #0x001e
+    000004AD 19               [ 8] 1012 	add	hl, de
+    000004AE 36 01            [12] 1013 	ld	(hl), #0x01
+                                   1014 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:216: sprite_manager_removal_check = TRUE;
+    000004B0 21rC1r03         [12] 1015 	ld	hl, #_sprite_manager_removal_check
+    000004B3 36 01            [12] 1016 	ld	(hl), #0x01
+                                   1017 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:217: }
+    000004B5 C9               [16] 1018 	ret
+                                   1019 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:219: void SpriteManagerFlushRemove(void) {
+                                   1020 ;	---------------------------------
+                                   1021 ; Function SpriteManagerFlushRemove
+                                   1022 ; ---------------------------------
+    000004B6                       1023 _SpriteManagerFlushRemove::
+    000004B6 3B               [ 8] 1024 	dec	sp
+                                   1025 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:221: UINT8 __save = CURRENT_BANK;
+    000004B7 F0r00            [12] 1026 	ldh	a, (__current_bank + 0)
+    000004B9 F8 00            [12] 1027 	ldhl	sp,	#0
+    000004BB 77               [ 8] 1028 	ld	(hl), a
+                                   1029 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:224: SPRITEMANAGER_ITERATE(THIS_IDX, THIS) {
+    000004BC AF               [ 4] 1030 	xor	a, a
+    000004BD EAr05r00         [16] 1031 	ld	(#_THIS_IDX),a
+    000004C0 21rADr03         [12] 1032 	ld	hl, #_sprite_manager_updatables + 1
+    000004C3 6E               [ 8] 1033 	ld	l, (hl)
+    000004C4 AF               [ 4] 1034 	xor	a, a
+    000004C5 67               [ 4] 1035 	ld	h, a
+    000004C6 29               [ 8] 1036 	add	hl, hl
+    000004C7 11r70r03         [12] 1037 	ld	de, #_sprite_manager_sprites
+    000004CA 19               [ 8] 1038 	add	hl, de
+    000004CB 5D               [ 4] 1039 	ld	e, l
+    000004CC 54               [ 4] 1040 	ld	d, h
+    000004CD 1A               [ 8] 1041 	ld	a, (de)
+    000004CE 21r06r00         [12] 1042 	ld	hl, #_THIS
+    000004D1 22               [ 8] 1043 	ld	(hl+), a
+    000004D2 13               [ 8] 1044 	inc	de
+    000004D3 1A               [ 8] 1045 	ld	a, (de)
+    000004D4 77               [ 8] 1046 	ld	(hl), a
+    000004D5 0E 00            [ 8] 1047 	ld	c, #0x00
+    000004D7                       1048 00106$:
+    000004D7 FArACr03         [16] 1049 	ld	a, (#_sprite_manager_updatables + 0)
+    000004DA 21r05r00         [12] 1050 	ld	hl, #_THIS_IDX
+    000004DD 96               [ 8] 1051 	sub	a, (hl)
+    000004DE CAr6Er05         [16] 1052 	jp	Z, 00104$
+                                   1053 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:225: UINT8 sprite_idx = VECTOR_GET(sprite_manager_updatables, THIS_IDX);
+    000004E1 FAr05r00         [16] 1054 	ld	a, (#_THIS_IDX)
+    000004E4 3C               [ 4] 1055 	inc	a
+    000004E5 6F               [ 4] 1056 	ld	l, a
+    000004E6 26 00            [ 8] 1057 	ld	h, #0x00
+    000004E8 11rACr03         [12] 1058 	ld	de, #_sprite_manager_updatables
+    000004EB 19               [ 8] 1059 	add	hl, de
+    000004EC 46               [ 8] 1060 	ld	b, (hl)
+                                   1061 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:226: if (THIS->marked_for_removal) {
+    000004ED FAr06r00         [16] 1062 	ld	a, (_THIS)
+    000004F0 5F               [ 4] 1063 	ld	e, a
+    000004F1 21r07r00         [12] 1064 	ld	hl, #_THIS + 1
+    000004F4 56               [ 8] 1065 	ld	d, (hl)
+    000004F5 21 1E 00         [12] 1066 	ld	hl, #0x001e
+    000004F8 19               [ 8] 1067 	add	hl, de
+    000004F9 7E               [ 8] 1068 	ld	a, (hl)
+    000004FA B7               [ 4] 1069 	or	a, a
+    000004FB 28 46            [12] 1070 	jr	Z, 00102$
+                                   1071 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:228: SWITCH_ROM(spriteBanks[THIS->type]);
+    000004FD 21 1D 00         [12] 1072 	ld	hl, #0x001d
+    00000500 19               [ 8] 1073 	add	hl, de
+    00000501 5D               [ 4] 1074 	ld	e, l
+    00000502 54               [ 4] 1075 	ld	d, h
+    00000503 1A               [ 8] 1076 	ld	a, (de)
+    00000504 C6r00            [ 8] 1077 	add	a, #<(_spriteBanks)
+    00000506 6F               [ 4] 1078 	ld	l, a
+    00000507 3E 00            [ 8] 1079 	ld	a, #0x00
+    00000509 CEs00            [ 8] 1080 	adc	a, #>(_spriteBanks)
+    0000050B 67               [ 4] 1081 	ld	h, a
+    0000050C 7E               [ 8] 1082 	ld	a, (hl)
+    0000050D E0r00            [12] 1083 	ldh	(__current_bank + 0), a
+    0000050F 1A               [ 8] 1084 	ld	a, (de)
+    00000510 C6r00            [ 8] 1085 	add	a, #<(_spriteBanks)
+    00000512 6F               [ 4] 1086 	ld	l, a
+    00000513 3E 00            [ 8] 1087 	ld	a, #0x00
+    00000515 CEs00            [ 8] 1088 	adc	a, #>(_spriteBanks)
+    00000517 67               [ 4] 1089 	ld	h, a
+    00000518 7E               [ 8] 1090 	ld	a, (hl)
+    00000519 EAr00r00         [16] 1091 	ld	(#_rROMB0),a
+                                   1092 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:229: spriteDestroyFuncs[THIS->type]();
+    0000051C 1A               [ 8] 1093 	ld	a, (de)
+    0000051D 26 00            [ 8] 1094 	ld	h, #0x00
+    0000051F 6F               [ 4] 1095 	ld	l, a
+    00000520 29               [ 8] 1096 	add	hl, hl
+    00000521 11r00r00         [12] 1097 	ld	de, #_spriteDestroyFuncs
+    00000524 19               [ 8] 1098 	add	hl, de
+    00000525 2A               [ 8] 1099 	ld	a,	(hl+)
+    00000526 66               [ 8] 1100 	ld	h, (hl)
+    00000527 6F               [ 4] 1101 	ld	l, a
+    00000528 C5               [16] 1102 	push	bc
+    00000529 01r2Fr05         [12] 1103 	ld	bc, #00133$
+    0000052C C5               [16] 1104 	push	bc
+    0000052D E5               [16] 1105 	push	hl
+    0000052E C9               [16] 1106 	ret
+    0000052F                       1107 00133$:
+    0000052F C1               [12] 1108 	pop	bc
+                                   1109 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:231: StackPush(sprite_manager_sprites_pool, sprite_idx);
+    00000530 21r00r00         [12] 1110 	ld	hl, #_sprite_manager_sprites_pool
+    00000533 34               [12] 1111 	inc	(hl)
+    00000534 20 02            [12] 1112 	jr	NZ, 00134$
+    00000536 23               [ 8] 1113 	inc	hl
+    00000537 34               [12] 1114 	inc	(hl)
+    00000538                       1115 00134$:
+    00000538 FAr00r00         [16] 1116 	ld	a, (_sprite_manager_sprites_pool)
+    0000053B 21r01r00         [12] 1117 	ld	hl, #_sprite_manager_sprites_pool + 1
+    0000053E 66               [ 8] 1118 	ld	h, (hl)
+    0000053F 6F               [ 4] 1119 	ld	l, a
+    00000540 70               [ 8] 1120 	ld	(hl), b
+    00000541 18 09            [12] 1121 	jr	00107$
+    00000543                       1122 00102$:
+                                   1123 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:234: VECTOR_SET_DIRECT(sprite_manager_updatables, current++, sprite_idx);
+    00000543 0C               [ 4] 1124 	inc	c
+    00000544 69               [ 4] 1125 	ld	l, c
+    00000545 26 00            [ 8] 1126 	ld	h, #0x00
+    00000547 11rACr03         [12] 1127 	ld	de, #_sprite_manager_updatables
+    0000054A 19               [ 8] 1128 	add	hl, de
+    0000054B 70               [ 8] 1129 	ld	(hl), b
+    0000054C                       1130 00107$:
+                                   1131 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:224: SPRITEMANAGER_ITERATE(THIS_IDX, THIS) {
+    0000054C 21r05r00         [12] 1132 	ld	hl, #_THIS_IDX
+    0000054F 34               [12] 1133 	inc	(hl)
+    00000550 7E               [ 8] 1134 	ld	a, (hl)
+    00000551 3C               [ 4] 1135 	inc	a
+    00000552 6F               [ 4] 1136 	ld	l, a
+    00000553 26 00            [ 8] 1137 	ld	h, #0x00
+    00000555 11rACr03         [12] 1138 	ld	de, #_sprite_manager_updatables
+    00000558 19               [ 8] 1139 	add	hl, de
+    00000559 6E               [ 8] 1140 	ld	l, (hl)
+    0000055A AF               [ 4] 1141 	xor	a, a
+    0000055B 67               [ 4] 1142 	ld	h, a
+    0000055C 29               [ 8] 1143 	add	hl, hl
+    0000055D 11r70r03         [12] 1144 	ld	de, #_sprite_manager_sprites
+    00000560 19               [ 8] 1145 	add	hl, de
+    00000561 5D               [ 4] 1146 	ld	e, l
+    00000562 54               [ 4] 1147 	ld	d, h
+    00000563 1A               [ 8] 1148 	ld	a, (de)
+    00000564 21r06r00         [12] 1149 	ld	hl, #_THIS
+    00000567 22               [ 8] 1150 	ld	(hl+), a
+    00000568 13               [ 8] 1151 	inc	de
+    00000569 1A               [ 8] 1152 	ld	a, (de)
+    0000056A 77               [ 8] 1153 	ld	(hl), a
+    0000056B C3rD7r04         [16] 1154 	jp	00106$
+    0000056E                       1155 00104$:
+                                   1156 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:238: VECTOR_LEN(sprite_manager_updatables) = current;
+    0000056E 21rACr03         [12] 1157 	ld	hl, #_sprite_manager_updatables
+    00000571 71               [ 8] 1158 	ld	(hl), c
+                                   1159 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:239: SWITCH_ROM(__save);
+    00000572 F8 00            [12] 1160 	ldhl	sp,	#0
+    00000574 7E               [ 8] 1161 	ld	a, (hl)
+    00000575 E0r00            [12] 1162 	ldh	(__current_bank + 0), a
+    00000577 7E               [ 8] 1163 	ld	a, (hl)
+    00000578 EAr00r00         [16] 1164 	ld	(#_rROMB0),a
+                                   1165 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:240: sprite_manager_removal_check = FALSE;
+    0000057B AF               [ 4] 1166 	xor	a, a
+    0000057C EArC1r03         [16] 1167 	ld	(#_sprite_manager_removal_check),a
+                                   1168 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:241: }
+    0000057F 33               [ 8] 1169 	inc	sp
+    00000580 C9               [16] 1170 	ret
+                                   1171 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:246: void SpriteManagerUpdate(void) {
+                                   1172 ;	---------------------------------
+                                   1173 ; Function SpriteManagerUpdate
+                                   1174 ; ---------------------------------
+    00000581                       1175 _SpriteManagerUpdate::
+    00000581 3B               [ 8] 1176 	dec	sp
+    00000582 3B               [ 8] 1177 	dec	sp
+                                   1178 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:250: __save = CURRENT_BANK;
+    00000583 F0r00            [12] 1179 	ldh	a, (__current_bank + 0)
+    00000585 EArC7r03         [16] 1180 	ld	(#_SpriteManagerUpdate___save_10000_319),a
+                                   1181 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:252: if (prev_scroll_target != scroll_target) {
+    00000588 FArC5r03         [16] 1182 	ld	a, (#_prev_scroll_target)
+    0000058B 21r00r00         [12] 1183 	ld	hl, #_scroll_target
+    0000058E 96               [ 8] 1184 	sub	a, (hl)
+    0000058F 20 09            [12] 1185 	jr	NZ, 00247$
+    00000591 FArC6r03         [16] 1186 	ld	a, (#_prev_scroll_target + 1)
+    00000594 21r01r00         [12] 1187 	ld	hl, #_scroll_target + 1
+    00000597 96               [ 8] 1188 	sub	a, (hl)
+    00000598 28 64            [12] 1189 	jr	Z, 00108$
+    0000059A                       1190 00247$:
+                                   1191 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:254: if ((enable_flickering) && (scroll_target)) {
+    0000059A FAr04r00         [16] 1192 	ld	a, (#_enable_flickering)
+    0000059D B7               [ 4] 1193 	or	a, a
+    0000059E 28 52            [12] 1194 	jr	Z, 00105$
+    000005A0 21r01r00         [12] 1195 	ld	hl, #_scroll_target + 1
+    000005A3 3A               [ 8] 1196 	ld	a, (hl-)
+    000005A4 B6               [ 8] 1197 	or	a, (hl)
+    000005A5 28 4B            [12] 1198 	jr	Z, 00105$
+                                   1199 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:255: for (UINT8 i = 0; i != VECTOR_LEN(sprite_manager_updatables); ++i) {
+    000005A7 06 00            [ 8] 1200 	ld	b, #0x00
+    000005A9                       1201 00127$:
+    000005A9 FArACr03         [16] 1202 	ld	a, (#_sprite_manager_updatables + 0)
+    000005AC 90               [ 4] 1203 	sub	a, b
+    000005AD 28 43            [12] 1204 	jr	Z, 00105$
+                                   1205 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:256: if (sprite_manager_sprites[VECTOR_GET(sprite_manager_updatables, i)] == scroll_target) {
+    000005AF 48               [ 4] 1206 	ld	c, b
+    000005B0 0C               [ 4] 1207 	inc	c
+    000005B1 3ErAC            [ 8] 1208 	ld	a, #<(_sprite_manager_updatables)
+    000005B3 81               [ 4] 1209 	add	a, c
+    000005B4 6F               [ 4] 1210 	ld	l, a
+    000005B5 3Es03            [ 8] 1211 	ld	a, #>(_sprite_manager_updatables)
+    000005B7 CE 00            [ 8] 1212 	adc	a, #0x00
+    000005B9 67               [ 4] 1213 	ld	h, a
+    000005BA 6E               [ 8] 1214 	ld	l, (hl)
+    000005BB 26 00            [ 8] 1215 	ld	h, #0x00
+    000005BD 29               [ 8] 1216 	add	hl, hl
+    000005BE 11r70r03         [12] 1217 	ld	de, #_sprite_manager_sprites
+    000005C1 19               [ 8] 1218 	add	hl, de
+    000005C2 5D               [ 4] 1219 	ld	e, l
+    000005C3 54               [ 4] 1220 	ld	d, h
+    000005C4 1A               [ 8] 1221 	ld	a, (de)
+    000005C5 F8 00            [12] 1222 	ldhl	sp,	#0
+    000005C7 22               [ 8] 1223 	ld	(hl+), a
+    000005C8 13               [ 8] 1224 	inc	de
+    000005C9 1A               [ 8] 1225 	ld	a, (de)
+    000005CA 77               [ 8] 1226 	ld	(hl), a
+    000005CB FAr00r00         [16] 1227 	ld	a, (#_scroll_target)
+    000005CE F8 00            [12] 1228 	ldhl	sp,	#0
+    000005D0 96               [ 8] 1229 	sub	a, (hl)
+    000005D1 20 1C            [12] 1230 	jr	NZ, 00128$
+    000005D3 FAr01r00         [16] 1231 	ld	a, (#_scroll_target + 1)
+    000005D6 F8 01            [12] 1232 	ldhl	sp,	#1
+    000005D8 96               [ 8] 1233 	sub	a, (hl)
+    000005D9 20 14            [12] 1234 	jr	NZ, 00128$
+                                   1235 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:257: VectorExchange(sprite_manager_updatables, 0, i);
+    000005DB 11rACr03         [12] 1236 	ld	de, #_sprite_manager_updatables
+                                   1237 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Vector.h:69: if ((pos1 < v[0]) && (pos2 < v[0])) BufferExchange(v, (UINT16)((pos1 + 1u) << 8) | (UINT8)(pos2 + 1u));
+    000005DE 1A               [ 8] 1238 	ld	a, (de)
+    000005DF 6F               [ 4] 1239 	ld	l, a
+    000005E0 AF               [ 4] 1240 	xor	a, a
+    000005E1 95               [ 4] 1241 	sub	a, l
+    000005E2 30 0E            [12] 1242 	jr	NC, 00105$
+    000005E4 78               [ 4] 1243 	ld	a, b
+    000005E5 95               [ 4] 1244 	sub	a, l
+    000005E6 30 0A            [12] 1245 	jr	NC, 00105$
+    000005E8 06 01            [ 8] 1246 	ld	b, #0x01
+    000005EA CDr00r00         [24] 1247 	call	_BufferExchange
+                                   1248 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:258: break;
+    000005ED 18 03            [12] 1249 	jr	00105$
+    000005EF                       1250 00128$:
+                                   1251 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:255: for (UINT8 i = 0; i != VECTOR_LEN(sprite_manager_updatables); ++i) {
+    000005EF 41               [ 4] 1252 	ld	b, c
+    000005F0 18 B7            [12] 1253 	jr	00127$
+    000005F2                       1254 00105$:
+                                   1255 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:263: prev_scroll_target = scroll_target;
+    000005F2 FAr00r00         [16] 1256 	ld	a, (#_scroll_target)
+    000005F5 EArC5r03         [16] 1257 	ld	(#_prev_scroll_target),a
+    000005F8 FAr01r00         [16] 1258 	ld	a, (#_scroll_target + 1)
+    000005FB EArC6r03         [16] 1259 	ld	(#_prev_scroll_target + 1),a
+    000005FE                       1260 00108$:
+                                   1261 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:266: if (enable_flickering) {
+    000005FE FAr04r00         [16] 1262 	ld	a, (#_enable_flickering)
+    00000601 B7               [ 4] 1263 	or	a, a
+    00000602 28 20            [12] 1264 	jr	Z, 00110$
+                                   1265 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:267: VectorRotateFrom(sprite_manager_updatables, (scroll_target) ? 1 : 0);
+    00000604 21r01r00         [12] 1266 	ld	hl, #_scroll_target + 1
+    00000607 3A               [ 8] 1267 	ld	a, (hl-)
+    00000608 B6               [ 8] 1268 	or	a, (hl)
+    00000609 1E 01            [ 8] 1269 	ld	e, #0x01
+    0000060B 20 02            [12] 1270 	jr	NZ, 00134$
+    0000060D 1E 00            [ 8] 1271 	ld	e, #0x00
+    0000060F                       1272 00134$:
+    0000060F 21rACr03         [12] 1273 	ld	hl, #_sprite_manager_updatables
+                                   1274 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Vector.h:65: if (pos < v[0]) BufferRotate(&v[pos + 1u], (v[0] - pos));
+    00000612 4E               [ 8] 1275 	ld	c, (hl)
+    00000613 7B               [ 4] 1276 	ld	a, e
+    00000614 91               [ 4] 1277 	sub	a, c
+    00000615 30 0D            [12] 1278 	jr	NC, 00110$
+    00000617 79               [ 4] 1279 	ld	a, c
+    00000618 93               [ 4] 1280 	sub	a, e
+    00000619 4F               [ 4] 1281 	ld	c, a
+    0000061A 1C               [ 4] 1282 	inc	e
+    0000061B 16 00            [ 8] 1283 	ld	d, #0x00
+    0000061D 19               [ 8] 1284 	add	hl, de
+    0000061E 79               [ 4] 1285 	ld	a, c
+    0000061F 5D               [ 4] 1286 	ld	e, l
+    00000620 54               [ 4] 1287 	ld	d, h
+    00000621 CDr00r00         [24] 1288 	call	_BufferRotate
+                                   1289 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:267: VectorRotateFrom(sprite_manager_updatables, (scroll_target) ? 1 : 0);
+    00000624                       1290 00110$:
+                                   1291 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:270: SPRITEMANAGER_ITERATE(THIS_IDX, THIS) {
+    00000624 AF               [ 4] 1292 	xor	a, a
+    00000625 EAr05r00         [16] 1293 	ld	(#_THIS_IDX),a
+    00000628 21rADr03         [12] 1294 	ld	hl, #_sprite_manager_updatables + 1
+    0000062B 6E               [ 8] 1295 	ld	l, (hl)
+    0000062C AF               [ 4] 1296 	xor	a, a
+    0000062D 67               [ 4] 1297 	ld	h, a
+    0000062E 29               [ 8] 1298 	add	hl, hl
+    0000062F 11r70r03         [12] 1299 	ld	de, #_sprite_manager_sprites
+    00000632 19               [ 8] 1300 	add	hl, de
+    00000633 5D               [ 4] 1301 	ld	e, l
+    00000634 54               [ 4] 1302 	ld	d, h
+    00000635 1A               [ 8] 1303 	ld	a, (de)
+    00000636 21r06r00         [12] 1304 	ld	hl, #_THIS
+    00000639 22               [ 8] 1305 	ld	(hl+), a
+    0000063A 13               [ 8] 1306 	inc	de
+    0000063B 1A               [ 8] 1307 	ld	a, (de)
+    0000063C 77               [ 8] 1308 	ld	(hl), a
+    0000063D                       1309 00130$:
+    0000063D FArACr03         [16] 1310 	ld	a, (#_sprite_manager_updatables + 0)
+    00000640 21r05r00         [12] 1311 	ld	hl, #_THIS_IDX
+    00000643 96               [ 8] 1312 	sub	a, (hl)
+    00000644 CArC9r06         [16] 1313 	jp	Z, 00116$
+                                   1314 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:272: if (THIS->marked_for_removal) continue;
+    00000647 FAr06r00         [16] 1315 	ld	a, (#_THIS)
+    0000064A F8 00            [12] 1316 	ldhl	sp,	#0
+    0000064C 77               [ 8] 1317 	ld	(hl), a
+    0000064D FAr07r00         [16] 1318 	ld	a, (#_THIS + 1)
+    00000650 F8 01            [12] 1319 	ldhl	sp,	#1
+    00000652 77               [ 8] 1320 	ld	(hl), a
+    00000653 D1               [12] 1321 	pop	de
+    00000654 D5               [16] 1322 	push	de
+    00000655 21 1E 00         [12] 1323 	ld	hl, #0x001e
+    00000658 19               [ 8] 1324 	add	hl, de
+    00000659 4D               [ 4] 1325 	ld	c, l
+    0000065A 44               [ 4] 1326 	ld	b, h
+    0000065B 0A               [ 8] 1327 	ld	a, (bc)
+    0000065C B7               [ 4] 1328 	or	a, a
+    0000065D 20 48            [12] 1329 	jr	NZ, 00115$
+                                   1330 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:274: SWITCH_ROM(spriteBanks[THIS->type]);
+    0000065F D1               [12] 1331 	pop	de
+    00000660 D5               [16] 1332 	push	de
+    00000661 21 1D 00         [12] 1333 	ld	hl, #0x001d
+    00000664 19               [ 8] 1334 	add	hl, de
+    00000665 4D               [ 4] 1335 	ld	c, l
+    00000666 44               [ 4] 1336 	ld	b, h
+    00000667 0A               [ 8] 1337 	ld	a, (bc)
+    00000668 6F               [ 4] 1338 	ld	l, a
+    00000669 26 00            [ 8] 1339 	ld	h, #0x00
+    0000066B 11r00r00         [12] 1340 	ld	de, #_spriteBanks
+    0000066E 19               [ 8] 1341 	add	hl, de
+    0000066F 7E               [ 8] 1342 	ld	a, (hl)
+    00000670 E0r00            [12] 1343 	ldh	(__current_bank + 0), a
+    00000672 0A               [ 8] 1344 	ld	a, (bc)
+    00000673 6F               [ 4] 1345 	ld	l, a
+    00000674 26 00            [ 8] 1346 	ld	h, #0x00
+    00000676 11r00r00         [12] 1347 	ld	de, #_spriteBanks
+    00000679 19               [ 8] 1348 	add	hl, de
+    0000067A 7E               [ 8] 1349 	ld	a, (hl)
+    0000067B EAr00r00         [16] 1350 	ld	(#_rROMB0),a
+                                   1351 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:276: spriteUpdateFuncs[THIS->type]();
+    0000067E 0A               [ 8] 1352 	ld	a, (bc)
+    0000067F 6F               [ 4] 1353 	ld	l, a
+    00000680 AF               [ 4] 1354 	xor	a, a
+    00000681 67               [ 4] 1355 	ld	h, a
+    00000682 29               [ 8] 1356 	add	hl, hl
+    00000683 11r00r00         [12] 1357 	ld	de, #_spriteUpdateFuncs
+    00000686 19               [ 8] 1358 	add	hl, de
+    00000687 4E               [ 8] 1359 	ld	c, (hl)
+    00000688 23               [ 8] 1360 	inc	hl
+    00000689 46               [ 8] 1361 	ld	b, (hl)
+    0000068A 69               [ 4] 1362 	ld	l, c
+    0000068B 60               [ 4] 1363 	ld	h, b
+    0000068C CDr00r00         [24] 1364 	call	___sdcc_call_hl
+                                   1365 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:278: if (THIS == scroll_target) {
+    0000068F FAr06r00         [16] 1366 	ld	a, (#_THIS)
+    00000692 21r00r00         [12] 1367 	ld	hl, #_scroll_target
+    00000695 96               [ 8] 1368 	sub	a, (hl)
+    00000696 20 0C            [12] 1369 	jr	NZ, 00114$
+    00000698 FAr07r00         [16] 1370 	ld	a, (#_THIS + 1)
+    0000069B 21r01r00         [12] 1371 	ld	hl, #_scroll_target + 1
+    0000069E 96               [ 8] 1372 	sub	a, (hl)
+    0000069F 20 03            [12] 1373 	jr	NZ, 00114$
+                                   1374 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:279: RefreshScroll();
+    000006A1 CDr00r00         [24] 1375 	call	_RefreshScroll
+    000006A4                       1376 00114$:
+                                   1377 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:282: DrawSprite();
+    000006A4 CDr00r00         [24] 1378 	call	_DrawSprite
+    000006A7                       1379 00115$:
+                                   1380 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:270: SPRITEMANAGER_ITERATE(THIS_IDX, THIS) {
+    000006A7 21r05r00         [12] 1381 	ld	hl, #_THIS_IDX
+    000006AA 34               [12] 1382 	inc	(hl)
+    000006AB 7E               [ 8] 1383 	ld	a, (hl)
+    000006AC 3C               [ 4] 1384 	inc	a
+    000006AD 6F               [ 4] 1385 	ld	l, a
+    000006AE 26 00            [ 8] 1386 	ld	h, #0x00
+    000006B0 11rACr03         [12] 1387 	ld	de, #_sprite_manager_updatables
+    000006B3 19               [ 8] 1388 	add	hl, de
+    000006B4 6E               [ 8] 1389 	ld	l, (hl)
+    000006B5 AF               [ 4] 1390 	xor	a, a
+    000006B6 67               [ 4] 1391 	ld	h, a
+    000006B7 29               [ 8] 1392 	add	hl, hl
+    000006B8 11r70r03         [12] 1393 	ld	de, #_sprite_manager_sprites
+    000006BB 19               [ 8] 1394 	add	hl, de
+    000006BC 5D               [ 4] 1395 	ld	e, l
+    000006BD 54               [ 4] 1396 	ld	d, h
+    000006BE 1A               [ 8] 1397 	ld	a, (de)
+    000006BF 21r06r00         [12] 1398 	ld	hl, #_THIS
+    000006C2 22               [ 8] 1399 	ld	(hl+), a
+    000006C3 13               [ 8] 1400 	inc	de
+    000006C4 1A               [ 8] 1401 	ld	a, (de)
+    000006C5 77               [ 8] 1402 	ld	(hl), a
+    000006C6 C3r3Dr06         [16] 1403 	jp	00130$
+    000006C9                       1404 00116$:
+                                   1405 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:285: SWITCH_ROM(__save);
+    000006C9 FArC7r03         [16] 1406 	ld	a, (_SpriteManagerUpdate___save_10000_319)
+    000006CC E0r00            [12] 1407 	ldh	(__current_bank + 0), a
+    000006CE EAr00r00         [16] 1408 	ld	(#_rROMB0),a
+                                   1409 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:287: SwapOAMs();
+    000006D1 CDr00r00         [24] 1410 	call	_SwapOAMs
+                                   1411 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:289: if (sprite_manager_removal_check) {
+    000006D4 FArC1r03         [16] 1412 	ld	a, (#_sprite_manager_removal_check)
+    000006D7 B7               [ 4] 1413 	or	a, a
+    000006D8 28 05            [12] 1414 	jr	Z, 00131$
+                                   1415 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:290: SpriteManagerFlushRemove();
+    000006DA 33               [ 8] 1416 	inc	sp
+    000006DB 33               [ 8] 1417 	inc	sp
+    000006DC C3rB6r04         [16] 1418 	jp	_SpriteManagerFlushRemove
+    000006DF                       1419 00131$:
+                                   1420 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/SpriteManager.c:292: }
+    000006DF 33               [ 8] 1421 	inc	sp
+    000006E0 33               [ 8] 1422 	inc	sp
+    000006E1 C9               [16] 1423 	ret
+                                   1424 	.area _CODE
+                                   1425 	.area _INITIALIZER
+    00000000                       1426 __xinit__sprite_manager_sprites_pool:
+    00000000r97r03                 1427 	.dw (_sprite_manager_sprites_poolSTACK - 1)
+    00000002                       1428 __xinit__sprite_tile_allocator_top:
+    00000002 80 00                 1429 	.dw #0x0080
+    00000004                       1430 __xinit__enable_flickering:
+    00000004 01                    1431 	.db #0x01	; 1
+    00000005                       1432 __xinit__THIS_IDX:
+    00000005 00                    1433 	.db #0x00	; 0
+    00000006                       1434 __xinit__THIS:
+    00000006 00 00                 1435 	.dw #0x0000
+                                   1436 	.area _CABS (ABS)

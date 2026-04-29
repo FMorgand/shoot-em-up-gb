@@ -1,0 +1,152 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.1 #15267 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module DefScrollLimits
+                                      6 	
+                                      7 ;--------------------------------------------------------
+                                      8 ; Public variables in this module
+                                      9 ;--------------------------------------------------------
+                                     10 	.globl _ClampScrollLimits
+                                     11 ;--------------------------------------------------------
+                                     12 ; special function registers
+                                     13 ;--------------------------------------------------------
+                         00000000    14 _GG_STATE	=	0x0000
+                         00000001    15 _GG_EXT_7BIT	=	0x0001
+                         00000002    16 _GG_EXT_CTL	=	0x0002
+                         00000003    17 _GG_SIO_SEND	=	0x0003
+                         00000004    18 _GG_SIO_RECV	=	0x0004
+                         00000005    19 _GG_SIO_CTL	=	0x0005
+                         00000006    20 _GG_SOUND_PAN	=	0x0006
+                         0000003E    21 _MEMORY_CTL	=	0x003e
+                         0000003F    22 _JOY_CTL	=	0x003f
+                         0000007E    23 _VCOUNTER	=	0x007e
+                         0000007F    24 _PSG	=	0x007f
+                         0000007F    25 _HCOUNTER	=	0x007f
+                         000000BE    26 _VDP_DATA	=	0x00be
+                         000000BF    27 _VDP_CMD	=	0x00bf
+                         000000BF    28 _VDP_STATUS	=	0x00bf
+                         000000DC    29 _JOY_PORT1	=	0x00dc
+                         000000DD    30 _JOY_PORT2	=	0x00dd
+                         000000F0    31 _FMADDRESS	=	0x00f0
+                         000000F1    32 _FMDATA	=	0x00f1
+                         000000F2    33 _AUDIOCTRL	=	0x00f2
+                                     34 ;--------------------------------------------------------
+                                     35 ; ram data
+                                     36 ;--------------------------------------------------------
+                                     37 	.area _DATA
+                         0000FFFC    38 _RAM_CONTROL	=	0xfffc
+                         0000FFF8    39 _GLASSES_3D	=	0xfff8
+                         0000FFFD    40 _MAP_FRAME0	=	0xfffd
+                         0000FFFE    41 _MAP_FRAME1	=	0xfffe
+                         0000FFFF    42 _MAP_FRAME2	=	0xffff
+                                     43 ;--------------------------------------------------------
+                                     44 ; ram data
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _INITIALIZED
+                                     47 ;--------------------------------------------------------
+                                     48 ; absolute external ram data
+                                     49 ;--------------------------------------------------------
+                                     50 	.area _DABS (ABS)
+                                     51 ;--------------------------------------------------------
+                                     52 ; global & static initialisations
+                                     53 ;--------------------------------------------------------
+                                     54 	.area _HOME
+                                     55 	.area _GSINIT
+                                     56 	.area _GSFINAL
+                                     57 	.area _GSINIT
+                                     58 ;--------------------------------------------------------
+                                     59 ; Home
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _HOME
+                                     62 	.area _HOME
+                                     63 ;--------------------------------------------------------
+                                     64 ; code
+                                     65 ;--------------------------------------------------------
+                                     66 	.area _CODE
+                                     67 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:4: void ClampScrollLimits(void) {
+                                     68 ;	---------------------------------
+                                     69 ; Function ClampScrollLimits
+                                     70 ; ---------------------------------
+    00000000                         71 _ClampScrollLimits::
+                                     72 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:5: if (clamp_enabled) {
+    00000000 3Ar00r00         [13]   73 	ld	a, (_clamp_enabled+0)
+    00000003 B7               [ 4]   74 	or	a, a
+    00000004 C8               [11]   75 	ret	Z
+                                     76 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:6: if (scroll_w < SCREEN_WIDTH) scroll_x = 0u;
+    00000005 11 A0 00         [10]   77 	ld	de, #0x00a0
+    00000008 2Ar00r00         [16]   78 	ld	hl, (_scroll_w)
+    0000000B BF               [ 4]   79 	cp	a, a
+    0000000C ED 52            [15]   80 	sbc	hl, de
+    0000000E 30 08            [12]   81 	jr	NC, 00104$
+    00000010 21 00 00         [10]   82 	ld	hl, #0x0000
+    00000013 22r00r00         [16]   83 	ld	(_scroll_x), hl
+    00000016 18 0D            [12]   84 	jr	00105$
+    00000018                         85 00104$:
+                                     86 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:7: else if (scroll_x < 0) scroll_x = 0u;
+    00000018 3Ar01r00         [13]   87 	ld	a, (_scroll_x+1)
+    0000001B CB 7F            [ 8]   88 	bit	7, a
+    0000001D 28 06            [12]   89 	jr	Z, 00105$
+    0000001F 21 00 00         [10]   90 	ld	hl, #0x0000
+    00000022 22r00r00         [16]   91 	ld	(_scroll_x), hl
+    00000025                         92 00105$:
+                                     93 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:9: if (scroll_x > (scroll_w - SCREEN_WIDTH)) scroll_x = (scroll_w - SCREEN_WIDTH);
+    00000025 3Ar00r00         [13]   94 	ld	a, (_scroll_w+0)
+    00000028 C6 60            [ 7]   95 	add	a, #0x60
+    0000002A 4F               [ 4]   96 	ld	c, a
+    0000002B 3Ar01r00         [13]   97 	ld	a, (_scroll_w+1)
+    0000002E CE FF            [ 7]   98 	adc	a, #0xff
+    00000030 47               [ 4]   99 	ld	b, a
+    00000031 2Ar00r00         [16]  100 	ld	hl, (_scroll_x)
+    00000034 79               [ 4]  101 	ld	a, c
+    00000035 95               [ 4]  102 	sub	a, l
+    00000036 78               [ 4]  103 	ld	a, b
+    00000037 9C               [ 4]  104 	sbc	a, h
+    00000038 30 04            [12]  105 	jr	NC, 00107$
+    0000003A ED 43r00r00      [20]  106 	ld	(_scroll_x), bc
+    0000003E                        107 00107$:
+                                    108 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:11: if (scroll_h < (SCREEN_HEIGHT - scroll_h_border)) scroll_y = 0u;
+    0000003E 21r00r00         [10]  109 	ld	hl, #_scroll_h_border
+    00000041 3E 90            [ 7]  110 	ld	a, #0x90
+    00000043 96               [ 7]  111 	sub	a, (hl)
+    00000044 23               [ 6]  112 	inc	hl
+    00000045 4F               [ 4]  113 	ld	c, a
+    00000046 9F               [ 4]  114 	sbc	a, a
+    00000047 96               [ 7]  115 	sub	a, (hl)
+    00000048 47               [ 4]  116 	ld	b, a
+    00000049 2Ar00r00         [16]  117 	ld	hl, (_scroll_h)
+    0000004C AF               [ 4]  118 	xor	a, a
+    0000004D ED 42            [15]  119 	sbc	hl, bc
+    0000004F 30 08            [12]  120 	jr	NC, 00111$
+    00000051 21 00 00         [10]  121 	ld	hl, #0x0000
+    00000054 22r00r00         [16]  122 	ld	(_scroll_y), hl
+    00000057 18 0D            [12]  123 	jr	00112$
+    00000059                        124 00111$:
+                                    125 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:12: else if (scroll_y < 0) scroll_y = 0u;
+    00000059 3Ar01r00         [13]  126 	ld	a, (_scroll_y+1)
+    0000005C CB 7F            [ 8]  127 	bit	7, a
+    0000005E 28 06            [12]  128 	jr	Z, 00112$
+    00000060 21 00 00         [10]  129 	ld	hl, #0x0000
+    00000063 22r00r00         [16]  130 	ld	(_scroll_y), hl
+    00000066                        131 00112$:
+                                    132 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:14: if (scroll_y > (scroll_h - SCREEN_HEIGHT + scroll_h_border)) scroll_y = (scroll_h - SCREEN_HEIGHT + scroll_h_border);
+    00000066 3Ar00r00         [13]  133 	ld	a, (_scroll_h+0)
+    00000069 C6 70            [ 7]  134 	add	a, #0x70
+    0000006B 4F               [ 4]  135 	ld	c, a
+    0000006C 3Ar01r00         [13]  136 	ld	a, (_scroll_h+1)
+    0000006F CE FF            [ 7]  137 	adc	a, #0xff
+    00000071 47               [ 4]  138 	ld	b, a
+    00000072 2Ar00r00         [16]  139 	ld	hl, (_scroll_h_border)
+    00000075 09               [11]  140 	add	hl, bc
+    00000076 ED 4Br00r00      [20]  141 	ld	bc, (_scroll_y)
+    0000007A 7D               [ 4]  142 	ld	a, l
+    0000007B 91               [ 4]  143 	sub	a, c
+    0000007C 7C               [ 4]  144 	ld	a, h
+    0000007D 98               [ 4]  145 	sbc	a, b
+    0000007E D0               [11]  146 	ret	NC
+    0000007F 22r00r00         [16]  147 	ld	(_scroll_y), hl
+                                    148 ;C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/src/DefScrollLimits.c:16: }
+    00000082 C9               [10]  149 	ret
+                                    150 	.area _CODE
+                                    151 	.area _INITIALIZER
+                                    152 	.area _CABS (ABS)

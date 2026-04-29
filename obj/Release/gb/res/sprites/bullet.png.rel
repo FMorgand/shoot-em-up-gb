@@ -1,0 +1,48 @@
+XL4
+H B areas 8 global symbols
+M bullet_png
+S .__.ABS. Def00000000
+S ___bank_bullet Def00000001
+A _CODE size 0 flags 0 addr 0
+A _HRAM size 0 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_1 size 3D flags 0 addr 0
+S _bullet_tiles Def00000008
+S _bullet Def00000032
+S _bullet_palettes Def00000000
+S ___func_bullet Def00000000
+S _bullet_metasprite0 Def00000028
+S _bullet_metasprites Def00000030
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00 00
+R 00 00 08 00
+T 00 00 00 00
+R 00 00 08 00
+T 00 00 00 00 BC 17 E7 22 C4 19 E0 14
+R 00 00 08 00
+T 08 00 00 00
+R 00 00 08 00
+T 08 00 00 00 00 00 00 00 00 00 00 00 FE FE 81 FF
+R 00 00 08 00
+T 14 00 00 00 FF FF CF B1 F5 8B CB B5 D7 A9 FF FF
+R 00 00 08 00
+T 20 00 00 00 00 00 00 00 00 00 00 00
+R 00 00 08 00
+T 28 00 00 00
+R 00 00 08 00
+T 28 00 00 00 F8 FC 00 00 80 00 00 00
+R 00 00 08 00
+T 30 00 00 00
+R 00 00 08 00
+T 30 00 00 00 28 00
+R 00 00 08 00 00 04 08 00
+T 32 00 00 00
+R 00 00 08 00
+T 32 00 00 00 08 10 02 08 00 01 00 00 01 30 00
+R 00 00 08 00 00 07 08 00 00 0A 08 00 00 0D 08 00
