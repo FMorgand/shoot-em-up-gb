@@ -2,18 +2,18 @@
                                       2 ; File Created by SDCC : free open source ISO C Compiler
                                       3 ; Version 4.5.1 #15267 (MINGW64)
                                       4 ;--------------------------------------------------------
-                                      5 	.module enemy_png
+                                      5 	.module old_player_png
                                       6 	
                                       7 ;--------------------------------------------------------
                                       8 ; Public variables in this module
                                       9 ;--------------------------------------------------------
-                                     10 	.globl _enemy
-                                     11 	.globl _enemy_metasprites
-                                     12 	.globl _enemy_metasprite0
-                                     13 	.globl _enemy_tiles
-                                     14 	.globl _enemy_palettes
-                                     15 	.globl b___func_enemy
-                                     16 	.globl ___func_enemy
+                                     10 	.globl _old_player
+                                     11 	.globl _old_player_metasprites
+                                     12 	.globl _old_player_metasprite0
+                                     13 	.globl _old_player_tiles
+                                     14 	.globl _old_player_palettes
+                                     15 	.globl b___func_old_player
+                                     16 	.globl ___func_old_player
                                      17 ;--------------------------------------------------------
                                      18 ; special function registers
                                      19 ;--------------------------------------------------------
@@ -46,22 +46,22 @@
                                      46 ; code
                                      47 ;--------------------------------------------------------
                                      48 	.area _CODE_255
-                                     49 ;../obj/Release/gbc/res/sprites/enemy.png.c:12: BANKREF(enemy)
+                                     49 ;../obj/Release/gbc/res/sprites/old_player.png.c:12: BANKREF(old_player)
                                      50 ;	---------------------------------
-                                     51 ; Function __func_enemy
+                                     51 ; Function __func_old_player
                                      52 ; ---------------------------------
-                         000000FF    53 	b___func_enemy	= 255
-    00000000                         54 ___func_enemy::
-                                     55 	.local b___func_enemy 
-                         000000FF    56 	___bank_enemy = b___func_enemy 
-                                     57 	.globl ___bank_enemy 
+                         000000FF    53 	b___func_old_player	= 255
+    00000000                         54 ___func_old_player::
+                                     55 	.local b___func_old_player 
+                         000000FF    56 	___bank_old_player = b___func_old_player 
+                                     57 	.globl ___bank_old_player 
                                      58 	.area _CODE_255
-    00000000                         59 _enemy_palettes:
+    00000000                         59 _old_player_palettes:
     00000000 BC 17                   60 	.dw #0x17bc
     00000002 E7 22                   61 	.dw #0x22e7
     00000004 C4 19                   62 	.dw #0x19c4
     00000006 E0 14                   63 	.dw #0x14e0
-    00000008                         64 _enemy_tiles:
+    00000008                         64 _old_player_tiles:
     00000008 1F                      65 	.db #0x1f	; 31
     00000009 1F                      66 	.db #0x1f	; 31
     0000000A 20                      67 	.db #0x20	; 32
@@ -126,9 +126,9 @@
     00000045 FC                     126 	.db #0xfc	; 252
     00000046 F8                     127 	.db #0xf8	; 248
     00000047 F8                     128 	.db #0xf8	; 248
-    00000048                        129 _enemy_metasprite0:
-    00000048 00                     130 	.db #0x00	;  0
-    00000049 00                     131 	.db #0x00	;  0
+    00000048                        129 _old_player_metasprite0:
+    00000048 F8                     130 	.db #0xf8	; -8
+    00000049 F8                     131 	.db #0xf8	; -8
     0000004A 00                     132 	.db #0x00	; 0
     0000004B 00                     133 	.db #0x00	; 0
     0000004C 00                     134 	.db #0x00	;  0
@@ -139,16 +139,16 @@
     00000051 00                     139 	.db #0x00	;  0
     00000052 00                     140 	.db #0x00	; 0
     00000053 00                     141 	.db #0x00	; 0
-    00000054                        142 _enemy_metasprites:
-    00000054r48r00                  143 	.dw _enemy_metasprite0
-    00000056                        144 _enemy:
+    00000054                        142 _old_player_metasprites:
+    00000054r48r00                  143 	.dw _old_player_metasprite0
+    00000056                        144 _old_player:
     00000056 10                     145 	.db #0x10	; 16
     00000057 10                     146 	.db #0x10	; 16
     00000058 04                     147 	.db #0x04	; 4
-    00000059r08r00                  148 	.dw _enemy_tiles
+    00000059r08r00                  148 	.dw _old_player_tiles
     0000005B 01                     149 	.db #0x01	; 1
-    0000005Cr00r00                  150 	.dw _enemy_palettes
+    0000005Cr00r00                  150 	.dw _old_player_palettes
     0000005E 01                     151 	.db #0x01	; 1
-    0000005Fr54r00                  152 	.dw _enemy_metasprites
+    0000005Fr54r00                  152 	.dw _old_player_metasprites
                                     153 	.area _INITIALIZER
                                     154 	.area _CABS (ABS)

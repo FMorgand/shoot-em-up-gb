@@ -95,8 +95,8 @@ _bullet_tiles:
 	.db #0x00	; 0
 	.db #0x00	; 0
 _bullet_metasprite0:
-	.db #0xf8	; -8
-	.db #0xfc	; -4
+	.db #0x00	;  0
+	.db #0x00	;  0
 	.db #0x00	; 0
 	.db #0x00	; 0
 	.db #0x80	; -128
@@ -107,7 +107,7 @@ _bullet_metasprites:
 	.dw _bullet_metasprite0
 _bullet:
 	.db #0x08	; 8
-	.db #0x10	; 16
+	.db #0x08	; 8
 	.db #0x02	; 2
 	.dw _bullet_tiles
 	.db #0x01	; 1

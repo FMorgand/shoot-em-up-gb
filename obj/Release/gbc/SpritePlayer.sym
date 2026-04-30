@@ -7,14 +7,22 @@ Symbol Table
     .__.ABS.                                                    =   00000000 G
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
-  8 _Destroy_SpritePlayer                                           00000224 GR
+  8 _Destroy_SpritePlayer                                           000002F5 GR
+    _EMU_printf                                                     ******** GX
+    _EMU_profiler_message                                           ******** GX
     _SpriteManagerAddEx                                             ******** GX
   8 _Start_SpritePlayer                                             00000000 GR
     _THIS                                                           ******** GX
-  8 _Update_SpritePlayer                                            0000001D GR
+    _TranslateSprite                                                ******** GX
+  8 _Update_SpritePlayer                                            00000035 GR
+  3 ___EMU_PROFILER_INIT                                            00000000 R
     ___bank_SpritePlayer                                        =   000000FF G
+  8 ___str_0                                                        000002D6 R
+  9 __xinit____EMU_PROFILER_INIT                                    00000000 R
     _joypads                                                        ******** GX
     _old_joypads                                                    ******** GX
+    _scroll_y                                                       ******** GX
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
@@ -24,12 +32,12 @@ Area Table
    0 _CODE                                      size        0   flags    0
    1 _HRAM                                      size        0   flags    0
    2 _DATA                                      size        0   flags    0
-   3 _INITIALIZED                               size        0   flags    0
+   3 _INITIALIZED                               size        2   flags    0
    4 _DABS                                      size        0   flags    8
    5 _HOME                                      size        0   flags    0
    6 _GSINIT                                    size        0   flags    0
    7 _GSFINAL                                   size        0   flags    0
-   8 _CODE_255                                  size      225   flags    0
-   9 _INITIALIZER                               size        0   flags    0
+   8 _CODE_255                                  size      2F6   flags    0
+   9 _INITIALIZER                               size        2   flags    0
    A _CABS                                      size        0   flags    8
 

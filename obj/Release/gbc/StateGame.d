@@ -15,5 +15,8 @@
  C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/MapInfo.h \
  C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Math.h \
  C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/gbc_hicolor.h \
+ ../include/EnemyDefs.h \
  C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Scroll.h \
- C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/SpriteManager.h
+ C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/Sprite.h \
+ C:/Users/franc/Documents/Projets/Perso/GameBoyProjects/CrossZGB/common/include/SpriteManager.h \
+ ../include/Balancing.h

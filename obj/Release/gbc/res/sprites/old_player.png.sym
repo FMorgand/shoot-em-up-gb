@@ -7,19 +7,14 @@ Symbol Table
     .__.ABS.                                                    =   00000000 G
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
-    _CheckCollision                                                 ******** GX
-  8 _Destroy_SpriteEnemy                                            000001C1 GR
-    _SpriteManagerRemoveSprite                                      ******** GX
-  8 _Start_SpriteEnemy                                              00000000 GR
-    _THIS                                                           ******** GX
-  8 _UpdateMovement                                                 00000065 R
-  8 _Update_SpriteEnemy                                             00000125 GR
-    ___bank_SpriteEnemy                                         =   000000FF G
-    _scroll_y                                                       ******** GX
-  8 _sine_dx                                                        00000045 R
-    _sprite_manager_sprites                                         ******** GX
-    _sprite_manager_updatables                                      ******** GX
-
+    ___bank_old_player                                          =   000000FF G
+  8 ___func_old_player                                              00000000 GR
+  8 _old_player                                                     00000056 GR
+  8 _old_player_metasprite0                                         00000048 GR
+  8 _old_player_metasprites                                         00000054 GR
+  8 _old_player_palettes                                            00000000 GR
+  8 _old_player_tiles                                               00000008 GR
+    b___func_old_player                                         =   000000FF L
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
@@ -34,7 +29,7 @@ Area Table
    5 _HOME                                      size        0   flags    0
    6 _GSINIT                                    size        0   flags    0
    7 _GSFINAL                                   size        0   flags    0
-   8 _CODE_255                                  size      1C2   flags    0
+   8 _CODE_255                                  size       61   flags    0
    9 _INITIALIZER                               size        0   flags    0
    A _CABS                                      size        0   flags    8
 

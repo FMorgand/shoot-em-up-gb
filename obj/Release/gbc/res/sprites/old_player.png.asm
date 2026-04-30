@@ -2,18 +2,18 @@
 ; File Created by SDCC : free open source ISO C Compiler
 ; Version 4.5.1 #15267 (MINGW64)
 ;--------------------------------------------------------
-	.module enemy_png
+	.module old_player_png
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _enemy
-	.globl _enemy_metasprites
-	.globl _enemy_metasprite0
-	.globl _enemy_tiles
-	.globl _enemy_palettes
-	.globl b___func_enemy
-	.globl ___func_enemy
+	.globl _old_player
+	.globl _old_player_metasprites
+	.globl _old_player_metasprite0
+	.globl _old_player_tiles
+	.globl _old_player_palettes
+	.globl b___func_old_player
+	.globl ___func_old_player
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -46,22 +46,22 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE_255
-;../obj/Release/gbc/res/sprites/enemy.png.c:12: BANKREF(enemy)
+;../obj/Release/gbc/res/sprites/old_player.png.c:12: BANKREF(old_player)
 ;	---------------------------------
-; Function __func_enemy
+; Function __func_old_player
 ; ---------------------------------
-	b___func_enemy	= 255
-___func_enemy::
-	.local b___func_enemy 
-	___bank_enemy = b___func_enemy 
-	.globl ___bank_enemy 
+	b___func_old_player	= 255
+___func_old_player::
+	.local b___func_old_player 
+	___bank_old_player = b___func_old_player 
+	.globl ___bank_old_player 
 	.area _CODE_255
-_enemy_palettes:
+_old_player_palettes:
 	.dw #0x17bc
 	.dw #0x22e7
 	.dw #0x19c4
 	.dw #0x14e0
-_enemy_tiles:
+_old_player_tiles:
 	.db #0x1f	; 31
 	.db #0x1f	; 31
 	.db #0x20	; 32
@@ -126,9 +126,9 @@ _enemy_tiles:
 	.db #0xfc	; 252
 	.db #0xf8	; 248
 	.db #0xf8	; 248
-_enemy_metasprite0:
-	.db #0x00	;  0
-	.db #0x00	;  0
+_old_player_metasprite0:
+	.db #0xf8	; -8
+	.db #0xf8	; -8
 	.db #0x00	; 0
 	.db #0x00	; 0
 	.db #0x00	;  0
@@ -139,16 +139,16 @@ _enemy_metasprite0:
 	.db #0x00	;  0
 	.db #0x00	; 0
 	.db #0x00	; 0
-_enemy_metasprites:
-	.dw _enemy_metasprite0
-_enemy:
+_old_player_metasprites:
+	.dw _old_player_metasprite0
+_old_player:
 	.db #0x10	; 16
 	.db #0x10	; 16
 	.db #0x04	; 4
-	.dw _enemy_tiles
+	.dw _old_player_tiles
 	.db #0x01	; 1
-	.dw _enemy_palettes
+	.dw _old_player_palettes
 	.db #0x01	; 1
-	.dw _enemy_metasprites
+	.dw _old_player_metasprites
 	.area _INITIALIZER
 	.area _CABS (ABS)

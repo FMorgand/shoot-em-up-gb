@@ -3,34 +3,32 @@
 #include "SpriteManager.h"
 #include "Keys.h"
 #include <gbdk/platform.h>
+#include <gbdk/emu_debug.h>
+#include "Scroll.h"
+#include "Balancing.h"
 
 // --- Formes ---
 #define FORM_OFFENSIVE 0   // Lente, peut tirer (bouton A)
 #define FORM_DEFENSIVE 1   // Rapide, ne tire pas
 
-// --- Tir ---
-#define FIRE_COOLDOWN 15   // frames entre deux tirs (~4 tirs/sec à 60fps)
-
-// --- Vitesses (pixels par frame) ---
-// Diagonal = speed / √2, arrondi à l'entier le plus proche
-#define SPEED_SLOW          1   // Forme offensive, droit
-#define SPEED_SLOW_DIAG     1   // Forme offensive, diagonal (inévitable avec des entiers)
-#define SPEED_FAST          3   // Forme défensive, droit
-#define SPEED_FAST_DIAG     2   // Forme défensive, diagonal (≈ 3/√2 ≈ 2.12)
-
 // --- Limites de l'écran (GBC : 160x144, sprite 8x16) ---
-#define PLAYER_MIN_X  8
-#define PLAYER_MAX_X  144
-#define PLAYER_MIN_Y  16
-#define PLAYER_MAX_Y  128
+// Limites en coordonnées écran (offset depuis scroll_y)
+#define PLAYER_MIN_X        8
+#define PLAYER_MAX_X        144
+#define PLAYER_SCREEN_MIN_Y 16
+#define PLAYER_SCREEN_MAX_Y 128
 
 // Stockage dans custom_data
 #define player_form     THIS->custom_data[0]
 #define fire_cooldown   THIS->custom_data[1]
 
-void START(void) {
+void START(void* data) {
     player_form   = FORM_OFFENSIVE;
     fire_cooldown = 0;
+    //THIS->coll_w = 16;
+    //THIS->coll_h = 16;
+    THIS->x -= 8;
+    //THIS->y -= 8;
 }
 
 void UPDATE(void) {
@@ -81,13 +79,15 @@ void UPDATE(void) {
     INT16 new_x = (INT16)THIS->x + (INT16)dx;
     INT16 new_y = (INT16)THIS->y + (INT16)dy;
 
-    if (new_x < PLAYER_MIN_X) new_x = PLAYER_MIN_X;
-    if (new_x > PLAYER_MAX_X) new_x = PLAYER_MAX_X;
-    if (new_y < PLAYER_MIN_Y) new_y = PLAYER_MIN_Y;
-    if (new_y > PLAYER_MAX_Y) new_y = PLAYER_MAX_Y;
+    INT16 world_min_y = scroll_y + PLAYER_SCREEN_MIN_Y;
+    INT16 world_max_y = scroll_y + PLAYER_SCREEN_MAX_Y;
+    if (new_x < PLAYER_MIN_X)  new_x = PLAYER_MIN_X;
+    if (new_x > PLAYER_MAX_X)  new_x = PLAYER_MAX_X;
+    if (new_y < world_min_y)   new_y = world_min_y;
+    if (new_y > world_max_y)   new_y = world_max_y;
 
-    THIS->x = (UINT16)new_x;
-    THIS->y = (UINT16)new_y;
+    TranslateSprite(THIS, (INT8)(new_x - (INT16)THIS->x), (INT8)(new_y - (INT16)THIS->y));
+    EMU_printf("x=%d y=%d coll_w=%d coll_h=%d\n", THIS->x, THIS->y, THIS->coll_w, THIS->coll_h);
 }
 
 void DESTROY(void) {

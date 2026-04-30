@@ -1,8 +1,8 @@
 XL4
 H B areas 8 global symbols
-M enemy_png
+M old_player_png
+S ___bank_old_player Def000000FF
 S .__.ABS. Def00000000
-S ___bank_enemy Def000000FF
 A _CODE size 0 flags 0 addr 0
 A _HRAM size 0 flags 0 addr 0
 A _DATA size 0 flags 0 addr 0
@@ -12,12 +12,12 @@ A _HOME size 0 flags 0 addr 0
 A _GSINIT size 0 flags 0 addr 0
 A _GSFINAL size 0 flags 0 addr 0
 A _CODE_255 size 61 flags 0 addr 0
-S ___func_enemy Def00000000
-S _enemy_metasprite0 Def00000048
-S _enemy_metasprites Def00000054
-S _enemy_tiles Def00000008
-S _enemy Def00000056
-S _enemy_palettes Def00000000
+S _old_player_tiles Def00000008
+S _old_player Def00000056
+S _old_player_palettes Def00000000
+S ___func_old_player Def00000000
+S _old_player_metasprite0 Def00000048
+S _old_player_metasprites Def00000054
 A _INITIALIZER size 0 flags 0 addr 0
 A _CABS size 0 flags 8 addr 0
 T 00 00 00 00
@@ -42,7 +42,7 @@ T 44 00 00 00 04 FC F8 F8
 R 00 00 08 00
 T 48 00 00 00
 R 00 00 08 00
-T 48 00 00 00 00 00 00 00 00 08 02 00 80 00 00 00
+T 48 00 00 00 F8 F8 00 00 00 08 02 00 80 00 00 00
 R 00 00 08 00
 T 54 00 00 00
 R 00 00 08 00

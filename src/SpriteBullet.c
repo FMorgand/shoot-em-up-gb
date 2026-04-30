@@ -1,11 +1,10 @@
 #include "Banks/SetAutoBank.h"
 #include "ZGBMain.h"
 #include "SpriteManager.h"
-
-#define BULLET_SPEED   4    // pixels par frame, vers le haut
+#include "Balancing.h"
 #define BULLET_MIN_Y   8u   // seuil hors écran (haut)
 
-void START(void) {
+void START(void* data) {
 }
 
 void UPDATE(void) {

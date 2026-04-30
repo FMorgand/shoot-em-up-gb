@@ -44,20 +44,20 @@
                                      44 ; code
                                      45 ;--------------------------------------------------------
                                      46 	.area _CODE_255
-                                     47 ;SpriteBullet.c:8: void START(void) {
+                                     47 ;SpriteBullet.c:7: void START(void* data) {
                                      48 ;	---------------------------------
                                      49 ; Function Start_SpriteBullet
                                      50 ; ---------------------------------
     00000000                         51 _Start_SpriteBullet::
-                                     52 ;SpriteBullet.c:9: }
+                                     52 ;SpriteBullet.c:8: }
     00000000 C9               [16]   53 	ret
                          000000FF    54 ___bank_SpriteBullet	=	0x00ff
-                                     55 ;SpriteBullet.c:11: void UPDATE(void) {
+                                     55 ;SpriteBullet.c:10: void UPDATE(void) {
                                      56 ;	---------------------------------
                                      57 ; Function Update_SpriteBullet
                                      58 ; ---------------------------------
     00000001                         59 _Update_SpriteBullet::
-                                     60 ;SpriteBullet.c:13: if (THIS->y > BULLET_MIN_Y + BULLET_SPEED) {
+                                     60 ;SpriteBullet.c:12: if (THIS->y > BULLET_MIN_Y + BULLET_SPEED) {
     00000001 FAr00r00         [16]   61 	ld	a, (_THIS)
     00000004 21r01r00         [12]   62 	ld	hl, #_THIS + 1
     00000007 46               [ 8]   63 	ld	b, (hl)
@@ -74,7 +74,7 @@
     00000013 3E 00            [ 8]   74 	ld	a, #0x00
     00000015 9C               [ 4]   75 	sbc	a, h
     00000016 30 0C            [12]   76 	jr	NC, 00102$
-                                     77 ;SpriteBullet.c:14: THIS->y -= BULLET_SPEED;
+                                     77 ;SpriteBullet.c:13: THIS->y -= BULLET_SPEED;
     00000018 11 FC FF         [12]   78 	ld	de, #0xfffc
     0000001B 19               [ 8]   79 	add	hl, de
     0000001C 5D               [ 4]   80 	ld	e, l
@@ -86,19 +86,19 @@
     00000022 02               [ 8]   86 	ld	(bc), a
     00000023 C9               [16]   87 	ret
     00000024                         88 00102$:
-                                     89 ;SpriteBullet.c:16: SpriteManagerRemoveSprite(THIS);
+                                     89 ;SpriteBullet.c:15: SpriteManagerRemoveSprite(THIS);
     00000024 FAr00r00         [16]   90 	ld	a, (_THIS)
     00000027 5F               [ 4]   91 	ld	e, a
     00000028 21r01r00         [12]   92 	ld	hl, #_THIS + 1
     0000002B 56               [ 8]   93 	ld	d, (hl)
-                                     94 ;SpriteBullet.c:18: }
+                                     94 ;SpriteBullet.c:17: }
     0000002C C3r00r00         [16]   95 	jp	_SpriteManagerRemoveSprite
-                                     96 ;SpriteBullet.c:20: void DESTROY(void) {
+                                     96 ;SpriteBullet.c:19: void DESTROY(void) {
                                      97 ;	---------------------------------
                                      98 ; Function Destroy_SpriteBullet
                                      99 ; ---------------------------------
     0000002F                        100 _Destroy_SpriteBullet::
-                                    101 ;SpriteBullet.c:21: }
+                                    101 ;SpriteBullet.c:20: }
     0000002F C9               [16]  102 	ret
                                     103 	.area _CODE_255
                                     104 	.area _INITIALIZER

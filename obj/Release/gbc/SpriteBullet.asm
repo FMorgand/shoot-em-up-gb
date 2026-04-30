@@ -44,20 +44,20 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE_255
-;SpriteBullet.c:8: void START(void) {
+;SpriteBullet.c:7: void START(void* data) {
 ;	---------------------------------
 ; Function Start_SpriteBullet
 ; ---------------------------------
 _Start_SpriteBullet::
-;SpriteBullet.c:9: }
+;SpriteBullet.c:8: }
 	ret
 ___bank_SpriteBullet	=	0x00ff
-;SpriteBullet.c:11: void UPDATE(void) {
+;SpriteBullet.c:10: void UPDATE(void) {
 ;	---------------------------------
 ; Function Update_SpriteBullet
 ; ---------------------------------
 _Update_SpriteBullet::
-;SpriteBullet.c:13: if (THIS->y > BULLET_MIN_Y + BULLET_SPEED) {
+;SpriteBullet.c:12: if (THIS->y > BULLET_MIN_Y + BULLET_SPEED) {
 	ld	a, (_THIS)
 	ld	hl, #_THIS + 1
 	ld	b, (hl)
@@ -74,7 +74,7 @@ _Update_SpriteBullet::
 	ld	a, #0x00
 	sbc	a, h
 	jr	NC, 00102$
-;SpriteBullet.c:14: THIS->y -= BULLET_SPEED;
+;SpriteBullet.c:13: THIS->y -= BULLET_SPEED;
 	ld	de, #0xfffc
 	add	hl, de
 	ld	e, l
@@ -86,19 +86,19 @@ _Update_SpriteBullet::
 	ld	(bc), a
 	ret
 00102$:
-;SpriteBullet.c:16: SpriteManagerRemoveSprite(THIS);
+;SpriteBullet.c:15: SpriteManagerRemoveSprite(THIS);
 	ld	a, (_THIS)
 	ld	e, a
 	ld	hl, #_THIS + 1
 	ld	d, (hl)
-;SpriteBullet.c:18: }
+;SpriteBullet.c:17: }
 	jp	_SpriteManagerRemoveSprite
-;SpriteBullet.c:20: void DESTROY(void) {
+;SpriteBullet.c:19: void DESTROY(void) {
 ;	---------------------------------
 ; Function Destroy_SpriteBullet
 ; ---------------------------------
 _Destroy_SpriteBullet::
-;SpriteBullet.c:21: }
+;SpriteBullet.c:20: }
 	ret
 	.area _CODE_255
 	.area _INITIALIZER
